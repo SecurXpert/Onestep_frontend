@@ -125,7 +125,7 @@ const specialtyTips = {
       image: tip,
     },
   ],
-  dietitian: [
+  nutritionist: [
     {
       id: 1,
       title: 'Balanced Meal Rule',

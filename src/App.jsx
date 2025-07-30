@@ -46,6 +46,7 @@ import Department from "./pages/Department"
 import DoctorProfile from "./components/DoctorProfile"
 import DoctorProfileWrapper from "./components/DoctorProfileWrapper"
 import Individualarticle from "./pages/Individualarticle"
+import Dashboard_Admin from "./pages/Dashborad_Admin"
 
 const App = () => {
   return (
@@ -99,6 +100,7 @@ const App = () => {
             <Route path="/department/:specialtyName" element={<Department/>}/>
             <Route path="/doctor/:id" element={<DoctorProfileWrapper/>} />
             <Route path="/article/:name" element={<Individualarticle/>} />
+            <Route path="/super_dashboard" element={<Dashboard_Admin/>} />
   
          
 

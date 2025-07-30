@@ -42,7 +42,7 @@ const SpecialityMenu = () => {
       'Irregular heartbeats': 'Cardiologist',
       'Thyroid': 'Endocrinologist',
       'Nutritional deficiencies': 'Nutritionist',
-      'Cavity': 'Dietitian/Nutritionist',
+      'Cavity': 'Dentist',
       'Joint or knee pain': 'Orthopedic',
       'Hairfall': 'Cosmetologist',
       'Skin': 'Cosmetologist',

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
 const PatientForm = ({
@@ -10,6 +10,7 @@ const PatientForm = ({
   setShowRelatedDoctors,
 }) => {
   const { user } = useContext(AuthContext);
+  const [errors, setErrors] = useState({});
 
   const calculateAge = (dob) => {
     if (!dob) return '';
@@ -35,7 +36,6 @@ const PatientForm = ({
   useEffect(() => {
     if (bookingForSelf && user) {
       setPatientInfo({
-        ...patientInfo,
         name: user.name || '',
         contact: user.email || '',
         phone: user.phone_number || user.phone || '',
@@ -52,11 +52,11 @@ const PatientForm = ({
         alternativeTime: '',
         medical_history: false,
       });
-      setReportFile(null); // Reset reportFile when booking for self
+      setReportFile(null);
       setShowRelatedDoctors(false);
     } else {
+      // Clear all fields when booking for family member
       setPatientInfo({
-        ...patientInfo,
         name: '',
         contact: '',
         phone: '',
@@ -73,7 +73,7 @@ const PatientForm = ({
         alternativeTime: '',
         medical_history: false,
       });
-      setReportFile(null); // Reset reportFile when booking for family member
+      setReportFile(null);
       setShowRelatedDoctors(false);
     }
   }, [bookingForSelf, user, setPatientInfo, setReportFile, setShowRelatedDoctors]);
@@ -81,21 +81,18 @@ const PatientForm = ({
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    // Restrict name to letters and spaces
-    if (name === 'name' && !/^[a-zA-Z\s]*$/.test(value)) {
-      return;
+    let error = '';
+    if (name === 'name' && value && !/^[a-zA-Z\s]*$/.test(value)) {
+      error = 'Name can only contain letters and spaces';
+    } else if (name === 'phone' && value && !/^\d*$/.test(value)) {
+      error = 'Phone number can only contain digits';
+    } else if (name === 'contact' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      error = 'Please enter a valid email address';
     }
 
-    // Restrict phone to numbers
-    if (name === 'phone' && !/^\d*$/.test(value)) {
-      return;
-    }
+    setErrors((prev) => ({ ...prev, [name]: error }));
 
-    // Validate email format
-    if (name === 'contact' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      return;
-    }
-
+    // Always update patientInfo, even for invalid input, to ensure visibility
     setPatientInfo((prev) => {
       const newInfo = {
         ...prev,
@@ -105,13 +102,13 @@ const PatientForm = ({
         newInfo.age = calculateAge(value);
       }
       if (name === 'purpose' && value === 'new_consultation') {
-        newInfo.medical_history = false; // Reset medical_history for first visit
+        newInfo.medical_history = false;
       }
       return newInfo;
     });
 
     if (name === 'purpose' && value === 'new_consultation') {
-      setReportFile(null); // Reset reportFile for first visit
+      setReportFile(null);
     }
 
     if (name === 'unavailabilityOption' && value === 'similar_doctor') {
@@ -159,10 +156,13 @@ const PatientForm = ({
             placeholder="Enter patient name"
             value={patientInfo.name}
             onChange={handleChange}
-            className="w-full px-3 py-1.5 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base"
+            className={`w-full px-3 py-1.5 md:px-4 md:py-2 border ${
+              errors.name ? 'border-red-500' : 'border-gray-300'
+            } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base text-gray-900 bg-white`}
             disabled={bookingForSelf}
             required
           />
+          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
         </div>
 
         <div>
@@ -175,10 +175,13 @@ const PatientForm = ({
             placeholder="Age"
             value={patientInfo.age}
             onChange={handleChange}
-            className="w-full px-3 py-1.5 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base"
-            disabled={bookingForSelf || !bookingForSelf}
+            className={`w-full px-3 py-1.5 md:px-4 md:py-2 border ${
+              errors.age ? 'border-red-500' : 'border-gray-300'
+            } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base text-gray-900 bg-white`}
+            disabled={bookingForSelf}
             required
           />
+          {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age}</p>}
         </div>
 
         <div>
@@ -190,10 +193,13 @@ const PatientForm = ({
             name="dob"
             value={patientInfo.dob}
             onChange={handleChange}
-            className="w-full px-3 py-1.5 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base"
+            className={`w-full px-3 py-1.5 md:px-4 md:py-2 border ${
+              errors.dob ? 'border-red-500' : 'border-gray-300'
+            } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base text-gray-900 bg-white`}
             disabled={bookingForSelf}
             required
           />
+          {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
         </div>
       </div>
 
@@ -206,7 +212,9 @@ const PatientForm = ({
             name="gender"
             value={patientInfo.gender}
             onChange={handleChange}
-            className="w-full px-3 py-1.5 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base"
+            className={`w-full px-3 py-1.5 md:px-4 md:py-2 border ${
+              errors.gender ? 'border-red-500' : 'border-gray-300'
+            } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base text-gray-900 bg-white`}
             required
           >
             <option value="">Select Gender</option>
@@ -214,6 +222,7 @@ const PatientForm = ({
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </select>
+          {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender}</p>}
         </div>
 
         <div>
@@ -226,10 +235,13 @@ const PatientForm = ({
             placeholder="Enter email address"
             value={patientInfo.contact}
             onChange={handleChange}
-            className="w-full px-3 py-1.5 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base"
+            className={`w-full px-3 py-1.5 md:px-4 md:py-2 border ${
+              errors.contact ? 'border-red-500' : 'border-gray-300'
+            } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base text-gray-900 bg-white`}
             disabled={bookingForSelf}
             required
           />
+          {errors.contact && <p className="text-red-500 text-xs mt-1">{errors.contact}</p>}
         </div>
 
         <div>
@@ -242,10 +254,13 @@ const PatientForm = ({
             placeholder="Enter phone number"
             value={patientInfo.phone}
             onChange={handleChange}
-            className="w-full px-3 py-1.5 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base"
+            className={`w-full px-3 py-1.5 md:px-4 md:py-2 border ${
+              errors.phone ? 'border-red-500' : 'border-gray-300'
+            } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base text-gray-900 bg-white`}
             disabled={bookingForSelf}
             required
           />
+          {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
         </div>
       </div>
 
@@ -258,7 +273,7 @@ const PatientForm = ({
             name="blood_group"
             value={patientInfo.blood_group}
             onChange={handleChange}
-            className="w-full px-3 py-1.5 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base"
+            className="w-full px-3 py-1.5 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base text-gray-900 bg-white"
           >
             <option value="">Select Blood Group</option>
             <option value="A+">A+</option>
@@ -280,13 +295,16 @@ const PatientForm = ({
             name="purpose"
             value={patientInfo.purpose}
             onChange={handleChange}
-            className="w-full px-3 py-1.5 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base"
+            className={`w-full px-3 py-1.5 md:px-4 md:py-2 border ${
+              errors.purpose ? 'border-red-500' : 'border-gray-300'
+            } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base text-gray-900 bg-white`}
             required
           >
             <option value="">Select Care Objective</option>
             <option value="new_consultation">First visit</option>
             <option value="second_opinion">Second Opinion</option>
           </select>
+          {errors.purpose && <p className="text-red-500 text-xs mt-1">{errors.purpose}</p>}
         </div>
       </div>
 
@@ -300,9 +318,12 @@ const PatientForm = ({
           value={patientInfo.problem}
           onChange={handleChange}
           rows={3}
-          className="w-full px-3 py-1.5 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base resize-none"
+          className={`w-full px-3 py-1.5 md:px-4 md:py-2 border ${
+            errors.problem ? 'border-red-500' : 'border-gray-300'
+          } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base text-gray-900 bg-white resize-none`}
           required
         />
+        {errors.problem && <p className="text-red-500 text-xs mt-1">{errors.problem}</p>}
       </div>
 
       {patientInfo.purpose === 'second_opinion' && (
@@ -323,8 +344,7 @@ const PatientForm = ({
       {patientInfo.purpose === 'second_opinion' && patientInfo.medical_history && (
         <div>
           <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
-            Upload Previous Reports
-            <span className="text-red-500"> *</span>
+            Upload Previous Reports <span className="text-red-500">*</span>
           </label>
           <input
             type="file"
