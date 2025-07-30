@@ -31,13 +31,9 @@ const ArticlesPage = () => {
         </div>
 
         {/* Right Image */}
-        <div className="w-full md:w-1/2 flex justify-center px-4 sm:px-8">
-          <img
-            src={banner}
-            alt="Healthcare"
-            className="w-full max-w-md h-auto object-cover rounded-lg"
-          />
-        </div>
+     <div className="md:w-[50%] flex justify-center">
+             <img src={banner} alt="Healthcare" className="max-w-full h-auto max-h-[50vh]" />
+           </div>
       </div>
 
       {/* Decorative Line Element */}
@@ -55,10 +51,10 @@ const ArticlesPage = () => {
         <p className="text-gray-600 mb-6">Trending tips from doctors and health experts</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex flex-col items-start border rounded-lg p-4">
-            <img src="/images/weight-loss.jpg" alt="Weight Loss" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">6 Myths and Facts About Weight Loss</h3>
+            <img src="/images/weight-loss.jpg" alt="teeth" className="w-full h-48 object-cover rounded-lg mb-2" />
+            <h3 className="text-md font-medium text-gray-800">TOP 5 FOODS THAT NATURALLY  WHITEN YOUR TEETH</h3>
             <p className="text-xs text-gray-500 mb-2">Ms. Swati Kapoor, Dietitian/Nutritionist</p>
-            <p className="text-sm text-gray-600 mb-2">Weight loss is a long journey with many misconceptions attached to it. So, let us talk about more in detail...</p>
+            <p className="text-sm text-gray-600 mb-2">If you're dreaming of a brighter smile, you'll want to learn about the food that naturally whitens your teeth....</p>
             <div className="flex flex-wrap gap-2 mb-2">
               <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs">Weight Loss</span>
               <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs">Weight Training</span>
@@ -69,10 +65,10 @@ const ArticlesPage = () => {
             </div>
           </div>
           <div className="flex flex-col items-start border rounded-lg p-4">
-            <img src="/images/immune-system.jpg" alt="Immune System" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">How to Stop Immune System Attacking Yourself</h3>
+            <img src="/images/immune-system.jpg" alt="pregnancy" className="w-full h-48 object-cover rounded-lg mb-2" />
+            <h3 className="text-md font-medium text-gray-800">BEST FERTILITY FOODS FOR WOMEN DURING PREGNANCY</h3>
             <p className="text-xs text-gray-500 mb-2">Dr. Govindaraja S.J, Dentist</p>
-            <p className="text-sm text-gray-600 mb-2">Autoimmune diseases are increasing at a dramatic rate. Most of the time it's the hidden allergens, infections most commonly now...</p>
+            <p className="text-sm text-gray-600 mb-2">The foods you choose directly impact your baby's growth, brain development and your overall health. In this guide, we'll explore...</p>
             <div className="flex flex-wrap gap-2 mb-2">
               <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs">Immunity</span>
             </div>
@@ -82,10 +78,10 @@ const ArticlesPage = () => {
             </div>
           </div>
           <div className="flex flex-col items-start border rounded-lg p-4">
-            <img src="/images/skin-type.jpg" alt="Facial Skin Type" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">Determining Your Facial Skin Type & Care Guide</h3>
+            <img src="/images/skin-type.jpg" alt="eye" className="w-full h-48 object-cover rounded-lg mb-2" />
+            <h3 className="text-md font-medium text-gray-800">BEST FOODS FOR EYE HEALTH</h3>
             <p className="text-xs text-gray-500 mb-2">Women's Health</p>
-            <p className="text-sm text-gray-600 mb-2">Figuring out your skin type is the 1st step for getting a beautiful skin. Most women misdiagnose themselves & end up using the wrong regimen & products. This actually aggravates their skin more. Here's a cheat sheet to help you find the correct category: 1. Oily- Your face looks moist/shiny, especially at midday, 2. Dry/Sensitive- You have read patches...</p>
+            <p className="text-sm text-gray-600 mb-2">Discover the foods for eye health that protect against digital eye strain, dryness, cataracts and macular degeneration. Rich in vitamin A, lutein...</p>
             <div className="flex items-center text-gray-500">
               <span className="mr-2">❤️ 160</span>
               <span>💬</span>

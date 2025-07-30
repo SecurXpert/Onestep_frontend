@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import myImage from '../assets/image.jpg';
+import myImage from '../assets/contactus-1.png';
 import { FaPaperPlane } from 'react-icons/fa';
  
 const ContactUs = () => {
