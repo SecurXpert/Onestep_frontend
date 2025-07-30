@@ -1,29 +1,38 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import banner from '../assets/banner.jpg';
- 
+import derma from '../assets/derma.png'
+
 const articles = [
   {
-    name: '6 Myths and Facts About Weight Loss',
-    image: '/images/weight-loss.jpg',
-    content: 'Weight loss is a long journey with many misconceptions attached to it. Let us talk about more in detail...',
-    author: 'Ms. Swati Kapoor, Dietitian/Nutritionist',
+    name: 'TOP 5 FOODS THAT NATURALLY WHITEN YOUR TEETH',
+    image: banner,
+    image1: derma,
+    image2: derma,
+    image3: '/images/teeth-whitening3.jpg',
+    previewContent: `Dreaming of a brighter smile? Discover the top foods that naturally whiten your teeth...`,
+    fullContent: `Dreaming of a brighter smile? Professional teeth whitening treatments are available, but nature offers powerful solutions too. Foods like strawberries, apples, celery, carrots, and dairy products such as yogurt and cheese can help remove stains and promote oral health. Strawberries contain malic acid, which acts as a natural astringent to remove surface stains. Apples and celery increase saliva production, which helps clean teeth naturally. Carrots are rich in fiber, aiding in scrubbing away plaque, while dairy products provide calcium and phosphates that strengthen enamel. Incorporate these foods into your diet for a naturally brighter smile!`,
     tags: ['Weight Loss', 'Weight Training'],
     likes: 702,
   },
   {
-    name: 'How to Stop Immune System Attacking Yourself',
-    image: '/images/immune-system.jpg',
-    content: 'Autoimmune diseases are increasing at a dramatic rate. Most of the time it\'s the hidden allergens, infections most commonly now...',
-    author: 'Dr. Govindaraja S.J, Dentist',
+    name: 'BEST FERTILITY FOODS FOR WOMEN DURING PREGNANCY',
+    image: '/images/pregnancy.jpg',
+    image2: '/images/pregnancy2.jpg',
+    image3: '/images/pregnancy3.jpg',
+    previewContent: `The foods you choose during pregnancy impact your baby's growth and your health...`,
+    fullContent: `The foods you choose directly impact your baby's growth, brain development, and your overall health. During pregnancy, nutrient-rich foods are essential for a healthy pregnancy and smooth delivery. Include folate-rich foods like leafy greens, avocados, and lentils to support neural tube development. Omega-3 fatty acids from salmon and chia seeds promote brain health. Iron-rich foods such as spinach and lean meats prevent anemia, while calcium from dairy or fortified plant-based milk supports bone development. Probiotics from yogurt can enhance gut health, benefiting both mother and baby. Ensure a balanced diet with these fertility-boosting foods for a healthy pregnancy!`,
     tags: ['Immunity'],
     likes: 8,
   },
   {
-    name: 'Determining Your Facial Skin Type & Care Guide',
-    image: '/images/skin-type.jpg',
-    content: 'Figuring out your skin type is the 1st step for getting a beautiful skin. Most women misdiagnose themselves & end up using the wrong regimen & products. This actually aggravates their skin more. Here\'s a cheat sheet to help you find the correct category: 1. Oily- Your face looks moist/shiny, especially at midday, 2. Dry/Sensitive- You have red patches...',
-    author: 'Women\'s Health',
+    name: 'BEST FOODS FOR GLOWING SKIN AND FIGHT ACNE NATURALLY',
+    image: '/images/skin-care.jpg',
+    image2: '/images/skin-care2.jpg',
+    image3: '/images/skin-care3.jpg',
+    previewContent: `True radiance comes from within. Discover the best foods for glowing skin...`,
+    fullContent: `While skincare products help externally, true radiance comes from within. The best foods for glowing skin are packed with antioxidants, vitamins, and healthy fats. Berries like blueberries and raspberries are rich in antioxidants that combat free radicals, reducing signs of aging. Avocados provide healthy fats and vitamin E for skin hydration. Nuts like almonds and walnuts offer zinc to fight acne. Leafy greens such as spinach and kale are loaded with vitamins A and C, promoting cell turnover and collagen production. Fatty fish like salmon provides omega-3s to reduce inflammation. Hydrate with water and green tea to flush out toxins and achieve a radiant complexion!`,
+    tags: [],
     likes: 160,
   },
 ];
@@ -61,6 +70,9 @@ const ArticlesPage = () => {
             src={banner}
             alt="Healthcare"
             className="w-full max-w-md h-auto object-cover rounded-lg"
+            onError={(e) => {
+              e.target.src = '/images/fallback.jpg'; // Fallback image in case of error
+            }}
           />
         </div>
       </div>
@@ -75,23 +87,30 @@ const ArticlesPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {articles.map((article, index) => (
             <div
-              key={index}
+              key={`${article.name}-${index}`}
               className="flex flex-col items-start border rounded-lg p-4 cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => handleArticleClick(article)}
             >
-              <img src={article.image} alt={article.name} className="w-full h-48 object-cover rounded-lg mb-2" />
-              <h3 className="text-md font-medium text-gray-800">{article.name}</h3>
-              <p className="text-xs text-gray-500 mb-2">{article.author}</p>
-              <p className="text-sm text-gray-600 mb-2">{article.content}</p>
-              {article.tags && (
-                <div className="flex flex-wrap gap-2 mb-2">
-                  {article.tags.map((tag, tagIndex) => (
-                    <span key={tagIndex} className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs">
+              <div className="w-full mb-2">
+                <img
+                  src={article.image}
+                  alt={article.name}
+                  className="w-full h-48 object-cover rounded-lg"
+                  onError={(e) => {
+                    e.target.src = '/images/fallback.jpg'; // Fallback image
+                  }}
+                />
+              </div>
+              <h3 className="text-md font-medium text-gray-800 mb-2">{article.name}</h3>
+              <p className="text-sm text-gray-600 mb-2">{article.previewContent}</p>
+              <div className="flex flex-wrap gap-2 mb-2">
+                {article.tags.length > 0 &&
+                  article.tags.map((tag, tagIndex) => (
+                    <span key={`${tag}-${tagIndex}`} className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs">
                       {tag}
                     </span>
                   ))}
-                </div>
-              )}
+              </div>
               <div className="flex items-center text-gray-500">
                 <span className="mr-2">❤️ {article.likes}</span>
                 <span>💬</span>
