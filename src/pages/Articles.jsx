@@ -56,13 +56,9 @@ const ArticlesPage = () => {
         </div>
 
         {/* Right Image */}
-        <div className="w-full md:w-1/2 flex justify-center px-4 sm:px-8">
-          <img
-            src={banner}
-            alt="Healthcare"
-            className="w-full max-w-md h-auto object-cover rounded-lg"
-          />
-        </div>
+     <div className="md:w-[50%] flex justify-center">
+             <img src={banner} alt="Healthcare" className="max-w-full h-auto max-h-[50vh]" />
+           </div>
       </div>
 
       {/* Decorative Line Element */}
@@ -73,29 +69,45 @@ const ArticlesPage = () => {
         <h1 className="text-2xl font-semibold text-gray-700 mb-6">Top Health Articles</h1>
         <p className="text-gray-600 mb-6">Trending tips from doctors and health experts</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {articles.map((article, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-start border rounded-lg p-4 cursor-pointer hover:shadow-lg transition-shadow"
-              onClick={() => handleArticleClick(article)}
-            >
-              <img src={article.image} alt={article.name} className="w-full h-48 object-cover rounded-lg mb-2" />
-              <h3 className="text-md font-medium text-gray-800">{article.name}</h3>
-              <p className="text-xs text-gray-500 mb-2">{article.author}</p>
-              <p className="text-sm text-gray-600 mb-2">{article.content}</p>
-              {article.tags && (
-                <div className="flex flex-wrap gap-2 mb-2">
-                  {article.tags.map((tag, tagIndex) => (
-                    <span key={tagIndex} className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-              <div className="flex items-center text-gray-500">
-                <span className="mr-2">❤️ {article.likes}</span>
-                <span>💬</span>
-              </div>
+
+          <div className="flex flex-col items-start border rounded-lg p-4">
+            <img src="/images/weight-loss.jpg" alt="teeth" className="w-full h-48 object-cover rounded-lg mb-2" />
+            <h3 className="text-md font-medium text-gray-800">TOP 5 FOODS THAT NATURALLY  WHITEN YOUR TEETH</h3>
+            <p className="text-xs text-gray-500 mb-2">Ms. Swati Kapoor, Dietitian/Nutritionist</p>
+            <p className="text-sm text-gray-600 mb-2">If you're dreaming of a brighter smile, you'll want to learn about the food that naturally whitens your teeth....</p>
+            <div className="flex flex-wrap gap-2 mb-2">
+              <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs">Weight Loss</span>
+              <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs">Weight Training</span>
+            </div>
+            <div className="flex items-center text-gray-500">
+              <span className="mr-2">❤️ 702</span>
+              <span>💬</span>
+            </div>
+          </div>
+          <div className="flex flex-col items-start border rounded-lg p-4">
+            <img src="/images/immune-system.jpg" alt="pregnancy" className="w-full h-48 object-cover rounded-lg mb-2" />
+            <h3 className="text-md font-medium text-gray-800">BEST FERTILITY FOODS FOR WOMEN DURING PREGNANCY</h3>
+            <p className="text-xs text-gray-500 mb-2">Dr. Govindaraja S.J, Dentist</p>
+            <p className="text-sm text-gray-600 mb-2">The foods you choose directly impact your baby's growth, brain development and your overall health. In this guide, we'll explore...</p>
+            <div className="flex flex-wrap gap-2 mb-2">
+              <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs">Immunity</span>
+            </div>
+            <div className="flex items-center text-gray-500">
+              <span className="mr-2">❤️ 8</span>
+              <span>💬</span>
+            </div>
+          </div>
+          <div className="flex flex-col items-start border rounded-lg p-4">
+            <img src="/images/skin-type.jpg" alt="eye" className="w-full h-48 object-cover rounded-lg mb-2" />
+            <h3 className="text-md font-medium text-gray-800">BEST FOODS FOR EYE HEALTH</h3>
+            <p className="text-xs text-gray-500 mb-2">Women's Health</p>
+            <p className="text-sm text-gray-600 mb-2">Discover the foods for eye health that protect against digital eye strain, dryness, cataracts and macular degeneration. Rich in vitamin A, lutein...</p>
+            <div className="flex items-center text-gray-500">
+              <span className="mr-2">❤️ 160</span>
+              <span>💬</span>
+
+          
+
             </div>
           ))}
         </div>

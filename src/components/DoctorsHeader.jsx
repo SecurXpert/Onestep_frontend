@@ -1,4 +1,4 @@
-import banner from '../assets/home.png';
+import banner from '../assets/finddoc-2.png';
  
 const DoctorsHeader = () => {
  
@@ -17,9 +17,9 @@ const DoctorsHeader = () => {
       </div>
  
       {/* Right Image */}
-      <div className="md:w-3/4 flex justify-center">
-        <img src={banner} alt="Doctors" className="max-w-full h-auto max-h-[30vh]" />
-      </div>
+    <div className="md:w-[50%] flex justify-center">
+          <img src={banner} alt="Healthcare" className="max-w-full h-auto max-h-[50vh]" />
+        </div>
     </div>
   );
 };
