@@ -105,9 +105,10 @@ export const specialitymenu = [
     name: 'Hairfall',
     image: hairfall,
   },
+
   {
-    name: 'Gynecologist',
-    sub: `skin,acne`,
+    name: 'Skin',
+
     image: skin,
   },
   {

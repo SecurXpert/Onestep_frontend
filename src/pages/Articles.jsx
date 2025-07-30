@@ -1,16 +1,42 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import banner from '../assets/banner.jpg';
 
-const ArticlesPage = () => {
-  // const navigate = useNavigate();
+const articles = [
+  {
+    name: '6 Myths and Facts About Weight Loss',
+    image: '/images/weight-loss.jpg',
+    content: 'Weight loss is a long journey with many misconceptions attached to it. Let us talk about more in detail...',
+    author: 'Ms. Swati Kapoor, Dietitian/Nutritionist',
+    tags: ['Weight Loss', 'Weight Training'],
+    likes: 702,
+  },
+  {
+    name: 'How to Stop Immune System Attacking Yourself',
+    image: '/images/immune-system.jpg',
+    content: 'Autoimmune diseases are increasing at a dramatic rate. Most of the time it\'s the hidden allergens, infections most commonly now...',
+    author: 'Dr. Govindaraja S.J, Dentist',
+    tags: ['Immunity'],
+    likes: 8,
+  },
+  {
+    name: 'Determining Your Facial Skin Type & Care Guide',
+    image: '/images/skin-type.jpg',
+    content: 'Figuring out your skin type is the 1st step for getting a beautiful skin. Most women misdiagnose themselves & end up using the wrong regimen & products. This actually aggravates their skin more. Here\'s a cheat sheet to help you find the correct category: 1. Oily- Your face looks moist/shiny, especially at midday, 2. Dry/Sensitive- You have red patches...',
+    author: 'Women\'s Health',
+    likes: 160,
+  },
+];
 
-  // const handleBack = () => {
-  //   navigate(-1); // Go back to the previous page
-  // };
+const ArticlesPage = () => {
+  const navigate = useNavigate();
+
+  const handleArticleClick = (article) => {
+    navigate(`/article/${encodeURIComponent(article.name)}`, { state: article });
+  };
 
   return (
-    <div className="w-full bg-white flex flex-col items-center  relative overflow-hidden">
+    <div className="w-full bg-white flex flex-col items-center relative overflow-hidden">
       {/* Banner Section - Full Width */}
       <div className="w-full bg-gradient-to-r min-h-[40vh] from-blue-100 to-teal-100 flex flex-col md:flex-row items-center justify-between rounded-none shadow-lg p-4 sm:p-8 mb-12">
         {/* Left Content */}
@@ -27,7 +53,6 @@ const ArticlesPage = () => {
           <p className="text-gray-700 font-medium text-base md:text-lg mb-6">
             Find Your Trusted Doctor In Just One Step – Only At OneStep Medi.
           </p>
-         
         </div>
 
         {/* Right Image */}
@@ -41,15 +66,10 @@ const ArticlesPage = () => {
 
       {/* Articles Section */}
       <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg relative z-10">
-        {/* <button
-          onClick={handleBack}
-          className="mb-6 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          Back
-        </button> */}
         <h1 className="text-2xl font-semibold text-gray-700 mb-6">Top Health Articles</h1>
         <p className="text-gray-600 mb-6">Trending tips from doctors and health experts</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
           <div className="flex flex-col items-start border rounded-lg p-4">
             <img src="/images/weight-loss.jpg" alt="teeth" className="w-full h-48 object-cover rounded-lg mb-2" />
             <h3 className="text-md font-medium text-gray-800">TOP 5 FOODS THAT NATURALLY  WHITEN YOUR TEETH</h3>
@@ -85,8 +105,11 @@ const ArticlesPage = () => {
             <div className="flex items-center text-gray-500">
               <span className="mr-2">❤️ 160</span>
               <span>💬</span>
+
+          
+
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
