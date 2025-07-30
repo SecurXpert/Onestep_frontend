@@ -304,58 +304,35 @@ const Appointment = () => {
     setBookingStatus(`Selected alternative doctor for forwarding.`);
   };
  const handleBook = async () => {
-  console.log('patientInfo:', patientInfo);
-  console.log('user:', user);
-  console.log('bookingForSelf:', bookingForSelf);
-  console.log('appointmentData before validation:', {
-    doctor_id: id,
-    preferred_date: selectedDate,
-    time_slot: selectedTime,
-    appointment_type: selectedMode.toLowerCase().replace(' ', '_'),
-    specialization: doctor?.specialization_name,
-    problem_description: patientInfo.problem || patientInfo.notes,
-    opinion_type: patientInfo.purpose.toLowerCase(),
-    consent_to_forward: patientInfo.consent,
-    forward_option: patientInfo.unavailabilityOption,
-    is_self: bookingForSelf,
-    medical_history: patientInfo.medical_history,
-    name: patientInfo.name || user?.name,
-    email: patientInfo.contact || user?.email,
-    phone_number: patientInfo.phone || user?.phone,
-    age: parseInt(patientInfo.age, 10) || parseInt(calculateAge(patientInfo.dob), 10),
-    gender: patientInfo.gender || user?.gender,
-    dob: patientInfo.dob || user?.dob,
-    blood_group: patientInfo.blood_group || user?.bloodGroup,
-    patient_id: user?.patient_id,
-    address: patientInfo.address || '',
-    fallback_doctor_id: patientInfo.unavailabilityOption === 'similar_doctor' ? patientInfo.optionalDoctorId : undefined,
-    fallback_time_slot: patientInfo.unavailabilityOption === 'similar_doctor' ? patientInfo.alternativeTime : undefined,
+  console.log('Starting handleBook with state:', {
+    id,
+    doctor,
+    selectedDate,
+    selectedTime,
+    selectedMode,
+    patientInfo,
+    user,
+    bookingForSelf,
   });
 
+  // Enhanced validation
+  const missingFields = [];
   if (!isLoggedIn) {
     alert('Please log in to book an appointment.');
     navigate('/login-register');
     return;
   }
-  if (!selectedDate || !selectedTime || !selectedMode) {
-    alert('Please select date, time, and appointment mode.');
-    return;
-  }
-  if (!doctor || !doctor.specialization_name || !id) {
-    alert('Doctor or specialization not found.');
-    return;
-  }
-  if (!patientInfo.contact) {
-    alert('Patient email is required. Please enter an email in the form.');
-    return;
-  }
+  if (!id) missingFields.push('Doctor ID (from URL parameters)');
+  if (!doctor || !doctor.specialization_name) missingFields.push('Doctor or Specialization');
+  if (!selectedDate) missingFields.push('Preferred Date');
+  if (!selectedTime) missingFields.push('Time Slot');
+  if (!selectedMode) missingFields.push('Appointment Mode');
+  if (!patientInfo.contact) missingFields.push('Patient Email');
   if (!user?.patient_id) {
     alert('Your profile is incomplete. Please update your profile with a valid patient ID in the Profile section.');
     navigate('/profilepage');
     return;
   }
-
-  const missingFields = [];
   if (!patientInfo.name) missingFields.push('Patient Name');
   if (!patientInfo.age || isNaN(parseInt(patientInfo.age, 10)) || parseInt(patientInfo.age, 10) <= 0)
     missingFields.push('Patient Age');
@@ -373,11 +350,11 @@ const Appointment = () => {
 
   // Only enforce medical history and report file for second opinion
   if (patientInfo.purpose === 'second_opinion') {
-    if (patientInfo.medical_history && !reportFile) {
-      missingFields.push('Previous Reports (required when medical history is included)');
-    }
     if (!patientInfo.medical_history) {
       missingFields.push('Medical History (required for second opinion)');
+    }
+    if (patientInfo.medical_history && !reportFile) {
+      missingFields.push('Previous Reports (required when medical history is included)');
     }
   }
 
@@ -389,6 +366,7 @@ const Appointment = () => {
   setLoadingAvailability(true);
   setError('');
   setValidationErrors([]);
+
   try {
     const timeTo24Hour = (time) => {
       if (!time) return '';
@@ -433,12 +411,12 @@ const Appointment = () => {
     let appointmentId;
     if (patientInfo.medical_history && reportFile) {
       const formData = new FormData();
-      formData.append('file', reportFile);
       Object.entries(appointmentData).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
           formData.append(key, value);
         }
       });
+      formData.append('file', reportFile);
 
       const response = await fetchWithAuth('http://192.168.0.112:8000/appointments/book', {
         method: 'POST',
@@ -448,6 +426,13 @@ const Appointment = () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Backend validation errors:', JSON.stringify(errorData.detail, null, 2));
+        // Improved error handling
+        if (Array.isArray(errorData.detail)) {
+          const errorMessages = errorData.detail.map((err) => {
+            return `Field ${err.loc.join('.')} is ${err.msg.toLowerCase()}`;
+          });
+          throw new Error(errorMessages.join('; '));
+        }
         throw new Error(errorData.detail || 'Failed to book appointment');
       }
 
@@ -463,6 +448,13 @@ const Appointment = () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Backend validation errors:', JSON.stringify(errorData.detail, null, 2));
+        // Improved error handling
+        if (Array.isArray(errorData.detail)) {
+          const errorMessages = errorData.detail.map((err) => {
+            return `Field ${err.loc.join('.')} is ${err.msg.toLowerCase()}`;
+          });
+          throw new Error(errorMessages.join('; '));
+        }
         throw new Error(errorData.detail || 'Failed to book appointment');
       }
 
@@ -492,7 +484,7 @@ const Appointment = () => {
     setBookingStatus(`Appointment booked with ${doctor.doctor_name || 'Unknown'}. Please wait for confirmation.`);
     setTimeout(() => navigate('/myappointment'), 3500);
   } catch (error) {
-    console.error('Booking error:', error);
+    console.error('Booking error:', error.message);
     alert(`Failed to book appointment: ${error.message}`);
     if (error.message.includes('Selected slot is already booked') && retryCount < maxRetries) {
       setRetryCount(retryCount + 1);

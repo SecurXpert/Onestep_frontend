@@ -75,7 +75,7 @@ const Navbar = () => {
               Home<hr />
             </NavLink>
             <NavLink to="/about" className="nav-link">
-              AboutUs<hr />
+              About Us<hr />
             </NavLink>
             <NavLink to="/doctors" className="nav-link">
               Find Doctors<hr />
@@ -98,7 +98,7 @@ const Navbar = () => {
               <img src={cmplogo} alt="Company Logo" className="h-10 w-auto" />
             </NavLink> */}
              <NavLink to="/contact" className="nav-link">
-              ContactUs<hr />
+              Contact Us<hr />
             </NavLink>
              <NavLink to="/contact" className="nav-link">
               Help?<hr />

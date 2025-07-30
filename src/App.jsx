@@ -42,6 +42,10 @@ import ArticlesPage from "./pages/Articles"
 import DoctorsHeader from "./components/DoctorsHeader"
 import Pharmacy from "./pages/Pharmacy"
 import Labtest from "./pages/LabTest"
+import Department from "./pages/Department"
+import DoctorProfile from "./components/DoctorProfile"
+import DoctorProfileWrapper from "./components/DoctorProfileWrapper"
+import Individualarticle from "./pages/Individualarticle"
 // import SampleCollection from "./pages/SampleCollection"
 // import DiagnosticCenterDashboard from "./pages/admin/DiagnosticCenterDashboard"
 // import PharmacyLogin from "./pages/PharmacyLogin"
@@ -96,6 +100,10 @@ const App = () => {
             <Route path="/doctors-header" element={<DoctorsHeader/>} />
             <Route path="/pharmacy" element={<Pharmacy/>} />
             <Route path="/lab" element={<Labtest/>} />
+            <Route path="/department/:specialtyName" element={<Department/>}/>
+            <Route path="/doctor/:id" element={<DoctorProfileWrapper/>} />
+            <Route path="/article/:name" element={<Individualarticle/>} />
+
          
 
 

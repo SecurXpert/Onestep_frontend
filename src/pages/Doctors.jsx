@@ -7,21 +7,28 @@ import nurse from '../assets/nurse-4.jpg';
 import physio from '../assets/physio-4.jpg';
 import genral from '../assets/genral-4.png';
 import nutrition from '../assets/nutrition-4.jpg';
- 
+
+// City options for dropdown
+const cityOptions = ['Visakhapatnam', 'Hyderabad'];
+
 const Doctors = () => {
   const { specialty } = useParams();
   const [filterdoc, setFilterDoc] = useState([]);
   const [activeFilter, setActiveFilter] = useState(specialty || "All");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchParams, setSearchParams] = useState({
+    city: '',
+    locality: '',
+    searchTerm: '',
+  });
   const { topdoctors } = useContext(AppContext);
   const navigate = useNavigate();
   const location = useLocation();
   const doctorsListRef = useRef(null);
- 
+
   const renderStars = (rating, size = 'text-xs') => {
     const stars = [];
     const rounded = Math.round(rating * 2) / 2;
- 
+
     for (let i = 1; i <= 5; i++) {
       if (i <= rounded) {
         stars.push(<span key={i} className={`text-yellow-400 ${size}`}>&#9733;</span>);
@@ -31,27 +38,27 @@ const Doctors = () => {
         stars.push(<span key={i} className={`text-gray-300 ${size}`}>&#9734;</span>);
       }
     }
- 
+
     return <div className="flex gap-0.5">{stars}</div>;
   };
- 
-  // Apply filter based on activeFilter and searchTerm
-  const applyFilter = () => {
+
+  // Apply filter based on activeFilter and searchParams.searchTerm
+  const applyFilter = (doctors) => {
     let filtered = activeFilter === "All"
-      ? topdoctors
-      : topdoctors.filter(doc => doc.specialization_name === activeFilter);
- 
-    if (searchTerm.trim() !== "") {
-      const lowerSearch = searchTerm.toLowerCase();
+      ? doctors
+      : doctors.filter(doc => doc.specialization_name === activeFilter);
+
+    if (searchParams.searchTerm.trim() !== "") {
+      const lowerSearch = searchParams.searchTerm.toLowerCase();
       filtered = filtered.filter(doc =>
         doc.name.toLowerCase().includes(lowerSearch) ||
         doc.specialization_name.toLowerCase().includes(lowerSearch)
       );
     }
- 
+
     setFilterDoc(filtered);
   };
- 
+
   useEffect(() => {
     if (specialty && doctorsListRef.current) {
       // Scroll to doctors list if a specialty is provided
@@ -63,36 +70,36 @@ const Doctors = () => {
       window.scrollTo(0, 0);
     }
   }, [location.pathname, specialty]);
- 
+
   useEffect(() => {
     setActiveFilter(specialty || "All");
   }, [specialty]);
- 
+
   useEffect(() => {
-    applyFilter();
-  }, [activeFilter, searchTerm, topdoctors]);
- 
+    applyFilter(topdoctors);
+  }, [activeFilter, searchParams.searchTerm, topdoctors]);
+
   const specialties = [
     "Specialities List",
     "Gynecologist",
-    "Dentist",  
+    "Dentist",
     "Endocrinologist",
-    "Cardiologist",  
-    "Dermatologist",  
+    "Cardiologist",
+    "Dermatologist",
     "Dietitian/Nutritionist",
     "General Physician",
     "Proctologist or General Surgeon",
-    "Psychiatrist",  
+    "Psychiatrist",
     "Pediatrician",
     "Cosmetologist",
     "Neurologist",
     "Orthopedic Doctor",
   ];
- 
+
   const handleClick = (specialtyName) => {
     navigate(`/doctors/${encodeURIComponent(specialtyName)}`);
     setActiveFilter(specialtyName);
-    setSearchTerm("");
+    setSearchParams((prev) => ({ ...prev, searchTerm: "" }));
     // Scroll to the doctors list section
     setTimeout(() => {
       if (doctorsListRef.current) {
@@ -100,16 +107,43 @@ const Doctors = () => {
       }
     }, 100);
   };
- 
-  const handleSearch = (e) => {
+
+  const handleSearch = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const city = formData.get('city');
     const locality = formData.get('locality');
     const searchTerm = formData.get('searchTerm');
+    setSearchParams({ city, locality, searchTerm });
     console.log({ city, locality, searchTerm });
+
+    // Construct location parameter based on city and locality
+    let location = locality || city;
+    if (city && locality) {
+      location = `${locality},${city}`;
+    }
+
+    // If location is provided, fetch doctors by location
+    if (location) {
+      try {
+        const response = await fetch(
+          `http://192.168.0.112:8000/doctors/by-location?location=${encodeURIComponent(location)}`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch doctors by location');
+        }
+        const data = await response.json();
+        applyFilter(data);
+      } catch (err) {
+        console.error(err);
+        setFilterDoc([]);
+      }
+    } else {
+      // If no location is provided, apply filter on topdoctors
+      applyFilter(topdoctors);
+    }
   };
- 
+
   return (
     <div className="min-h-screen bg-b3d8e4-gradient flex flex-col items-center px-4 relative overflow-hidden">
       <DoctorsHeader />
@@ -117,7 +151,7 @@ const Doctors = () => {
         <h2 className="text-2xl md:text-4xl font-extrabold text-center text-purple-600 mb-6 md:mb-8 tracking-tight animate-fade-in-up">
           Doctor Specialists
         </h2>
- 
+
         <div className="flex flex-col gap-6">
           <div className="flex flex-wrap justify-center md:hidden gap-2">
             {specialties.map((spec) => (
@@ -125,7 +159,7 @@ const Doctors = () => {
                 key={spec}
                 onClick={() => {
                   setActiveFilter(spec);
-                  setSearchTerm("");
+                  setSearchParams((prev) => ({ ...prev, searchTerm: "" }));
                   if (spec === "All") {
                     navigate("/doctors");
                     setTimeout(() => {
@@ -147,7 +181,7 @@ const Doctors = () => {
               </p>
             ))}
           </div>
- 
+
           <div className="mb-4 md:mb-6 flex flex-col md:flex-row md:items-center md:justify-center md:gap-4">
             <div className="w-full max-w-7xl mx-auto px-4 mb-8">
               <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4 items-center justify-center">
@@ -159,25 +193,41 @@ const Doctors = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </span>
-                    <input
-                      type="text"
+                    <select
                       name="city"
-                      placeholder="Enter City"
                       className="w-full pl-10 pr-4 py-2 rounded-l-lg border-0 focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
-                    />
+                      value={searchParams.city}
+                      onChange={(e) => setSearchParams((prev) => ({ ...prev, city: e.target.value }))}
+                    >
+                      <option value="" disabled>Select City</option>
+                      {cityOptions.map((city) => (
+                        <option key={city} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <input
                     type="text"
                     name="locality"
-                    placeholder="Enter Locality"
+                    placeholder="Enter Locality or Pincode"
                     className="w-1/3 px-4 py-2 border-0 border-l border-gray-300 focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
+                    value={searchParams.locality}
+                    onChange={(e) => setSearchParams((prev) => ({ ...prev, locality: e.target.value }))}
                   />
-                  <input
-                    type="text"
+                  <select
                     name="searchTerm"
-                    placeholder="Doctor Name or Hospital or Specialist"
                     className="w-1/3 px-4 py-2 border-0 border-l border-gray-300 focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
-                  />
+                    value={searchParams.searchTerm}
+                    onChange={(e) => setSearchParams((prev) => ({ ...prev, searchTerm: e.target.value }))}
+                  >
+                    <option value="" disabled>Select Specialist</option>
+                    {specialties.map((spec) => (
+                      <option key={spec} value={spec}>
+                        {spec}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <button
                   type="submit"
@@ -187,66 +237,12 @@ const Doctors = () => {
                 </button>
               </form>
             </div>
-            {/* <div className="hidden md:block relative w-48">
-              <select
-                value={activeFilter}
-                onChange={(e) => {
-                  const spec = e.target.value;
-                  setActiveFilter(spec);
-                  setSearchTerm("");
-                  if (spec === "All") {
-                    navigate("/doctors");
-                    setTimeout(() => {
-                      if (doctorsListRef.current) {
-                        doctorsListRef.current.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }, 100);
-                  } else {
-                    handleClick(spec);
-                  }
-                }}
-                className="w-full bg-white border-2 border-blue-500 rounded-lg px-3 py-3 text-gray-800 focus:outline-none focus:border-purple-600 transition-all duration-300"
-                aria-label="Filter by specialty"
-              >
-                {specialties.map((spec) => (
-                  <option key={spec} value={spec}>
-                    {spec}
-                  </option>
-                ))}
-              </select>
-            </div> */}
           </div>
- 
+
           <div className="relative w-full flex flex-col items-start">
             <div className="flex justify-between items-center w-full mb-2">
               <h1 className="text-3xl md:text-4xl font-bold text-custom-blue">13+ Specialities</h1>
               <div className="hidden md:block relative w-48">
-                <select
-                  value={activeFilter}
-                  onChange={(e) => {
-                    const spec = e.target.value;
-                    setActiveFilter(spec);
-                    setSearchTerm("");
-                    if (spec === "All") {
-                      navigate("/doctors");
-                      setTimeout(() => {
-                        if (doctorsListRef.current) {
-                          doctorsListRef.current.scrollIntoView({ behavior: 'smooth' });
-                        }
-                      }, 100);
-                    } else {
-                      handleClick(spec);
-                    }
-                  }}
-                  className="w-full bg-white border-2 border-blue-500 rounded-lg px-3 py-3 text-gray-800 focus:outline-none focus:border-purple-600 transition-all duration-300"
-                  aria-label="Filter by specialty"
-                >
-                  {specialties.map((spec) => (
-                    <option key={spec} value={spec}>
-                      {spec}
-                    </option>
-                  ))}
-                </select>
               </div>
             </div>
             <p className="text-lg md:text-m text-gray-600 mb-6 text-center max-w-2xl">
@@ -323,7 +319,7 @@ const Doctors = () => {
               </div>
             </div>
           </div>
- 
+
           <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg mt-8">
             <h2 className="text-xl font-semibold text-gray-700 mb-4"> Expert HealthCare – Right at Your Doorstep</h2>
             <p className="text-gray-600 mb-6">Book trusted specialists nearby for quick consultations and appointments.</p>
@@ -350,39 +346,10 @@ const Doctors = () => {
               </div>
             </div>
           </div>
- 
-          <div ref={doctorsListRef} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 justify-items-center">
-            {filterdoc.length > 0 ? (
-              filterdoc.map((doctor) => (
-                <div
-                  key={doctor.doctor_id}
-                  onClick={() => navigate(`/appointment/${doctor.doctor_id}`)}
-                  className="w-full max-w-[200px] md:max-w-[220px] rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform bg-white"
-                >
-                  <div className="relative w-full h-32 md:h-36 bg-gray-100 flex items-center justify-center">
-                    <img
-                      src={doctor.image}
-                      alt={doctor.doctor_name}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <div className="p-3 md:p-4 bg-custom-blue text-center relative">
-                    <h3 className="text-base md:text-lg font-semibold text-white mb-1">{doctor.doctor_name}</h3>
-                    <p className="text-white text-xs md:text-sm mb-1 md:mb-2">{doctor.specialization_name}</p>
-                    <p className="text-white text-xs md:text-sm">{doctor.experience}</p>
-                    <div className="absolute bottom-2 left-2 flex gap-0.5 drop-shadow-md">{renderStars(doctor.rating, 'text-xs')}</div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-center text-gray-600 col-span-full text-sm md:text-base">No doctors found</p>
-            )}
-          </div>
         </div>
       </div>
     </div>
   );
 };
- 
+
 export default Doctors;
- 
