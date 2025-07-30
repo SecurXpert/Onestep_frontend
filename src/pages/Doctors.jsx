@@ -299,12 +299,12 @@ const Doctors = () => {
               >
                 {speciality.map((specialty, index) => (
                   <div
-                    key={index}
-                    className="flex flex-col items-center mx-6 cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 pt-2"
+                    key={`${specialty.name}-${index}`}
+                    className="flex flex-col items-center mx-4 cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 pt-2"
                     style={{ minWidth: '150px' }}
                     onClick={() => handleClick(specialty.name)}
                   >
-                    <div className="w-24 h-24 bg-custom-blue md:w-36 md:h-36 rounded-full border-2 border-custom-blue shadow-md">
+                    <div className="w-24 h-24 bg-custom-blue md:w-36 md:h-36 rounded-full border-2 border-custom-blue overflow-hidden shadow-md">
                       <img
                         src={specialty.image}
                         alt={specialty.name}
@@ -314,6 +314,15 @@ const Doctors = () => {
                     <h3 className="text-xs md:text-sm font-semibold text-custom-blue text-center mt-2">
                       {specialty.name}
                     </h3>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleClick(specialty.name);
+                      }}
+                      className="mt-2 px-4 py-1 bg-custom-blue text-white text-xs md:text-sm rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      Consult Now
+                    </button>
                   </div>
                 ))}
               </div>
@@ -325,22 +334,22 @@ const Doctors = () => {
             <p className="text-gray-600 mb-6">Book trusted specialists nearby for quick consultations and appointments.</p>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="flex flex-col items-center">
-                <img src={physio} alt="Dentist" className="w-full h-48 object-cover rounded-lg mb-2" />
+                <img src={physio} alt="Physiotherapist" className="w-full h-48 object-cover rounded-lg mb-2" />
                 <h3 className="text-md font-medium text-gray-800">Physiotherapist</h3>
                 <p className="text-sm text-gray-600 text-center">for recovery, rehabilitation, and mobility support</p>
               </div>
               <div className="flex flex-col items-center">
-                <img src={nutrition} alt="Cosmetologist / Dermatologist" className="w-full h-48 object-cover rounded-lg mb-2" />
+                <img src={nutrition} alt="Nutritionist / Dietitian" className="w-full h-48 object-cover rounded-lg mb-2" />
                 <h3 className="text-md font-medium text-gray-800">Nutritionist / Dietitian</h3>
                 <p className="text-sm text-gray-600 text-center">for personalized diet planning and nutrition advice.</p>
               </div>
               <div className="flex flex-col items-center">
-                <img src={genral} alt="ENT Specialist" className="w-full h-48 object-cover rounded-lg mb-2" />
+                <img src={genral} alt="General Physician" className="w-full h-48 object-cover rounded-lg mb-2" />
                 <h3 className="text-md font-medium text-gray-800">General Physician</h3>
                 <p className="text-sm text-gray-600 text-center">for fever, infections, chronic conditions, and elderly care</p>
               </div>
               <div className="flex flex-col items-center">
-                <img src={nurse} alt="Ophthalmologist" className="w-full h-48 object-cover rounded-lg mb-2" />
+                <img src={nurse} alt="Nurse / Elderly Care Assistant" className="w-full h-48 object-cover rounded-lg mb-2" />
                 <h3 className="text-md font-medium text-gray-800">Nurse / Elderly Care Assistant</h3>
                 <p className="text-sm text-gray-600 text-center">for post-surgical care, injections, wound dressing.</p>
               </div>
