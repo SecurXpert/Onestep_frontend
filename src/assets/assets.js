@@ -34,7 +34,7 @@ export const speciality = [
     image: Gynecologist,
   },
   {
-    name: 'Pediatricians',
+    name: 'Pediatrician',
     image: kido,
   },
   {

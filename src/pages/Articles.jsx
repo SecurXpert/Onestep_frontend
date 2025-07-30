@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import banner from '../assets/banner.jpg';
-import derma from '../assets/derma.png'
+import derma from '../assets/derma.png';
 
 const articles = [
   {
@@ -36,14 +36,14 @@ const articles = [
     likes: 160,
   },
 ];
- 
+
 const ArticlesPage = () => {
   const navigate = useNavigate();
- 
+
   const handleArticleClick = (article) => {
-    navigate(`/article/${encodeURIComponent(article.name)}`, { state: article });
+    navigate(`/article/${encodeURIComponent(article.name)}`, { state: { name: article.name } });
   };
- 
+
   return (
     <div className="w-full bg-white flex flex-col items-center relative overflow-hidden">
       {/* Banner Section - Full Width */}
@@ -51,19 +51,19 @@ const ArticlesPage = () => {
         {/* Left Content */}
         <div className="w-full md:w-1/2 mb-6 md:mb-0 text-center px-4 sm:px-8">
           <h1 className="text-4xl md:text-5xl font-bold text-blue-600 mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
-            Welcome to OneStep Medi
+            ARTICLES
           </h1>
           <h1 className="text-3xl md:text-4xl font-bold text-blue-600 mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
-            Your all-in-one healthcare services
+            Explore Health Tips, Doctor Advice & Wellness Guides
           </h1>
           <p className="text-gray-700 font-medium text-base md:text-lg mb-4">
-            We bring medical care to your fingertips, including online and in-clinic doctor appointments, diagnostics, and more!
+            Stay updated with the latest health trends, expert wellness tips,
           </p>
           <p className="text-gray-700 font-medium text-base md:text-lg mb-6">
-            Find Your Trusted Doctor In Just One Step – Only At OneStep Medi.
+            and nutrition advice—all simplified to help you and your family live healthier every day.
           </p>
         </div>
- 
+
         {/* Right Image */}
         <div className="w-full md:w-1/2 flex justify-center px-4 sm:px-8">
           <img
@@ -76,10 +76,10 @@ const ArticlesPage = () => {
           />
         </div>
       </div>
- 
+
       {/* Decorative Line Element */}
       <div className="absolute top-0 left-1/2 w-1/2 h-1 bg-gradient-to-r from-blue-500 to-purple-600 transform -translate-x-1/2"></div>
- 
+
       {/* Articles Section */}
       <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg relative z-10">
         <h1 className="text-2xl font-semibold text-gray-700 mb-6">Top Health Articles</h1>
@@ -122,5 +122,5 @@ const ArticlesPage = () => {
     </div>
   );
 };
- 
+
 export default ArticlesPage;
