@@ -46,10 +46,6 @@ import Department from "./pages/Department"
 import DoctorProfile from "./components/DoctorProfile"
 import DoctorProfileWrapper from "./components/DoctorProfileWrapper"
 import Individualarticle from "./pages/Individualarticle"
-// import SampleCollection from "./pages/SampleCollection"
-// import DiagnosticCenterDashboard from "./pages/admin/DiagnosticCenterDashboard"
-// import PharmacyLogin from "./pages/PharmacyLogin"
-// import CheckoutPage from "./pages/CheckoutPage"
 
 const App = () => {
   return (
@@ -103,7 +99,7 @@ const App = () => {
             <Route path="/department/:specialtyName" element={<Department/>}/>
             <Route path="/doctor/:id" element={<DoctorProfileWrapper/>} />
             <Route path="/article/:name" element={<Individualarticle/>} />
-
+  
          
 
 
