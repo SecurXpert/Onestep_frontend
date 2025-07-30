@@ -27,8 +27,8 @@ const SpecialityMenu = () => {
     "Endocrinologist",
     "Cardiologist",
     "Dermatologist",
-    "Dietitian/Nutritionist",
-    "General Physician",
+    "Nutritionist",
+    "GeneralPhysician",
     "Proctologist or General Surgeon",
     "Psychiatrist",
     "Pediatrician",
@@ -41,14 +41,14 @@ const SpecialityMenu = () => {
     const specialtyMap = {
       'Irregular heartbeats': 'Cardiologist',
       'Thyroid': 'Endocrinologist',
-      'Nutritional deficiencies': 'Dietitian/Nutritionist',
+      'Nutritional deficiencies': 'Nutritionist',
       'Cavity': 'Dietitian/Nutritionist',
       'Joint or knee pain': 'Orthopedic',
       'Hairfall': 'Cosmetologist',
       'Skin': 'Cosmetologist',
       'Piles': 'Proctologist',
       'Fertility Specialist': 'Gynecologist',
-      'Fever & Cold': 'General Physician',
+      'Fever & Cold': 'GeneralPhysician',
       'PCOS & hormonal imbalance': 'Gynecologist',
       'Stress': 'Neurologist',
     };
@@ -75,7 +75,7 @@ const SpecialityMenu = () => {
     if (location) {
       try {
         const response = await fetch(
-          `http://192.168.0.112:8000/doctors/by-location?location=${encodeURIComponent(location)}`
+          `http://192.168.0.123:8000/doctors/by-location?location=${encodeURIComponent(location)}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch doctors by location');
@@ -278,7 +278,7 @@ const SpecialityMenu = () => {
           </div>
           <div
             className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2"
-            onClick={() => handleClick('Dietitian/Nutritionist')}
+            onClick={() => handleClick('Nutritionist')}
           >
             <img src={nutritionist} alt="Nutritionist / Dietitian" className="w-full h-48 object-cover rounded-lg mb-2" />
             <h3 className="text-md font-medium text-gray-800">Nutritionist / Dietitian</h3>
@@ -286,7 +286,7 @@ const SpecialityMenu = () => {
           </div>
           <div
             className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2"
-            onClick={() => handleClick('General Physician')}
+            onClick={() => handleClick('GeneralPhysician')}
           >
             <img src={physiotherapist} alt="General Physician" className="w-full h-48 object-cover rounded-lg mb-2" />
             <h3 className="text-md font-medium text-gray-800">General Physician</h3>

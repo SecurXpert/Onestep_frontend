@@ -43,7 +43,7 @@ const ProfileContent = () => {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-        const response = await fetchWithAuth('http://192.168.0.112:8000/profile/me', {
+        const response = await fetchWithAuth('http://192.168.0.123:8000/profile/me', {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
@@ -242,7 +242,7 @@ const ProfileContent = () => {
       }
       console.log('Profile update payload:', formDataEntries);
  
-      const response = await fetchWithAuth('http://192.168.0.112:8000/profile/me', {
+      const response = await fetchWithAuth('http://192.168.0.123:8000/profile/me', {
         method: 'PUT',
         body: formData,
       });

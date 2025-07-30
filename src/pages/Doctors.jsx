@@ -86,8 +86,8 @@ const Doctors = () => {
     "Endocrinologist",
     "Cardiologist",
     "Dermatologist",
-    "Dietitian/Nutritionist",
-    "General Physician",
+    "Nutritionist",
+    "GeneralPhysician",
     "Proctologist or General Surgeon",
     "Psychiatrist",
     "Pediatrician",
@@ -97,7 +97,7 @@ const Doctors = () => {
   ];
 
   const handleClick = (specialtyName) => {
-    navigate(`/doctors/${encodeURIComponent(specialtyName)}`);
+    navigate(`/department/${encodeURIComponent(specialtyName)}`);
     setActiveFilter(specialtyName);
     setSearchParams((prev) => ({ ...prev, searchTerm: "" }));
     // Scroll to the doctors list section
@@ -127,7 +127,7 @@ const Doctors = () => {
     if (location) {
       try {
         const response = await fetch(
-          `http://192.168.0.112:8000/doctors/by-location?location=${encodeURIComponent(location)}`
+          `http://192.168.0.123:8000/doctors/by-location?location=${encodeURIComponent(location)}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch doctors by location');
@@ -330,25 +330,37 @@ const Doctors = () => {
           </div>
 
           <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg mt-8">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4"> Expert HealthCare – Right at Your Doorstep</h2>
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Expert HealthCare – Right at Your Doorstep</h2>
             <p className="text-gray-600 mb-6">Book trusted specialists nearby for quick consultations and appointments.</p>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="flex flex-col items-center">
+              <div
+                className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2"
+                onClick={() => handleClick('Physiotherapist')}
+              >
                 <img src={physio} alt="Physiotherapist" className="w-full h-48 object-cover rounded-lg mb-2" />
                 <h3 className="text-md font-medium text-gray-800">Physiotherapist</h3>
                 <p className="text-sm text-gray-600 text-center">for recovery, rehabilitation, and mobility support</p>
               </div>
-              <div className="flex flex-col items-center">
+              <div
+                className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2"
+                onClick={() => handleClick('Nutritionist')}
+              >
                 <img src={nutrition} alt="Nutritionist / Dietitian" className="w-full h-48 object-cover rounded-lg mb-2" />
                 <h3 className="text-md font-medium text-gray-800">Nutritionist / Dietitian</h3>
                 <p className="text-sm text-gray-600 text-center">for personalized diet planning and nutrition advice.</p>
               </div>
-              <div className="flex flex-col items-center">
+              <div
+                className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2"
+                onClick={() => handleClick('GeneralPhysician')}
+              >
                 <img src={genral} alt="General Physician" className="w-full h-48 object-cover rounded-lg mb-2" />
                 <h3 className="text-md font-medium text-gray-800">General Physician</h3>
                 <p className="text-sm text-gray-600 text-center">for fever, infections, chronic conditions, and elderly care</p>
               </div>
-              <div className="flex flex-col items-center">
+              <div
+                className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2"
+                onClick={() => handleClick('Nurse')}
+              >
                 <img src={nurse} alt="Nurse / Elderly Care Assistant" className="w-full h-48 object-cover rounded-lg mb-2" />
                 <h3 className="text-md font-medium text-gray-800">Nurse / Elderly Care Assistant</h3>
                 <p className="text-sm text-gray-600 text-center">for post-surgical care, injections, wound dressing.</p>

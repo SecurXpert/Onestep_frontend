@@ -107,7 +107,7 @@ const Appointment = () => {
   const fetchDoctor = async () => {
     setIsLoading(true);
     try {
-      const response = await fetchWithAuth('http://192.168.0.112:8000/doctors/all', {
+      const response = await fetchWithAuth('http://192.168.0.123:8000/doctors/all', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -141,7 +141,7 @@ const Appointment = () => {
  
     try {
       const response = await fetchWithAuth(
-        `http://192.168.0.112:8000/slots/similar-doctors?specialization=${encodeURIComponent(
+        `http://192.168.0.123:8000/slots/similar-doctors?specialization=${encodeURIComponent(
           doctor.specialization_name
         )}&exclude_doctor_id=${id}&preferred_date=${selectedDate}`,
         {
@@ -205,7 +205,7 @@ const Appointment = () => {
     setValidationErrors([]);
     try {  
       const response = await fetchWithAuth(
-        `http://192.168.0.112:8000/slots/available-slots?preferred_date=${date}&doctor_id=${id}`,
+        `http://192.168.0.123:8000/slots/available-slots?preferred_date=${date}&doctor_id=${id}`,
         {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
@@ -303,7 +303,7 @@ const Appointment = () => {
     });
     setBookingStatus(`Selected alternative doctor for forwarding.`);
   };
- const handleBook = async () => {
+const handleBook = async () => {
   console.log('Starting handleBook with state:', {
     id,
     doctor,
@@ -313,9 +313,10 @@ const Appointment = () => {
     patientInfo,
     user,
     bookingForSelf,
+    reportFile,
   });
 
-  // Enhanced validation
+  // Validation
   const missingFields = [];
   if (!isLoggedIn) {
     alert('Please log in to book an appointment.');
@@ -339,7 +340,8 @@ const Appointment = () => {
   if (!patientInfo.gender) missingFields.push('Gender');
   if (!patientInfo.phone) missingFields.push('Phone Number');
   if (!patientInfo.dob) missingFields.push('Date of Birth');
-  if (!patientInfo.problem) missingFields.push('Problem Description');
+  if (!patientInfo.problem || patientInfo.problem.length < 3)
+    missingFields.push('Problem Description (must be at least 3 characters)');
   if (!patientInfo.purpose) missingFields.push('Care Objective');
   if (patientInfo.consent && !patientInfo.unavailabilityOption) missingFields.push('Unavailability Option');
   if (patientInfo.unavailabilityOption === 'similar_doctor' && !patientInfo.optionalDoctorId)
@@ -347,8 +349,6 @@ const Appointment = () => {
   if (patientInfo.unavailabilityOption === 'similar_doctor' && !patientInfo.alternativeTime)
     missingFields.push('Alternative Time Slot');
   if (selectedMode === 'Home Visit' && !patientInfo.address) missingFields.push('Address');
-
-  // Only enforce medical history and report file for second opinion
   if (patientInfo.purpose === 'second_opinion') {
     if (!patientInfo.medical_history) {
       missingFields.push('Medical History (required for second opinion)');
@@ -377,13 +377,22 @@ const Appointment = () => {
       return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`;
     };
 
+    // Convert DOB from DD/MM/YYYY to YYYY-MM-DD
+    const formatDOB = (dob) => {
+      if (!dob || !/^\d{2}\/\d{2}\/\d{4}$/.test(dob)) return dob;
+      const [day, month, year] = dob.split('/');
+      return `${year}-${month}-${day}`;
+    };
+
     const appointmentData = {
       doctor_id: id,
       preferred_date: selectedDate,
       time_slot: timeTo24Hour(selectedTime),
       appointment_type: selectedMode.toLowerCase().replace(' ', '_'),
       specialization: doctor.specialization_name,
-      problem_description: patientInfo.problem || patientInfo.notes || 'Not specified',
+      problem_description: patientInfo.problem && patientInfo.problem.length >= 3
+        ? patientInfo.problem
+        : patientInfo.notes || 'Not specified',
       opinion_type: patientInfo.purpose.toLowerCase() || 'new_consultation',
       consent_to_forward: patientInfo.consent || false,
       forward_option: patientInfo.unavailabilityOption || '',
@@ -394,7 +403,7 @@ const Appointment = () => {
       phone_number: patientInfo.phone || user?.phone || '',
       age: parseInt(patientInfo.age, 10) || parseInt(calculateAge(patientInfo.dob), 10) || 0,
       gender: patientInfo.gender || user?.gender || 'Other',
-      dob: patientInfo.dob || user?.dob || '',
+      dob: formatDOB(patientInfo.dob) || user?.dob || '',
       blood_group: patientInfo.blood_group || user?.bloodGroup || 'Unknown',
       patient_id: user?.patient_id || '',
       address: patientInfo.address || '',
@@ -407,60 +416,40 @@ const Appointment = () => {
     };
 
     console.log('appointmentData before sending:', JSON.stringify(appointmentData, null, 2));
+    console.log('reportFile exists:', !!reportFile);
 
-    let appointmentId;
-    if (patientInfo.medical_history && reportFile) {
-      const formData = new FormData();
-      Object.entries(appointmentData).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          formData.append(key, value);
-        }
-      });
+    // Always use FormData to match Postman
+    console.log('Sending request with FormData');
+    const formData = new FormData();
+    Object.entries(appointmentData).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        formData.append(key, typeof value === 'boolean' ? value.toString() : value);
+      }
+    });
+    if (reportFile) {
       formData.append('file', reportFile);
-
-      const response = await fetchWithAuth('http://192.168.0.112:8000/appointments/book', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Backend validation errors:', JSON.stringify(errorData.detail, null, 2));
-        // Improved error handling
-        if (Array.isArray(errorData.detail)) {
-          const errorMessages = errorData.detail.map((err) => {
-            return `Field ${err.loc.join('.')} is ${err.msg.toLowerCase()}`;
-          });
-          throw new Error(errorMessages.join('; '));
-        }
-        throw new Error(errorData.detail || 'Failed to book appointment');
-      }
-
-      const data = await response.json();
-      appointmentId = data.appointment_id;
-    } else {
-      const response = await fetchWithAuth('http://192.168.0.112:8000/appointments/book', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(appointmentData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Backend validation errors:', JSON.stringify(errorData.detail, null, 2));
-        // Improved error handling
-        if (Array.isArray(errorData.detail)) {
-          const errorMessages = errorData.detail.map((err) => {
-            return `Field ${err.loc.join('.')} is ${err.msg.toLowerCase()}`;
-          });
-          throw new Error(errorMessages.join('; '));
-        }
-        throw new Error(errorData.detail || 'Failed to book appointment');
-      }
-
-      const data = await response.json();
-      appointmentId = data.appointment_id;
     }
+    console.log('FormData entries:', [...formData.entries()]);
+
+    const response = await fetchWithAuth('http://192.168.0.123:8000/appointments/book', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Backend validation errors:', JSON.stringify(errorData.detail, null, 2));
+      if (Array.isArray(errorData.detail)) {
+        const errorMessages = errorData.detail.map((err) => {
+          return `Field ${err.loc.join('.')} is ${err.msg.toLowerCase()}`;
+        });
+        throw new Error(errorMessages.join('; '));
+      }
+      throw new Error(errorData.detail || 'Failed to book appointment');
+    }
+
+    const data = await response.json();
+    const appointmentId = data.appointment_id;
 
     const saved = JSON.parse(localStorage.getItem('myAppointments')) || [];
     const appointmentWithId = {
@@ -492,6 +481,7 @@ const Appointment = () => {
       setTimeout(() => handleBook(), 3000);
     } else {
       setBookingStatus(`Failed to book appointment: ${error.message}`);
+      setRetryCount(0);
     }
   } finally {
     setLoadingAvailability(false);

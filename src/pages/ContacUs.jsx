@@ -50,7 +50,7 @@ const ContactUs = () => {
     if (Object.keys(formErrors).length === 0) {
       setIsSubmitting(true);
       try {
-        const response = await fetch('http://192.168.0.112:8000/contact/contact_us', {
+        const response = await fetch('http://192.168.0.123:8000/contact/contact_us', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

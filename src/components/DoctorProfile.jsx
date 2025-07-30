@@ -50,9 +50,9 @@ const DoctorProfile = ({ doctor }) => {
             <p className="text-gray-600 font-medium text-sm md:text-base">{doctor.specialty}</p>
           </div>
           <div className="flex space-x-2 mt-2 md:mt-0">
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm md:text-base hover:bg-blue-700">
+            {/* <button className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm md:text-base hover:bg-blue-700">
               Book Appointment
-            </button>
+            </button> */}
             {doctor.contact && (
               <a
                 href={`tel:${doctor.contact}`}

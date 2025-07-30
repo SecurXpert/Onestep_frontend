@@ -15,7 +15,7 @@ import Gynecologist from './gynecologist.png';
 import fever from './fever.png';
 import cardio1 from './cardio1.png';
 import psychiatrist from './psych.jpg';
-import Dietitian from './dietitian.png'
+import Dentist from './dietitian.png'
 import general from './general.jpg';
 import kido from './kido.png';
 import nurology from './nurology.png';
@@ -26,8 +26,8 @@ import Cosmetologist from './Cosmetologist.jpg'
 
 export const speciality = [
   {
-    name: 'Dietitian',
-    image: Dietitian,
+    name: 'Dentist',
+    image: Dentist,
   },
   {
     name: 'Gynecologist',

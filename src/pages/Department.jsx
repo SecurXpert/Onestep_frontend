@@ -1,30 +1,272 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import banner from '../assets/banner.jpg'; // Ensure this path is correct
+import banner from '../assets/banner.jpg';
 import { FaInfoCircle } from 'react-icons/fa';
 import tip from '../assets/nutrition-4.jpg';
 
-// Sample tips data
-const tips = [
-  {
-    id: 1,
-    title: 'Heart Health Tips',
-    content: 'Maintain a balanced diet and exercise regularly to keep your heart healthy.',
-    image: tip,
-  },
-  {
-    id: 2,
-    title: 'Managing Stress',
-    content: 'Practice mindfulness and meditation to reduce stress and improve mental health.',
-    image: tip,
-  },
-  {
-    id: 3,
-    title: 'Healthy Eating',
-    content: 'Incorporate more fruits and vegetables into your diet for better nutrition.',
-    image: tip,
-  },
-];
+// Specialty-specific tips
+const specialtyTips = {
+  gynecologist: [
+    {
+      id: 1,
+      title: 'Ease Period Cramps',
+      content: 'Drink ginger or chamomile tea during your period to naturally reduce cramps and inflammation. These teas help relax your body, calm your mood, and ease discomfort without needing painkillers.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Nourish Skin During Pregnancy',
+      content: 'Gently massage your belly with almond or coconut oil daily to reduce dryness, ease itching, and support skin elasticity. It keeps your skin nourished and comfortable as your body changes.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Post-Period Stretching',
+      content: 'Do 5 minutes of gentle stretching after your period ends to boost energy, ease lingering cramps, and improve pelvic blood flow for a smoother cycle recovery.',
+      image: tip,
+    },
+  ],
+  dentist: [
+    {
+      id: 1,
+      title: 'Natural Teeth Cleanser',
+      content: 'Crunchy fruits like apples gently scrub your teeth, making them a tasty, natural cleanser after snacks.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Prevent Staining',
+      content: 'Love tea or coffee? Rinse with water afterward to help prevent staining while still enjoying your favorite sips.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Freshen Breath Naturally',
+      content: 'Chew a few fennel seeds or fresh parsley after meals to naturally freshen breath and aid digestion without masking odors like gum or mints do.',
+      image: tip,
+    },
+  ],
+  endocrinologist: [
+    {
+      id: 1,
+      title: 'Support Thyroid Health',
+      content: 'Snack on 2–3 Brazil nuts weekly to support healthy thyroid function and balance hormones naturally.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Reduce Chemical Exposure',
+      content: 'Use glass or steel containers instead of plastic to reduce chemical exposure that can affect your hormones.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Prioritize Deep Sleep',
+      content: 'Focus on deep sleep, not just long sleep. Quality rest keeps your energy steady and hormones in sync.',
+      image: tip,
+    },
+  ],
+  cardiologist: [
+    {
+      id: 1,
+      title: 'Improve Circulation',
+      content: 'Stand and stretch every hour, especially if you sit for long hours, to improve circulation and lower blood pressure.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Morning Walk for Heart Health',
+      content: 'A brisk walk right after waking up can improve circulation, lower early-morning blood pressure spikes, and reduce your risk of heart attack over time.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Heart-Healthy Snacks',
+      content: 'Choose walnuts or almonds over salty snacks. They nourish your heart and help reduce bad cholesterol.',
+      image: tip,
+    },
+  ],
+  dermatologist: [
+    {
+      id: 1,
+      title: 'Lock in Hydration',
+      content: 'Apply moisturizer on damp skin to lock in hydration more effectively than applying it on dry skin.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Hydrate from Within',
+      content: 'Add water-rich foods like cucumbers and oranges to your diet. They boost skin elasticity and help maintain a natural, dewy glow.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Daily Sunscreen',
+      content: 'Wear sunscreen daily, not just in summer. Even indoor light and screens can cause pigmentation and aging.',
+      image: tip,
+    },
+  ],
+  dietitian: [
+    {
+      id: 1,
+      title: 'Balanced Meal Rule',
+      content: 'Follow the 3-2-1 rule for every meal: 3 parts vegetables, 2 parts protein, and 1 part whole grain for balanced nutrition and steady energy.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Mindful Chewing',
+      content: 'Chew each bite 20–30 times to eat less, digest better, and avoid post-meal bloating.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Smart Carb Pairing',
+      content: 'Pair carbs with protein and fiber, like brown rice with lentils and sautéed veggies, for steady energy and better weight control.',
+      image: tip,
+    },
+  ],
+  generalphysician: [
+    {
+      id: 1,
+      title: 'Annual Health Check',
+      content: 'Schedule one preventive health check every year, even when you feel healthy. Prevention is easier than cure.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Digital Health Records',
+      content: 'Keep digital health records easily accessible to help doctors diagnose faster and more accurately during visits.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Know Your Vitals',
+      content: 'Knowing your normal body temperature, pulse, and blood pressure empowers you to detect early warning signs.',
+      image: tip,
+    },
+  ],
+  proctologist: [
+    {
+      id: 1,
+      title: 'Reduce Rectal Pressure',
+      content: 'If you sit for long periods, stretch or stand for at least 5 minutes every hour to reduce rectal pressure and improve blood flow.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Increase Fiber Gradually',
+      content: 'Increase fiber gradually with foods like soaked raisins or oats to avoid gas while easing bowel movements.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Address Rectal Bleeding',
+      content: 'Never ignore rectal bleeding. It could be minor or the first sign of a larger issue best caught early.',
+      image: tip,
+    },
+  ],
+  psychiatrist: [
+    {
+      id: 1,
+      title: 'Track Your Mood',
+      content: 'Keep a daily mood log for two weeks to help you and your doctor identify hidden patterns and emotional triggers.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Limit Late-Night Screens',
+      content: 'Screen time after 10 p.m. can disrupt melatonin and worsen anxiety. Try journaling or deep breathing instead.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Therapy for Wellbeing',
+      content: 'Therapy isn’t just for crisis—it’s like regular fitness for emotional wellbeing and self-awareness.',
+      image: tip,
+    },
+  ],
+  pediatrician: [
+    {
+      id: 1,
+      title: 'Introduce Foods Safely',
+      content: 'Introduce new foods to your baby one at a time and wait 2–3 days to spot allergies or sensitivities.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Encourage Sensory Play',
+      content: 'Let children engage in messy, sensory-rich play to boost brain development and emotional intelligence.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Track Vaccinations',
+      content: 'Track your child’s vaccinations digitally to ensure on-time shots protect against serious illnesses.',
+      image: tip,
+    },
+  ],
+  cosmetologist: [
+    {
+      id: 1,
+      title: 'Sleep for Skin Health',
+      content: 'Sleep 7–8 hours a night—your skin repairs itself best during deep sleep, boosting collagen and reducing inflammation.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Clean Makeup Brushes',
+      content: 'Clean your makeup brushes every week to prevent bacterial buildup that causes clogged pores and breakouts.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Limit Exfoliation',
+      content: 'Over-exfoliation damages your skin barrier. Limit scrubs or acids to 2–3 times a week based on your skin type.',
+      image: tip,
+    },
+  ],
+  neurologist: [
+    {
+      id: 1,
+      title: 'Boost Brain Agility',
+      content: 'Add coordination games like juggling or memory puzzles to your routine to boost brain agility and focus.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Stay Hydrated',
+      content: 'Stay hydrated with electrolytes by adding a pinch of pink Himalayan salt or a splash of coconut water to maintain nerve conductivity and prevent migraine triggers.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Screen Time Breaks',
+      content: 'Take a 15-minute break after every hour of screen time to reset your nervous system and reduce brain fog.',
+      image: tip,
+    },
+  ],
+  orthopedic: [
+    {
+      id: 1,
+      title: 'Build Bone Density',
+      content: 'Climbing stairs or brisk walking daily builds bone density and reduces the risk of osteoporosis with age.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Foot-Elevation Breaks',
+      content: 'If you stand or walk for long hours, take a 5-minute foot-elevation break every hour to improve circulation and ease joint stress.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Maintain Good Posture',
+      content: 'Sit with a straight back and feet flat while working—good posture now prevents long-term spinal stress later.',
+      image: tip,
+    },
+  ],
+};
 
 // Sample FAQ data
 const faqs = [
@@ -67,7 +309,7 @@ const Department = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://192.168.0.112:8000/doctors/by-specialization/${encodeURIComponent(
+          `http://192.168.0.123:8000/doctors/by-specialization/${encodeURIComponent(
             specialtyName
           )}`
         );
@@ -104,7 +346,7 @@ const Department = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://192.168.0.112:8000/doctors/by-location?location=${encodeURIComponent(location)}`
+          `http://192.168.0.123:8000/doctors/by-location?location=${encodeURIComponent(location)}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch doctors by location');
@@ -145,19 +387,29 @@ const Department = () => {
     (doctor) => doctor.specialization_name.toLowerCase() === decodedSpecialty.toLowerCase()
   );
 
+  // Get tips based on specialty
+  const currentTips = specialtyTips[decodedSpecialty.toLowerCase()] ||  [
+    {
+      id: 1,
+      title: 'General Health Tip',
+      content: 'Maintain a balanced lifestyle with proper diet, exercise, and rest for overall wellbeing.',
+      image: tip,
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Banner */}
       <div className="w-full min-h-[40vh] mx-auto bg-b3d8e4-gradient flex flex-col md:flex-row items-center justify-between px-4">
         <div className="md:w-3/4 mb-6 md:mb-0 text-left md:text-center md:pl-32 md:pr-8">
           <h1 className="text-4xl font-bold text-custom-blue mb-4 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.3)]">
-            Need a {decodedSpecialty || 'Doctors'}? We’ve Got the Right One for You
+            Need a {decodedSpecialty || 'Doctors'}? We’ve Got You.
           </h1>
           <h4 className="text-4xl font-bold text-custom-blue mb-4 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.3)]">
-            Because your health journey deserves more than a search bar.
+            Your health needs more than a search.
           </h4>
           <p className="text-custom-blue font-bold text-lg mb-4">
-            Book appointments with verified [specialists] who understand your concerns.
+            Book appointments with verified {decodedSpecialty || 'Doctors'} who understand your concerns.
           </p>
           <p className="text-custom-blue font-bold text-lg mb-4">
             One Step Medi connects you to top-rated doctors for personalized, hassle-free healthcare—online or in person.
@@ -220,102 +472,68 @@ const Department = () => {
       </div>
 
       {/* Doctor Profile Cards */}
-      <div className="w-full max-w-7xl mx-auto px-4 mb-12">
-        {loading ? (
-          <div className="text-center">
-            <p className="text-gray-600 text-lg">Loading doctors...</p>
-          </div>
-        ) : error ? (
-          <div className="text-center">
-            <p className="text-red-600 text-lg">Error: {error}</p>
-            <button
-              onClick={handleViewAllDoctors}
-              className="px-6 py-2 bg-custom-blue text-white rounded-lg hover:bg-blue-700 transition-colors mt-4"
-            >
-              View All Doctors
-            </button>
-          </div>
-        ) : filteredDoctors.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {filteredDoctors.map((doctor) => (
-              <div
-                key={doctor.doctor_id}
-                className="bg-white shadow-md rounded-lg border border-gray-200 p-4 flex items-center cursor-pointer hover:shadow-lg transition-shadow"
-                onClick={() => navigate(`/doctor/${doctor.doctor_id}`)} // Navigate to DoctorProfile with doctor ID
-              >
-                {/* Circular Profile Image */}
-                <div className="w-24 h-24 bg-gray-300 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                  {doctor.image ? (
-                    <img
-                      src={doctor.image}
-                      alt={doctor.doctor_name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500">
-                      No Image
-                    </div>
-                  )}
-                </div>
-
-                {/* Doctor Details and Button */}
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <h2 className="text-lg font-bold text-gray-800">{doctor.doctor_name}</h2>
-                    <span className="text-blue-500 text-sm font-semibold">✔</span>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-1">
-                    Specialization: <span className="font-medium">{doctor.specialization_name}</span>
-                  </p>
-                  <p className="text-sm text-gray-600 mb-1">
-                    Qualification: <span className="font-medium">{doctor.degree || 'MD'}</span>
-                  </p>
-                  <p className="text-sm text-gray-600 mb-1">
-                    Experience: <span className="font-medium">{doctor.experience_years} years</span>
-                  </p>
-                  <p className="text-sm text-green-600 mb-1 flex items-center">
-                    <span className="mr-1">✔</span> Available
-                  </p>
-                  <p className="text-sm text-gray-600 mb-1 flex items-center">
-                    <span className="mr-1">📍</span> {doctor.clinic_location || 'Not specified'}
-                  </p>
-                  {/* Consult Now Button */}
-                  <button
-                    className="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent card click from triggering
-                      navigate(`/doctor/${doctor.doctor_id}`); // Navigate to DoctorProfile
-                    }}
-                  >
-                    Consult Now
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  {filteredDoctors.map((doctor) => (
+    <div
+      key={doctor.doctor_id}
+      className="bg-white shadow-md rounded-lg border border-gray-200 p-4 flex items-center cursor-pointer hover:shadow-lg transition-shadow"
+      onClick={() => navigate(`/doctor/${doctor.doctor_id}`)}
+    >
+      <div className="w-24 h-24 bg-gray-300 rounded-full overflow-hidden mr-4 flex-shrink-0">
+        {doctor.image ? (
+          <img
+            src={doctor.image}
+            alt={doctor.doctor_name}
+            className="w-full h-full object-cover"
+          />
         ) : (
-          <div className="text-center">
-            <p className="text-gray-600 text-lg mb-4">
-              No doctors found for {decodedSpecialty}.
-            </p>
-            <button
-              onClick={handleViewAllDoctors}
-              className="px-6 py-2 bg-custom-blue text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              View All Doctors
-            </button>
+          <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500">
+            No Image
           </div>
         )}
       </div>
+      <div className="flex-1">
+        <div className="flex items-center justify-between mb-2">
+          <h2 className="text-lg font-bold text-gray-800">{doctor.doctor_name}</h2>
+          <span className="text-blue-500 text-sm font-semibold">✔</span>
+        </div>
+        <p className="text-sm text-gray-600 mb-1">
+          Specialization: <span className="font-medium">{doctor.specialization_name}</span>
+        </p>
+        <p className="text-sm text-gray-600 mb-1">
+          Qualification: <span className="font-medium">{doctor.degree || 'MD'}</span>
+        </p>
+        <p className="text-sm text-gray-600 mb-1">
+          Experience: <span className="font-medium">{doctor.experience_years} years</span>
+        </p>
+        <p className="text-sm text-green-600 mb-1 flex items-center">
+          <span className="mr-1">✔</span> Available
+        </p>
+        <p className="text-sm text-gray-600 mb-1 flex items-center">
+          <span className="mr-1">📍</span> {doctor.clinic_location || 'Not specified'}
+        </p>
+        <button
+          className="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevents the card's onClick from firing
+            navigate(`/appointment/${doctor.doctor_id}`); // Navigate to appointment page
+          }}
+        >
+          Consult Now
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
 
       {/* Video Container */}
       <div className="w-full max-w-7xl mx-auto px-4 mb-12">
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">Educational Video</h2>
         <div className="w-full bg-gray-200 rounded-lg overflow-hidden">
-          <div className="relative" style={{ paddingBottom: '40%' /* Adjusted for smaller height while keeping 16:9 */ }}>
+          <div className="relative" style={{ paddingBottom: '40%' }}>
             <iframe
               className="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ" // Placeholder video
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
               title="Health Education Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -329,7 +547,7 @@ const Department = () => {
       <div className="w-full max-w-7xl mx-auto px-4 mb-12">
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">Health Tips</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {tips.map((tip) => (
+          {currentTips.map((tip) => (
             <div key={tip.id} className="bg-white shadow-md rounded-lg overflow-hidden">
               <img
                 src={tip.image}

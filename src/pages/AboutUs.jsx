@@ -34,7 +34,7 @@ const AboutUs = () => {
 
         {/* Right Image */}
         <div className="md:w-[50%] flex justify-center pr-0">
-          <img src={about} alt="Healthcare" className="max-w-full h-auto max-h-[60vh]" />
+          <img src={about} alt="Healthcare" className="max-w-full h-auto max-h-[50vh]" />
         </div>
 </div>
 
