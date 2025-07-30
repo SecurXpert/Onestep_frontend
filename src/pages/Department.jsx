@@ -3,6 +3,25 @@ import { useParams, useNavigate } from 'react-router-dom';
 import banner from '../assets/banner.jpg';
 import { FaInfoCircle } from 'react-icons/fa';
 import tip from '../assets/nutrition-4.jpg';
+import tip1 from '../assets/teethtip1.png';
+import tip2 from '../assets/teethtip2.png';
+import tip3 from '../assets/teethtip3.png';
+import skintip1 from '../assets/skintip1.png';
+import skintip2 from '../assets/skintip2.png';
+import skintip3 from '../assets/skintip3.png';
+import pilestips1 from '../assets/pilestips1.png';
+import pilestips2 from '../assets/pilestips2.png';
+import pilestips3 from '../assets/pilestips3.png';
+import gynictip1 from '../assets/gynictip1.png';
+import gynictip2 from '../assets/gynictip2.png';
+import gynictip3 from '../assets/gynictip3.png';
+import genraltrail1 from '../assets/genraltrail1.png';
+import genraltrail2 from '../assets/genraltrail2.png';
+import genraltrail3 from '../assets/genraltrail3.png';
+import jointtip1 from '../assets/jointtip1.png';
+import jointtip2 from '../assets/jointtip2.png';
+import jointtip3 from '../assets/jointtip3.png';
+
 
 // Specialty-specific tips
 const specialtyTips = {
@@ -11,19 +30,19 @@ const specialtyTips = {
       id: 1,
       title: 'Ease Period Cramps',
       content: 'Drink ginger or chamomile tea during your period to naturally reduce cramps and inflammation. These teas help relax your body, calm your mood, and ease discomfort without needing painkillers.',
-      image: tip,
+      image: gynictip1,
     },
     {
       id: 2,
       title: 'Nourish Skin During Pregnancy',
       content: 'Gently massage your belly with almond or coconut oil daily to reduce dryness, ease itching, and support skin elasticity. It keeps your skin nourished and comfortable as your body changes.',
-      image: tip,
+      image: gynictip2,
     },
     {
       id: 3,
       title: 'Post-Period Stretching',
       content: 'Do 5 minutes of gentle stretching after your period ends to boost energy, ease lingering cramps, and improve pelvic blood flow for a smoother cycle recovery.',
-      image: tip,
+      image: gynictip3,
     },
   ],
   dentist: [
@@ -31,19 +50,19 @@ const specialtyTips = {
       id: 1,
       title: 'Natural Teeth Cleanser',
       content: 'Crunchy fruits like apples gently scrub your teeth, making them a tasty, natural cleanser after snacks.',
-      image: tip,
+      image: tip2,
     },
     {
       id: 2,
       title: 'Prevent Staining',
       content: 'Love tea or coffee? Rinse with water afterward to help prevent staining while still enjoying your favorite sips.',
-      image: tip,
+      image: tip3,
     },
     {
       id: 3,
       title: 'Freshen Breath Naturally',
       content: 'Chew a few fennel seeds or fresh parsley after meals to naturally freshen breath and aid digestion without masking odors like gum or mints do.',
-      image: tip,
+      image: tip1,
     },
   ],
   endocrinologist: [
@@ -131,19 +150,19 @@ const specialtyTips = {
       id: 1,
       title: 'Annual Health Check',
       content: 'Schedule one preventive health check every year, even when you feel healthy. Prevention is easier than cure.',
-      image: tip,
+      image: genraltrail1,
     },
     {
       id: 2,
       title: 'Digital Health Records',
       content: 'Keep digital health records easily accessible to help doctors diagnose faster and more accurately during visits.',
-      image: tip,
+      image: genraltrail2,
     },
     {
       id: 3,
       title: 'Know Your Vitals',
       content: 'Knowing your normal body temperature, pulse, and blood pressure empowers you to detect early warning signs.',
-      image: tip,
+      image: genraltrail3,
     },
   ],
   proctologist: [
@@ -151,19 +170,19 @@ const specialtyTips = {
       id: 1,
       title: 'Reduce Rectal Pressure',
       content: 'If you sit for long periods, stretch or stand for at least 5 minutes every hour to reduce rectal pressure and improve blood flow.',
-      image: tip,
+      image: pilestips1,
     },
     {
       id: 2,
       title: 'Increase Fiber Gradually',
       content: 'Increase fiber gradually with foods like soaked raisins or oats to avoid gas while easing bowel movements.',
-      image: tip,
+      image: pilestips2,
     },
     {
       id: 3,
       title: 'Address Rectal Bleeding',
       content: 'Never ignore rectal bleeding. It could be minor or the first sign of a larger issue best caught early.',
-      image: tip,
+      image: pilestips3,
     },
   ],
   psychiatrist: [
@@ -211,19 +230,19 @@ const specialtyTips = {
       id: 1,
       title: 'Sleep for Skin Health',
       content: 'Sleep 7–8 hours a night—your skin repairs itself best during deep sleep, boosting collagen and reducing inflammation.',
-      image: tip,
+      image: skintip2,
     },
     {
       id: 2,
       title: 'Clean Makeup Brushes',
       content: 'Clean your makeup brushes every week to prevent bacterial buildup that causes clogged pores and breakouts.',
-      image: tip,
+      image: skintip1,
     },
     {
       id: 3,
       title: 'Limit Exfoliation',
       content: 'Over-exfoliation damages your skin barrier. Limit scrubs or acids to 2–3 times a week based on your skin type.',
-      image: tip,
+      image: skintip3,
     },
   ],
   neurologist: [
@@ -251,19 +270,19 @@ const specialtyTips = {
       id: 1,
       title: 'Build Bone Density',
       content: 'Climbing stairs or brisk walking daily builds bone density and reduces the risk of osteoporosis with age.',
-      image: tip,
+      image: jointtip1,
     },
     {
       id: 2,
       title: 'Foot-Elevation Breaks',
       content: 'If you stand or walk for long hours, take a 5-minute foot-elevation break every hour to improve circulation and ease joint stress.',
-      image: tip,
+      image: jointtip2,
     },
     {
       id: 3,
       title: 'Maintain Good Posture',
       content: 'Sit with a straight back and feet flat while working—good posture now prevents long-term spinal stress later.',
-      image: tip,
+      image: jointtip3,
     },
   ],
 };

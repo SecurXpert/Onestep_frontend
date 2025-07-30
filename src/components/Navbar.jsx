@@ -4,14 +4,14 @@ import { FaUserCircle, FaBars, FaTimes } from 'react-icons/fa';
 import myImage from '../assets/logo.png';
 import cmplogo from '../assets/cmplogo.png';
 import { AuthContext } from '../context/AuthContext';
- 
+
 const Navbar = () => {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
- 
+
   // Fetch profile image from sessionStorage on mount
   useEffect(() => {
     const storedImage = sessionStorage.getItem('profileImage');
@@ -26,38 +26,37 @@ const Navbar = () => {
       };
     }
   }, []);
- 
+
   const handleRegisterClick = () => navigate('/login-register');
- 
+
   // Toggle profile menu
   const toggleProfileMenu = () => {
     setIsProfileMenuOpen((prev) => !prev);
   };
- 
+
   // Toggle mobile menu
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
-    // Close profile menu if mobile menu is opened
     if (isProfileMenuOpen) setIsProfileMenuOpen(false);
   };
- 
+
   // Handle logout
   const handleLogout = () => {
     logout();
     navigate('/login-register');
     setIsProfileMenuOpen(false);
-    setProfileImage(null); // Clear profile image on logout
-    sessionStorage.removeItem('profileImage'); // Clear from sessionStorage
+    setProfileImage(null);
+    sessionStorage.removeItem('profileImage');
   };
- 
+
   // Handle image load error
   const handleImageError = (e) => {
     console.error('Failed to load profile image in Navbar');
     setProfileImage(null);
     sessionStorage.removeItem('profileImage');
-    e.target.src = 'https://placehold.co/80x80?text=Profile';
+    e.target.src = '/assets/fallback-profile.png'; // Local fallback image
   };
- 
+
   return (
     <nav className="bg-white shadow fixed top-0 left-0 right-0 z-40">
       <div className="w-full px-8 md:px-12">
@@ -68,7 +67,7 @@ const Navbar = () => {
               <img src={myImage} alt="Logo" className="h-16 w-auto" />
             </NavLink>
           </div>
- 
+
           {/* Center Nav Links (Desktop) */}
           <div className="hidden md:flex space-x-6 items-center">
             <NavLink to="/" className="nav-link">
@@ -80,29 +79,13 @@ const Navbar = () => {
             <NavLink to="/doctors" className="nav-link">
               Find Doctors<hr />
             </NavLink>
-            {/* <NavLink to="/pharmacy" className="nav-link">
-              Pharmacy<hr />
-            </NavLink>
-            <NavLink to="/pharmacy" className="nav-link">
-              Lab Test<hr />
-            </NavLink> */}
             <NavLink to="/article" className="nav-link">
               Articles<hr />
             </NavLink>
-           
           </div>
- 
-          {/* Right: Auth Buttons, Menu Icon & Company Logo */}
+
+          {/* Right: Auth Buttons & Menu Icon */}
           <div className="flex items-center space-x-4 relative">
-            {/* <NavLink to="/" className="hidden md:block">
-              <img src={cmplogo} alt="Company Logo" className="h-10 w-auto" />
-            </NavLink> */}
-             <NavLink to="/contact" className="nav-link">
-              Contact Us<hr />
-            </NavLink>
-             <NavLink to="/contact" className="nav-link">
-              Help?<hr />
-            </NavLink>
             {!isLoggedIn ? (
               <button
                 onClick={handleRegisterClick}
@@ -126,7 +109,6 @@ const Navbar = () => {
                     onClick={toggleProfileMenu}
                   />
                 )}
-                {/* Profile Dropdown Menu */}
                 {isProfileMenuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-50">
                     <div className="flex flex-col p-4 space-y-2">
@@ -148,7 +130,6 @@ const Navbar = () => {
                 )}
               </div>
             )}
-            {/* Mobile Menu Icon */}
             <div className="md:hidden">
               <FaBars
                 className="text-3xl text-purple-700 cursor-pointer"
@@ -158,7 +139,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
- 
+
       {/* Mobile Menu */}
       <div
         className={`fixed top-0 right-0 h-auto w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
@@ -198,11 +179,25 @@ const Navbar = () => {
               Doctors
             </NavLink>
             <NavLink
+              to="/article"
+              className="text-lg text-gray-700 hover:text-purple-700"
+              onClick={toggleMenu}
+            >
+              Articles
+            </NavLink>
+            <NavLink
               to="/contact"
               className="text-lg text-gray-700 hover:text-purple-700"
               onClick={toggleMenu}
             >
-              ContactUs
+              Contact Us
+            </NavLink>
+            <NavLink
+              to="/contact"
+              className="text-lg text-gray-700 hover:text-purple-700"
+              onClick={toggleMenu}
+            >
+              Help?
             </NavLink>
             {isLoggedIn && (
               <>
@@ -242,7 +237,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
- 
+
       {/* Overlay for Mobile Menu */}
       {isMenuOpen && (
         <div
@@ -250,7 +245,7 @@ const Navbar = () => {
           onClick={toggleMenu}
         ></div>
       )}
- 
+
       {/* Overlay for Profile Menu */}
       {isProfileMenuOpen && (
         <div
@@ -261,5 +256,5 @@ const Navbar = () => {
     </nav>
   );
 };
- 
+
 export default Navbar;
