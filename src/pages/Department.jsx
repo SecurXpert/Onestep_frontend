@@ -27,6 +27,9 @@ import thyroidtip3 from '../assets/thyroidtip3.png';
 import nutritiontip1 from '../assets/nutritiontip1.png';
 import nutritiontip2 from '../assets/nutritiontip2.png';
 import nutritiontip3 from '../assets/nutritiontip3.png';
+import physiotip1 from '../assets/physiotip1.png';
+import physiotip2 from '../assets/physiotip2.png';
+import physiotip3 from '../assets/physiotip3.png';
 
 
 // Specialty-specific tips
@@ -36,19 +39,19 @@ const specialtyTips = {
       id: 1,
       title: 'Relieve Neck Tension',
       content: 'Gently tilt your head side to side ear to shoulder holding each stretch for 15 seconds to relieve neck tension.',
-      image: tip,
+      image: physiotip1,
     },
     {
       id: 2,
       title: 'Massage with a Ball',
       content: 'Squeeze a small massage ball (or tennis ball) under your foot or along your shoulder blade to work out knots.',
-      image: tip,
+      image: physiotip2,
     },
     {
       id: 3,
       title: 'Stretch with Bands',
       content: 'Stretch with resistance bands looped around your feet or hands for gentle pulls that build strength without strain.',
-      image: tip,
+      image: physiotip3,
     },
   ],
   gynecologist: [
