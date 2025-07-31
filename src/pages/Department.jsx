@@ -30,7 +30,26 @@ import nutritiontip3 from '../assets/nutritiontip3.png';
 import physiotip1 from '../assets/physiotip1.png';
 import physiotip2 from '../assets/physiotip2.png';
 import physiotip3 from '../assets/physiotip3.png';
-import doctor1 from '../assets/doctor1.png'
+
+import nurse1 from '../assets/nurse1.png';
+import nurse2 from '../assets/nurse2.png';
+import nurse3 from '../assets/nurse3.png';
+import cardiotip1 from '../assets/cardiotip1.png';
+import cardiotip2 from '../assets/cardiotip2.png';
+import cardiotip3 from '../assets/cardiotip3.png';
+import pediatip1 from '../assets/pediatip1.png';
+import pediatip2 from '../assets/pediatip2.png';
+import pediatip3 from '../assets/pediatip3.png';
+import neurotip1 from '../assets/neurotip1.png';
+import neurotip2 from '../assets/neurotip2.png';
+import neurotip3 from '../assets/neurotip3.png';
+import derma1 from '../assets/derma1.png';
+import derma2 from '../assets/derma2.png';
+import derma3 from '../assets/derma3.png';
+import psychairtisttip1 from '../assets/psychairtisttip1.png';
+import psychairtisttip2 from '../assets/psychairtisttip2.png';
+import psychairtisttip3 from '../assets/psychairtisttip3.png';
+
 
 // Specialty-specific tips
 const specialtyTips = {
@@ -39,19 +58,19 @@ const specialtyTips = {
       id: 1,
       title: 'First-Aid Essentials',
       content: 'Keep a home first-aid kit stocked with bandages, antiseptic wipes, gauze, and a thermometer for quick care of cuts, scrapes, or fevers.',
-      image: tip,
+      image: nurse1,
     },
     {
       id: 2,
       title: 'Smart Medication Management',
       content: 'Organize medications in a weekly pill box and set phone alarms to avoid missed or double doses.',
-      image: tip,
+      image: nurse2,
     },
     {
       id: 3,
       title: 'Monitor Vitals When Sick',
       content: 'Monitor and log your temperature, blood pressure, and resting pulse daily when unwell to track recovery and share accurate data with your healthcare team.',
-      image: tip,
+      image: nurse3,
     },
   ],
   homeopathy: [
@@ -159,19 +178,19 @@ const specialtyTips = {
       id: 1,
       title: 'Improve Circulation',
       content: 'Stand and stretch every hour, especially if you sit for long hours, to improve circulation and lower blood pressure.',
-      image: tip,
+      image: cardiotip1,
     },
     {
       id: 2,
       title: 'Morning Walk for Heart Health',
       content: 'A brisk walk right after waking up can improve circulation, lower early-morning blood pressure spikes, and reduce your risk of heart attack over time.',
-      image: tip,
+      image: cardiotip2,
     },
     {
       id: 3,
       title: 'Heart-Healthy Snacks',
       content: 'Choose walnuts or almonds over salty snacks. They nourish your heart and help reduce bad cholesterol.',
-      image: tip,
+      image: cardiotip3,
     },
   ],
   dermatologist: [
@@ -179,19 +198,19 @@ const specialtyTips = {
       id: 1,
       title: 'Lock in Hydration',
       content: 'Apply moisturizer on damp skin to lock in hydration more effectively than applying it on dry skin.',
-      image: tip,
+      image: derma1,
     },
     {
       id: 2,
       title: 'Hydrate from Within',
       content: 'Add water-rich foods like cucumbers and oranges to your diet. They boost skin elasticity and help maintain a natural, dewy glow.',
-      image: tip,
+      image: derma2,
     },
     {
       id: 3,
       title: 'Daily Sunscreen',
       content: 'Wear sunscreen daily, not just in summer. Even indoor light and screens can cause pigmentation and aging.',
-      image: tip,
+      image: derma3,
     },
   ],
   nutritionist: [
@@ -259,19 +278,19 @@ const specialtyTips = {
       id: 1,
       title: 'Track Your Mood',
       content: 'Keep a daily mood log for two weeks to help you and your doctor identify hidden patterns and emotional triggers.',
-      image: tip,
+      image: psychairtisttip1,
     },
     {
       id: 2,
       title: 'Limit Late-Night Screens',
       content: 'Screen time after 10 p.m. can disrupt melatonin and worsen anxiety. Try journaling or deep breathing instead.',
-      image: tip,
+      image: psychairtisttip2,
     },
     {
       id: 3,
       title: 'Therapy for Wellbeing',
       content: 'Therapy isn’t just for crisis—it’s like regular fitness for emotional wellbeing and self-awareness.',
-      image: tip,
+      image: psychairtisttip3,
     },
   ],
   pediatrician: [
@@ -279,19 +298,19 @@ const specialtyTips = {
       id: 1,
       title: 'Introduce Foods Safely',
       content: 'Introduce new foods to your baby one at a time and wait 2–3 days to spot allergies or sensitivities.',
-      image: tip,
+      image: pediatip1,
     },
     {
       id: 2,
       title: 'Encourage Sensory Play',
       content: 'Let children engage in messy, sensory-rich play to boost brain development and emotional intelligence.',
-      image: tip,
+      image: pediatip2,
     },
     {
       id: 3,
       title: 'Track Vaccinations',
       content: 'Track your child’s vaccinations digitally to ensure on-time shots protect against serious illnesses.',
-      image: tip,
+      image: pediatip3,
     },
   ],
   cosmetologist: [
@@ -319,19 +338,19 @@ const specialtyTips = {
       id: 1,
       title: 'Boost Brain Agility',
       content: 'Add coordination games like juggling or memory puzzles to your routine to boost brain agility and focus.',
-      image: tip,
+      image: neurotip1,
     },
     {
       id: 2,
       title: 'Stay Hydrated',
       content: 'Stay hydrated with electrolytes by adding a pinch of pink Himalayan salt or a splash of coconut water to maintain nerve conductivity and prevent migraine triggers.',
-      image: tip,
+      image: neurotip2,
     },
     {
       id: 3,
       title: 'Screen Time Breaks',
       content: 'Take a 15-minute break after every hour of screen time to reset your nervous system and reduce brain fog.',
-      image: tip,
+      image: neurotip3,
     },
   ],
   orthopedic: [

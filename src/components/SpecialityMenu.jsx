@@ -44,7 +44,7 @@ const SpecialityMenu = () => {
       title: 'TOP 5 FOODS THAT NATURALLY WHITEN YOUR TEETH',
       category: 'FOOD',
       description: '“Top 5 Foods That Naturally Whiten Your Teeth”',
-      author: 'Ms. Swati Kapoor, Dentist',
+      author: '',
       image: foodeye,
     },
     {
@@ -121,7 +121,7 @@ const SpecialityMenu = () => {
   const isSearchEnabled = searchParams.area && searchParams.searchTerm;
 
   return (
-    <div className="w-full bg-b3d8e4-gradient py-10">
+    <div className="w-full bg-white py-10">
       {/* Search Bar */}
       <div className="w-full max-w-7xl mx-auto px-4 mb-8 mt-8">
   <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4 items-center justify-center">
@@ -198,51 +198,51 @@ const SpecialityMenu = () => {
       </div>
 
       {/* Marquee Container */}
-      <div className="relative overflow-hidden w-full flex justify-center">
-        <div className="w-full max-w-7xl mx-auto overflow-hidden group">
-          <div
-            className="flex animate-marquee whitespace-nowrap"
-            style={{
-              animation: 'marquee 40s linear infinite',
-              width: 'max-content',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.animationPlayState = 'paused';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.animationPlayState = 'running';
-            }}
-          >
-            {[...specialitymenu, ...specialitymenu, ...specialitymenu].map((specialty, index) => (
-              <div
-                key={`${specialty.name}-${index}`}
-                className="flex flex-col items-center mx-2 2xs:mx-2.5 xs:mx-3 2sm:mx-3 sm:mx-3 md:mx-3 md800:mx-3.5 md900:mx-4 lg:mx-4 xl:mx-4.5 2xl:mx-5 3xl:mx-6 cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 pt-1 2xs:pt-1.5 xs:pt-2 2sm:pt-2 sm:pt-2 md:pt-2 md800:pt-2.5 md900:pt-2.5 lg:pt-2.5 xl:pt-3 2xl:pt-3 3xl:pt-3.5"
-                onClick={() => handleClick(specialty.name)}
-              >
-                <div className="w-16 2xs:w-20 xs:w-24 2sm:w-24 sm:w-24 md:w-28 md800:w-32 md900:w-36 lg:w-36 xl:w-40 2xl:w-44 3xl:w-48 h-16 2xs:h-20 xs:h-24 2sm:h-24 sm:h-24 md:h-28 md800:h-32 md900:h-36 lg:h-36 xl:h-40 2xl:h-44 3xl:h-48 bg-custom-blue rounded-full border-2 border-custom-blue overflow-hidden shadow-md">
-                  <img
-                    src={specialty.image}
-                    alt={specialty.name}
-                    className="w-full h-full object-cover object-top rounded-full"
-                  />
-                </div>
-                <h3 className="text-xs 2xs:text-xs xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-base md900:text-base lg:text-base xl:text-lg 2xl:text-lg 3xl:text-xl font-semibold text-custom-blue text-center mt-1 2xs:mt-1.5 xs:mt-2 2sm:mt-2 sm:mt-2 md:mt-2 md800:mt-2.5 md900:mt-2.5 lg:mt-2.5 xl:mt-3 2xl:mt-3 3xl:mt-3.5">
-                  {specialty.name}
-                </h3>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleClick(specialty.name);
-                  }}
-                  className="mt-1 2xs:mt-1.5 xs:mt-2 2sm:mt-2 sm:mt-2 md:mt-2 md800:mt-2.5 md900:mt-2.5 lg:mt-2.5 xl:mt-3 2xl:mt-3 3xl:mt-3.5 px-3 2xs:px-3.5 xs:px-4 2sm:px-4 sm:px-4 md:px-4 md800:px-4.5 md900:px-4.5 lg:px-4.5 xl:px-5 2xl:px-5 3xl:px-5.5 py-1 2xs:py-1 xs:py-1.5 2sm:py-1.5 sm:py-1.5 md:py-1.5 md800:py-1.5 md900:py-1.5 lg:py-1.5 xl:py-2 2xl:py-2 3xl:py-2.5 bg-custom-blue text-white text-xs 2xs:text-xs xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-base md900:text-base lg:text-base xl:text-lg 2xl:text-lg 3xl:text-xl rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Consult Now
-                </button>
-              </div>
-            ))}
+<div className="relative overflow-hidden w-full flex justify-center">
+  <div className="w-full max-w-7xl mx-auto overflow-hidden group rounded-l-full rounded-r-full">
+    <div
+      className="flex animate-marquee whitespace-nowrap"
+      style={{
+        animation: 'marquee 40s linear infinite',
+        width: 'max-content',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.animationPlayState = 'paused';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.animationPlayState = 'running';
+      }}
+    >
+      {[...specialitymenu, ...specialitymenu, ...specialitymenu].map((specialty, index) => (
+        <div
+          key={`${specialty.name}-${index}`}
+          className="flex flex-col items-center mx-2 2xs:mx-2.5 xs:mx-3 2sm:mx-3 sm:mx-3 md:mx-3 md800:mx-3.5 md900:mx-4 lg:mx-4 xl:mx-4.5 2xl:mx-5 3xl:mx-6 cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 pt-1 2xs:pt-1.5 xs:pt-2 2sm:pt-2 sm:pt-2 md:pt-2 md800:pt-2.5 md900:pt-2.5 lg:pt-2.5 xl:pt-3 2xl:pt-3 3xl:pt-3.5"
+          onClick={() => handleClick(specialty.name)}
+        >
+          <div className="w-16 2xs:w-20 xs:w-24 2sm:w-24 sm:w-24 md:w-28 md800:w-30 md900:w-30 lg:w-30 xl:w-30 2xl:w-30 3xl:w-30 h-16 2xs:h-20 xs:h-24 2sm:h-24 sm:h-24 md:h-28 md800:h-30 md900:h-30 lg:h-30 xl:h-30 2xl:h-30 3xl:h-30 bg-custom-blue rounded-full border-2 border-white overflow-hidden shadow-md">
+            <img
+              src={specialty.image}
+              alt={specialty.name}
+              className="w-full h-full object-cover object-top rounded-full"
+            />
           </div>
+          <h3 className="text-xs 2xs:text-xs xs:text-xs 2sm:text-xs sm:text-xs md:text-xs md800:text-xs md900:text-xs lg:text-xs xl:text-sm 2xl:text-sm 3xl:text-base font-semibold text-custom-blue text-center mt-1 2xs:mt-1.5 xs:mt-2 2sm:mt-2 sm:mt-2 md:mt-2 md800:mt-2.5 md900:mt-2.5 lg:mt-2.5 xl:mt-3 2xl:mt-3 3xl:mt-3.5">
+            {specialty.name}
+          </h3>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClick(specialty.name);
+            }}
+            className="mt-1 2xs:mt-1.5 xs:mt-2 2sm:mt-2 sm:mt-2 md:mt-2 md800:mt-2 md900:mt-2 lg:mt-2 xl:mt-2.5 2xl:mt-2.5 3xl:mt-3 px-1 2xs:px-1.5 xs:px-2 2sm:px-2 sm:px-2 md:px-2 md800:px-2.5 md900:px-2.5 lg:px-2.5 xl:px-3 2xl:px-3 3xl:px-3.5 py-0.5 2xs:py-0.5 xs:py-0.5 2sm:py-0.5 sm:py-0.5 md:py-0.5 md800:py-0.5 md900:py-0.5 lg:py-0.5 xl:py-0.5 2xl:py-0.5 3xl:py-1 bg-custom-blue text-white text-xs 2xs:text-xs xs:text-xs 2sm:text-xs sm:text-xs md:text-xs md800:text-xs md900:text-xs lg:text-xs xl:text-xs 2xl:text-xs 3xl:text-sm rounded-lg hover:bg-white-700 transition-colors"
+          >
+            Consult Now
+          </button>
         </div>
-      </div>
+      ))}
+    </div>
+  </div>
+</div>
 
       {/* In-Clinic Consultation Section */}
       <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg mt-8">

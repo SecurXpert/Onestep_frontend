@@ -89,7 +89,7 @@ export const specialitymenu = [
     image: thyroid,
   },
   {
-    name: 'Nutritional deficiencies',
+    name: 'Nutrition',
     image: nutrition,
   },
 
@@ -98,7 +98,7 @@ export const specialitymenu = [
     image: cavity,
   },
   {
-    name: 'Joint or knee pain',
+    name: 'knee pain',
     image: joint,
   },
   {
@@ -124,7 +124,7 @@ export const specialitymenu = [
     image: fever,
   },
   {
-    name: 'PCOS & hormonal imbalance',
+    name: 'PCOS',
     image: pcod,
   },
   {
