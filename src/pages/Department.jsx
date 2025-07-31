@@ -254,9 +254,6 @@ const specialtyTips = {
   cosmetologist: [
     {
       id: 1,
-      title: 'Hair Massage',
-      content: 'Spend 5 minutes, 2–3× weekly, massaging warm coconut or argan oil into your scalp to boost circulation, nourish follicles, and minimize hair fall.',
-      image: tip,
       title: 'Sleep for Skin Health',
       content: 'Sleep 7–8 hours a night—your skin repairs itself best during deep sleep, boosting collagen and reducing inflammation.',
       image: skintip2,
@@ -264,16 +261,12 @@ const specialtyTips = {
     {
       id: 2,
       title: 'Clean Makeup Brushes',
-      content: 'Cleaning your makeup brushes every week prevents bacterial buildup that causes clogged pores and breakouts.',
-      image: tip,
       content: 'Clean your makeup brushes every week to prevent bacterial buildup that causes clogged pores and breakouts.',
       image: skintip1,
     },
     {
       id: 3,
       title: 'Limit Exfoliation',
-      content: 'Over-exfoliation damages your skin barrier and limits scrubs or acids to 2–3 times a week based on your skin type',
-      image: tip,
       content: 'Over-exfoliation damages your skin barrier. Limit scrubs or acids to 2–3 times a week based on your skin type.',
       image: skintip3,
     },
