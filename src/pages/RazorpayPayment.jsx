@@ -4,7 +4,7 @@ const RazorpayPayment = ({ appointmentId, amount, onSuccess, doctorName, patient
   const handlePayment = async () => {
     try {
       // Step 1: Create order from backend
-      const res = await fetch('http://192.168.0.123:8000/payment/create-order', {
+      const res = await fetch('http://192.168.0.120:8000/payment/create-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ const RazorpayPayment = ({ appointmentId, amount, onSuccess, doctorName, patient
         handler: async function (response) {
           try {
             // Step 2: Verify payment
-            const verifyRes = await fetch('http://192.168.0.123:8000/payment/verify', {
+            const verifyRes = await fetch('http://192.168.0.120:8000/payment/verify', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

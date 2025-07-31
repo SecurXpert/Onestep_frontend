@@ -12,7 +12,7 @@ const DoctorProfileWrapper = () => {
     const fetchDoctor = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://192.168.0.123:8000/doctors/all');
+        const response = await fetch('http://192.168.0.120:8000/doctors/all');
         if (!response.ok) {
           throw new Error('Failed to fetch doctors');
         }

@@ -11,7 +11,7 @@ const AppointmentCard = ({ userId, onCancel }) => {
     const fetchAppointments = async () => {
       try {
         const response = await fetchWithAuth(
-          "http://192.168.0.123:8000/appointments/my-appointments"
+          "http://192.168.0.120:8000/appointments/my-appointments"
         );
         
         if (!response.ok) {
@@ -42,7 +42,7 @@ const AppointmentCard = ({ userId, onCancel }) => {
   const handleDownloadReceipt = async (appointmentId) => {
     try {
       const response = await fetchWithAuth(
-        `http://192.168.0.123:8000/static/receipts/receipt_${appointmentId}.pdf`,
+        `http://192.168.0.120:8000/static/receipts/receipt_${appointmentId}.pdf`,
         {
           method: "GET",
           headers: {

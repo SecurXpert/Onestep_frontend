@@ -30,6 +30,7 @@ import nutritiontip3 from '../assets/nutritiontip3.png';
 import physiotip1 from '../assets/physiotip1.png';
 import physiotip2 from '../assets/physiotip2.png';
 import physiotip3 from '../assets/physiotip3.png';
+
 import nurse1 from '../assets/nurse1.png';
 import nurse2 from '../assets/nurse2.png';
 import nurse3 from '../assets/nurse3.png';
@@ -48,6 +49,7 @@ import derma3 from '../assets/derma3.png';
 import psychairtisttip1 from '../assets/psychairtisttip1.png';
 import psychairtisttip2 from '../assets/psychairtisttip2.png';
 import psychairtisttip3 from '../assets/psychairtisttip3.png';
+
 
 // Specialty-specific tips
 const specialtyTips = {
@@ -407,15 +409,15 @@ const faqs = [
   },
 ];
 
-// City options for dropdown
-const cityOptions = ['Visakhapatnam', 'Hyderabad'];
-
 const Department = () => {
   const { specialtyName } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialArea = queryParams.get('area') || location.state?.searchParams?.area || '';
+
   const [searchParams, setSearchParams] = useState({
-    city: location.state?.searchParams?.city || '',
+    area: initialArea,
     searchTerm: decodeURIComponent(specialtyName || ''),
   });
   const [openFaq, setOpenFaq] = useState(null);
@@ -428,9 +430,9 @@ const Department = () => {
     const fetchDoctors = async () => {
       try {
         setLoading(true);
-        let url = `http://192.168.0.123:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
-        if (searchParams.city) {
-          url = `http://192.168.0.123:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.city)}`;
+        let url = `http://192.168.0.120:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
+        if (searchParams.area) {
+          url = `http://192.168.0.120:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
@@ -449,26 +451,27 @@ const Department = () => {
     if (specialtyName) {
       fetchDoctors();
     }
-  }, [specialtyName, searchParams.city]);
+  }, [specialtyName, searchParams.area]);
 
   // Handle search form submission
   const handleSearch = async (e) => {
     e.preventDefault();
-    const { city, searchTerm } = searchParams;
+    const { area, searchTerm } = searchParams;
 
     if (searchTerm) {
       try {
         setLoading(true);
-        let url = `http://192.168.0.123:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
-        if (city) {
-          url = `http://192.168.0.123:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(city)}`;
+        let url = `http://192.168.0.120:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
+        if (area) {
+          url = `http://192.168.0.120:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error('Failed to fetch doctors');
         }
         const data = await response.json();
-        navigate(`/department/${encodeURIComponent(searchTerm)}`, {
+        const queryString = area ? `?area=${encodeURIComponent(area)}` : '';
+        navigate(`/department/${encodeURIComponent(searchTerm)}${queryString}`, {
           state: { filteredDoctors: data, searchParams },
         });
         setDoctors(data);
@@ -495,9 +498,7 @@ const Department = () => {
   };
 
   const decodedSpecialty = specialtyName ? decodeURIComponent(specialtyName) : '';
-  const filteredDoctors = doctors.filter(
-    (doctor) => doctor.specialization_name.toLowerCase() === decodedSpecialty.toLowerCase()
-  );
+  const filteredDoctors = doctors; // API already filters by specialization_name
 
   // Get tips based on specialty
   const currentTips = specialtyTips[decodedSpecialty.toLowerCase()] || [
@@ -545,19 +546,14 @@ const Department = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </span>
-              <select
-                name="city"
+              <input
+                type="text"
+                name="area"
+                placeholder="City or Locality"
                 className="w-full pl-10 pr-4 py-2 rounded-l-lg border-0 focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
-                value={searchParams.city}
+                value={searchParams.area}
                 onChange={handleInputChange}
-              >
-                <option value="" disabled>Select City</option>
-                {cityOptions.map((city) => (
-                  <option key={city} value={city}>
-                    {city}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
             <input
               type="text"
@@ -600,7 +596,7 @@ const Department = () => {
                 <div className="w-24 h-24 bg-gray-300 rounded-full overflow-hidden mr-4 flex-shrink-0">
                   {doctor.image ? (
                     <img
-                      src={doctor.image}
+                      src= {doctor1}
                       alt={doctor.doctor_name}
                       className="w-full h-full object-cover"
                     />
