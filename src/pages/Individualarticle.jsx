@@ -24,7 +24,7 @@ const IndividualArticle = () => {
     {
       id: '1',
       title: 'TOP 5 FOODS THAT NATURALLY WHITEN YOUR TEETH',
-      author: 'Ms. Swati Kapoor, Dietitian/Nutritionist',
+      author: 'Ms. Swati Kapoor, Dentist',
       summary: `If you're dreaming of a brighter smile, you'll want to learn about the food that **_naturally whiten your teeth_**. Professional teeth whitening treatments are available, but nature offers powerful alternatives right in your kitchen. These foods can help to make your teeth appear brighter and support overall oral health. Add these delicious additions to your daily routine.
 Common Causes of Tooth Discoloration
 Discoloured or stained teeth are a common issue caused by:
@@ -61,7 +61,7 @@ While brushing, flossing and dental visits are important, your food choices also
     {
       id: '2',
       title: 'BEST FERTILITY FOODS FOR WOMEN DURING PREGNANCY',
-      author: 'Dr. Govindaraja S.J, Dentist',
+      author: 'Dr. Govindaraja S.J, Gynecologist',
       summary: `Eating right during pregnancy isn't just about satisfying cravings it's about nourishing your baby from the very beginning. The foods you choose directly impact your baby's growth, brain development and your overall health. In this guide, we'll explore the **_fertility foods for women_** during pregnancy, boosting and healthy pregnancy foods every woman should include in her diet to ensure a healthy pregnancy and smooth delivery.
 
 Why Eating Healthy Matters When You're Trying to Get Pregnant

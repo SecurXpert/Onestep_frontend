@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import banner from '../assets/banner.jpg';
 import { FaInfoCircle } from 'react-icons/fa';
 import tip from '../assets/nutrition-4.jpg';
@@ -31,9 +31,48 @@ import physiotip1 from '../assets/physiotip1.png';
 import physiotip2 from '../assets/physiotip2.png';
 import physiotip3 from '../assets/physiotip3.png';
 
-
 // Specialty-specific tips
 const specialtyTips = {
+  nurse: [
+    {
+      id: 1,
+      title: 'First-Aid Essentials',
+      content: 'Keep a home first-aid kit stocked with bandages, antiseptic wipes, gauze, and a thermometer for quick care of cuts, scrapes, or fevers.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Smart Medication Management',
+      content: 'Organize medications in a weekly pill box and set phone alarms to avoid missed or double doses.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Monitor Vitals When Sick',
+      content: 'Monitor and log your temperature, blood pressure, and resting pulse daily when unwell to track recovery and share accurate data with your healthcare team.',
+      image: tip,
+    },
+  ],
+  homeopathy: [
+    {
+      id: 1,
+      title: 'Drink Water from Copper Vessel',
+      content: 'Storing water in a copper container overnight helps balance pH levels and supports digestion—an age-old wellness practice aligned with homeopathy’s natural approach.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Wake Up with Sunlight',
+      content: 'Natural morning light boosts your mood, aligns your body clock, and supports your body’s natural healing rhythm.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Walk Barefoot on Grass',
+      content: 'Walking barefoot on natural surfaces like grass or soil (earthing) helps reduce stress, improve sleep, and connect you to natural healing energies.',
+      image: tip,
+    },
+  ],
   physiotherapist: [
     {
       id: 1,
@@ -316,23 +355,37 @@ const specialtyTips = {
   ],
 };
 
-
 // Sample FAQ data
 const faqs = [
   {
     id: 1,
-    question: 'How do I book an appointment?',
-    answer: 'You can book an appointment online through our platform by selecting a doctor and choosing a convenient time slot.',
+    question: 'How can I book an appointment with the doctor?',
+    answer: 'You can book a doctors appointment on the One Step Medi platform by selecting your preferred doctor, entering your symptoms, choosing a date and time and providing details such as your name, age, and gender.',
   },
   {
     id: 2,
-    question: 'What are the consultation fees?',
-    answer: 'Consultation fees vary by doctor and specialty. Each doctor’s profile lists their fee.',
+    question: 'Can I reschedule or cancel my appointment?',
+    answer: 'Yes, you can easily reschedule or cancel your doctor appointment via the One Step Medi platform before the scheduled time.',
   },
   {
     id: 3,
-    question: 'Can I consult online?',
-    answer: 'Yes, most doctors offer online consultations. Check the doctor’s profile for availability.',
+    question: 'What if I miss my scheduled appointment?',
+    answer: 'If you miss your appointment, you can rebook a doctor consultation online without any hassle from your dashboard.',
+  },
+  {
+    id: 4,
+    question: 'Is online consultation as effective as in-clinic visits?',
+    answer: 'Yes, online consultations on One Step Medi are secure, private and effective for most common health concerns, with experienced and verified doctors providing quality care.',
+  },
+  {
+    id: 5,
+    question: 'Will I receive a prescription after the consultation?',
+    answer: 'Yes, after your online consultation, the doctor will share a digital prescription directly within the One Step Medi platform.',
+  },
+  {
+    id: 6,
+    question: 'What if I need help during the booking process?',
+    answer: 'You can reach our support team anytime through chatbot, Contact Support or email for quick assistance during the appointment booking process on One Step Medi.',
   },
 ];
 
@@ -342,34 +395,35 @@ const cityOptions = ['Visakhapatnam', 'Hyderabad'];
 const Department = () => {
   const { specialtyName } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams, setSearchParams] = useState({
-    city: '',
-    locality: '',
-    searchTerm: '',
+    city: location.state?.searchParams?.city || '',
+    searchTerm: decodeURIComponent(specialtyName || ''),
   });
   const [openFaq, setOpenFaq] = useState(null);
-  const [doctors, setDoctors] = useState([]);
+  const [doctors, setDoctors] = useState(location.state?.filteredDoctors || []);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch doctors by specialty on component mount
+  // Fetch doctors by specialty and area on component mount
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `http://192.168.0.123:8000/doctors/by-specialization/${encodeURIComponent(
-            specialtyName
-          )}`
-        );
+        let url = `http://192.168.0.123:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
+        if (searchParams.city) {
+          url = `http://192.168.0.123:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.city)}`;
+        }
+        const response = await fetch(url);
         if (!response.ok) {
-          throw new Error('Failed to fetch doctors by specialization');
+          throw new Error('Failed to fetch doctors');
         }
         const data = await response.json();
         setDoctors(data);
         setLoading(false);
       } catch (err) {
         setError(err.message);
+        setDoctors([]);
         setLoading(false);
       }
     };
@@ -377,42 +431,33 @@ const Department = () => {
     if (specialtyName) {
       fetchDoctors();
     }
-  }, [specialtyName]);
+  }, [specialtyName, searchParams.city]);
 
   // Handle search form submission
   const handleSearch = async (e) => {
     e.preventDefault();
-    console.log('Search params:', searchParams);
+    const { city, searchTerm } = searchParams;
 
-    // Construct location parameter based on city and locality
-    let location = searchParams.locality || searchParams.city;
-    if (searchParams.city && searchParams.locality) {
-      location = `${searchParams.locality},${searchParams.city}`;
-    }
-
-    // If location is provided, fetch doctors by location
-    if (location) {
+    if (searchTerm) {
       try {
         setLoading(true);
-        const response = await fetch(
-          `http://192.168.0.123:8000/doctors/by-location?location=${encodeURIComponent(location)}`
-        );
+        let url = `http://192.168.0.123:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
+        if (city) {
+          url = `http://192.168.0.123:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(city)}`;
+        }
+        const response = await fetch(url);
         if (!response.ok) {
-          throw new Error('Failed to fetch doctors by location');
+          throw new Error('Failed to fetch doctors');
         }
         const data = await response.json();
-        // Filter doctors by specialty if specialtyName is provided
-        const filteredData = specialtyName
-          ? data.filter(
-              (doctor) =>
-                doctor.specialization_name.toLowerCase() ===
-                decodeURIComponent(specialtyName).toLowerCase()
-            )
-          : data;
-        setDoctors(filteredData);
+        navigate(`/department/${encodeURIComponent(searchTerm)}`, {
+          state: { filteredDoctors: data, searchParams },
+        });
+        setDoctors(data);
         setLoading(false);
       } catch (err) {
         setError(err.message);
+        setDoctors([]);
         setLoading(false);
       }
     }
@@ -437,7 +482,7 @@ const Department = () => {
   );
 
   // Get tips based on specialty
-  const currentTips = specialtyTips[decodedSpecialty.toLowerCase()] ||  [
+  const currentTips = specialtyTips[decodedSpecialty.toLowerCase()] || [
     {
       id: 1,
       title: 'General Health Tip',
@@ -445,6 +490,8 @@ const Department = () => {
       image: tip,
     },
   ];
+
+  const isSearchDisabled = !searchParams.searchTerm;
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -496,24 +543,19 @@ const Department = () => {
             </div>
             <input
               type="text"
-              name="locality"
-              placeholder="Enter Locality or Pincode"
-              className="w-1/3 px-4 py-2 border-0 border-l border-gray-300 focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
-              value={searchParams.locality}
-              onChange={handleInputChange}
-            />
-            <input
-              type="text"
               name="searchTerm"
               placeholder="Doctor Name or Hospital or Specialist or Problem"
-              className="w-1/3 px-4 py-2 border-0 border-l border-gray-300 focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
+              className="w-2/3 px-4 py-2 border-0 border-l border-gray-300 focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
               value={searchParams.searchTerm}
               onChange={handleInputChange}
             />
           </div>
           <button
             type="submit"
-            className="w-full md:w-auto px-6 py-2 bg-custom-blue text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className={`w-full md:w-auto px-6 py-2 rounded-lg text-white transition-colors ${
+              isSearchDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-custom-blue hover:bg-blue-700'
+            }`}
+            disabled={isSearchDisabled}
           >
             Search
           </button>
@@ -521,59 +563,70 @@ const Department = () => {
       </div>
 
       {/* Doctor Profile Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-  {filteredDoctors.map((doctor) => (
-    <div
-      key={doctor.doctor_id}
-      className="bg-white shadow-md rounded-lg border border-gray-200 p-4 flex items-center cursor-pointer hover:shadow-lg transition-shadow"
-      onClick={() => navigate(`/doctor/${doctor.doctor_id}`)}
-    >
-      <div className="w-24 h-24 bg-gray-300 rounded-full overflow-hidden mr-4 flex-shrink-0">
-        {doctor.image ? (
-          <img
-            src={doctor.image}
-            alt={doctor.doctor_name}
-            className="w-full h-full object-cover"
-          />
+      <div className="w-full max-w-7xl mx-auto px-4 mb-12">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Available Doctors</h2>
+        {loading ? (
+          <p className="text-gray-600">Loading doctors...</p>
+        ) : error ? (
+          <p className="text-red-600">{error}</p>
+        ) : filteredDoctors.length === 0 ? (
+          <p className="text-gray-600">No doctors found for this specialty.</p>
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500">
-            No Image
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {filteredDoctors.map((doctor) => (
+              <div
+                key={doctor.doctor_id}
+                className="bg-white shadow-md rounded-lg border border-gray-200 p-4 flex items-center cursor-pointer hover:shadow-lg transition-shadow"
+                onClick={() => navigate(`/doctor/${doctor.doctor_id}`)}
+              >
+                <div className="w-24 h-24 bg-gray-300 rounded-full overflow-hidden mr-4 flex-shrink-0">
+                  {doctor.image ? (
+                    <img
+                      src={doctor.image}
+                      alt={doctor.doctor_name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500">
+                      No Image
+                    </div>
+                  )}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-2">
+                    <h2 className="text-lg font-bold text-gray-800">{doctor.doctor_name}</h2>
+                    <span className="text-blue-500 text-sm font-semibold">✔</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-1">
+                    Specialization: <span className="font-medium">{doctor.specialization_name}</span>
+                  </p>
+                  <p className="text-sm text-gray-600 mb-1">
+                    Qualification: <span className="font-medium">{doctor.degree || 'MD'}</span>
+                  </p>
+                  <p className="text-sm text-gray-600 mb-1">
+                    Experience: <span className="font-medium">{doctor.experience_years} years</span>
+                  </p>
+                  <p className="text-sm text-green-600 mb-1 flex items-center">
+                    <span className="mr-1">✔</span> Available
+                  </p>
+                  <p className="text-sm text-gray-600 mb-1 flex items-center">
+                    <span className="mr-1">📍</span> {doctor.clinic_location || 'Not specified'}
+                  </p>
+                  <button
+                    className="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/appointment/${doctor.doctor_id}`);
+                    }}
+                  >
+                    Consult Now
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>
-      <div className="flex-1">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-lg font-bold text-gray-800">{doctor.doctor_name}</h2>
-          <span className="text-blue-500 text-sm font-semibold">✔</span>
-        </div>
-        <p className="text-sm text-gray-600 mb-1">
-          Specialization: <span className="font-medium">{doctor.specialization_name}</span>
-        </p>
-        <p className="text-sm text-gray-600 mb-1">
-          Qualification: <span className="font-medium">{doctor.degree || 'MD'}</span>
-        </p>
-        <p className="text-sm text-gray-600 mb-1">
-          Experience: <span className="font-medium">{doctor.experience_years} years</span>
-        </p>
-        <p className="text-sm text-green-600 mb-1 flex items-center">
-          <span className="mr-1">✔</span> Available
-        </p>
-        <p className="text-sm text-gray-600 mb-1 flex items-center">
-          <span className="mr-1">📍</span> {doctor.clinic_location || 'Not specified'}
-        </p>
-        <button
-          className="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
-          onClick={(e) => {
-            e.stopPropagation(); // Prevents the card's onClick from firing
-            navigate(`/appointment/${doctor.doctor_id}`); // Navigate to appointment page
-          }}
-        >
-          Consult Now
-        </button>
-      </div>
-    </div>
-  ))}
-</div>
 
       {/* Video Container */}
       <div className="w-full max-w-7xl mx-auto px-4 mb-12">
