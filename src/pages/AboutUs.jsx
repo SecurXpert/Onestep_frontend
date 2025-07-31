@@ -15,7 +15,7 @@ const AboutUs = () => {
   return (
     <div className="w-full bg-white flex flex-col items-center relative overflow-hidden">
       {/* Banner Section - Full Width */}
-     <div className="w-full min-h-[40vh] mx-auto bg-b3d8e4-gradient flex flex-col md:flex-row items-center justify-between">
+      <div className="w-full min-h-[40vh] mx-auto bg-b3d8e4-gradient flex flex-col md:flex-row items-center justify-between">
         {/* Left Content */}
         <div className="md:w-3/4 mb-6 md:mb-0 text-left md:text-center md:pl-32 md:pr-8">
           <h1 className="text-4xl md:text-5xl font-bold text-blue-600 mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
@@ -36,7 +36,7 @@ const AboutUs = () => {
         <div className="md:w-[50%] flex justify-center pr-0">
           <img src={about} alt="Healthcare" className="max-w-full h-auto max-h-[50vh]" />
         </div>
-</div>
+      </div>
 
       {/* Decorative Line Element */}
       <div className="absolute top-0 left-1/2 w-1/2 h-1 bg-gradient-to-r from-blue-500 to-purple-600 transform -translate-x-1/2"></div>
@@ -57,23 +57,26 @@ const AboutUs = () => {
             </div>
 
             {/* Text Section */}
-            <div className="flex flex-col justify-center">
-              <h2 className="text-2xl font-bold text-blue-600 mb-4">
-                One Step Medi – India’s Most Trusted All-in-One Digital Healthcare Platform
-              </h2>
+            <div className="flex justify-center px-4">
+  <div className="max-w-3xl text-left">
+    <h2 className="text-2xl font-bold text-blue-600 mb-4">
+      One Step Medi – India’s Most Trusted All-in-One Digital Healthcare Platform
+    </h2>
 
-              <p className="text-gray-600 font-medium leading-relaxed mb-4">
-                OneStep Medi is a unified digital healthcare platform that connects patients with verified
-                doctors and essential medical services. We simplify access to doctor consultations, lab
-                tests, doorstep medicine delivery, and secure digital records—all in one place.
-              </p>
+    <p className="text-gray-600 font-medium leading-relaxed mb-4">
+      OneStep Medi is a unified digital healthcare platform that connects patients with verified
+      doctors and essential medical services. We simplify access to doctor consultations,
+      and secure digital records—all in one place.
+    </p>
 
-              <p className="text-gray-600 font-medium leading-relaxed">
-                Each user is assigned a unique Patient ID to ensure seamless tracking of prescriptions,
-                reports, and medical history. With timely alerts and convenient at-home services, OneStep Medi
-                brings quality healthcare within everyone’s reach.
-              </p>
-            </div>
+    <p className="text-gray-600 font-medium leading-relaxed">
+      Each user is assigned a unique Patient ID to ensure seamless tracking of prescriptions,
+      reports, and medical history. With timely alerts and convenient at-home services, OneStep Medi
+      brings quality healthcare within everyone’s reach.
+    </p>
+  </div>
+</div>
+
           </div>
         </div>
 
@@ -156,14 +159,84 @@ const AboutUs = () => {
                 Andhra Pradesh
               </p>
             </div>
-
-            {/* Card 7 */}
-
           </div>
+
+          {/* What Makes Us Different from Others Section */}
+          <div className="mt-12">
+            <h2 className="text-4xl font-extrabold text-blue-600 mb-10 text-center tracking-tight animate-fade-in-up">
+              What Makes Us Different from Others?
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {/* Card 1: Trust */}
+              <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-5xl text-blue-500 mx-auto mb-4"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15.5l-4-4 1.41-1.41L11 14.67l5.59-5.59L18 10.5l-7 7z" />
+                </svg>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Trust</h3>
+                <p className="text-gray-600 text-sm">
+                  Verified doctors, honest reviews you can rely on.
+                </p>
+              </div>
+
+              {/* Card 2: Support */}
+              <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-5xl text-blue-500 mx-auto mb-4"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-15h-2v6H8v2h3v3h2v-3h3v-2h-3V7z" />
+                </svg>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Support</h3>
+                <p className="text-gray-600 text-sm">
+                  Post-consultation follow-ups, reminders, and help.
+                </p>
+              </div>
+
+              {/* Card 3: Access */}
+              <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-5xl text-blue-500 mx-auto mb-4"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13h-2v-2h-2v-2h-2v2H9v2H7v-6h10v6z" />
+                </svg>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Access</h3>
+                <p className="text-gray-600 text-sm">
+                  From appointments to reports, anytime, anywhere.
+                </p>
+              </div>
+
+              {/* Card 4: Care */}
+              <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-5xl text-blue-500 mx-auto mb-4"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                </svg>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Care</h3>
+                <p className="text-gray-600 text-sm">
+                  Designed around real patient needs, not just features.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-gray-100 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row items-center max-w-8xl mx-auto mt-10">
             <div className="md:w-1/2 p-4">
               <h3 className="text-3xl font-semibold text-gray-800 mb-4">Your Data, Fully Protected</h3>
-              <h3 className="font-bold p-2" >We prioritize your privacy and security at every level.</h3>
+              <h3 className="font-bold p-2">We prioritize your privacy and security at every level.</h3>
               <ul className="text-gray-600 text-sm mb-4 pl-5 space-y-2">
                 <li className="flex items-start text-blue-500 font-bold">
                   <span className="text-green-500 mr-2 text-bold">✓</span> Advanced Security Protocols
@@ -171,12 +244,10 @@ const AboutUs = () => {
                 <p className="text-gray-600 ml-6">Robust, multi-layered protection to keep your data safe.</p>
                 <li className="flex items-start text-blue-500 font-bold">
                   <span className="text-green-500 mr-2">✓</span> Automated Data Backups
-
                 </li>
                 <p className="text-gray-600 ml-6">Frequent backups ensure your information is never lost.</p>
                 <li className="flex items-start text-blue-500 font-bold">
                   <span className="text-green-500 mr-2">✓</span> Strict Privacy Policies
-
                 </li>
                 <p className="text-gray-600 ml-6">Your data is handled with the highest confidentiality standards.</p>
               </ul>
@@ -256,8 +327,6 @@ const AboutUs = () => {
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>

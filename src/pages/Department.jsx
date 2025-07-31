@@ -6,6 +6,26 @@ import tip from '../assets/nutrition-4.jpg';
 
 // Specialty-specific tips
 const specialtyTips = {
+  physiotherapist: [
+    {
+      id: 1,
+      title: 'Relieve Neck Tension',
+      content: 'Gently tilt your head side to side ear to shoulder holding each stretch for 15 seconds to relieve neck tension.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Massage with a Ball',
+      content: 'Squeeze a small massage ball (or tennis ball) under your foot or along your shoulder blade to work out knots.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Stretch with Bands',
+      content: 'Stretch with resistance bands looped around your feet or hands for gentle pulls that build strength without strain.',
+      image: tip,
+    },
+  ],
   gynecologist: [
     {
       id: 1,
@@ -209,20 +229,20 @@ const specialtyTips = {
   cosmetologist: [
     {
       id: 1,
-      title: 'Sleep for Skin Health',
-      content: 'Sleep 7–8 hours a night—your skin repairs itself best during deep sleep, boosting collagen and reducing inflammation.',
+      title: 'Hair Massage',
+      content: 'Spend 5 minutes, 2–3× weekly, massaging warm coconut or argan oil into your scalp to boost circulation, nourish follicles, and minimize hair fall.',
       image: tip,
     },
     {
       id: 2,
       title: 'Clean Makeup Brushes',
-      content: 'Clean your makeup brushes every week to prevent bacterial buildup that causes clogged pores and breakouts.',
+      content: 'Cleaning your makeup brushes every week prevents bacterial buildup that causes clogged pores and breakouts.',
       image: tip,
     },
     {
       id: 3,
       title: 'Limit Exfoliation',
-      content: 'Over-exfoliation damages your skin barrier. Limit scrubs or acids to 2–3 times a week based on your skin type.',
+      content: 'Over-exfoliation damages your skin barrier and limits scrubs or acids to 2–3 times a week based on your skin type',
       image: tip,
     },
   ],
@@ -266,7 +286,68 @@ const specialtyTips = {
       image: tip,
     },
   ],
+  entspecialist: [
+    {
+      id: 1,
+      title: 'Use Saline Rinse',
+      content: 'Use a saline nasal rinse twice daily to clear mucus, soothe inflamed sinuses, and reduce congestion.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Inhale Warm Steam',
+      content: 'Inhale warm steam for 5–10 minutes (bowl of hot water or hot shower) to loosen chest and nasal mucus and relieve ear‑throat pressure.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Avoid Irritants',
+      content: 'Identify and avoid triggers like smoke, strong perfumes, and allergens to prevent sinus and throat flare‑ups.',
+      image: tip,
+    },
+  ],
+  nurse: [
+    {
+      id: 1,
+      title: 'Stock First-Aid Kit',
+      content: 'Keep a home first‑aid kit stocked with bandages, antiseptic wipes, gauze, and a thermometer for quick care of cuts, scrapes, or fevers.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Organize Medications',
+      content: 'Organize medications in a weekly pill box and set phone alarms to avoid missed or double doses.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Monitor Vital Signs',
+      content: 'Monitor and log your temperature, blood pressure, and resting pulse once daily when unwell to track recovery and share accurate data with your healthcare team.',
+      image: tip,
+    },
+  ],
+  ophthalmologist: [
+    {
+      id: 1,
+      title: 'Follow the 20‑20‑20 Rule',
+      content: 'Every 20 minutes of screen time, look 20 feet away for 20 seconds to prevent digital eye strain.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Protect Your Eyes Outdoors',
+      content: 'Wear sunglasses blocking 100% UVA/UVB whenever outdoors to protect against cataracts and macular degeneration.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Eat Eye-Healthy Foods',
+      content: 'Snack on lutein‑ and zeaxanthin‑rich foods (spinach, kale, eggs) to support retina health and slow age‑related vision decline.',
+      image: tip,
+    },
+  ],
 };
+
 
 // Sample FAQ data
 const faqs = [

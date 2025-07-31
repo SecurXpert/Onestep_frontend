@@ -246,7 +246,7 @@ const SpecialityMenu = () => {
           </div>
           <div
             className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2"
-            onClick={() => handleClick('ENT Specialist')}
+            onClick={() => handleClick('ENTspecialist')}
           >
             <img src={ent} alt="ENT Specialist" className="w-full h-48 object-cover rounded-lg mb-2" />
             <h3 className="text-md font-medium text-gray-800">ENT Specialist</h3>
