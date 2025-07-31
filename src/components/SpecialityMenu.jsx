@@ -358,11 +358,11 @@ const SpecialityMenu = () => {
     </div>
     <div
       className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[250px] snap-center"
-      onClick={() => handleClick('GeneralPhysician')}
+      onClick={() => handleClick('Homeopathy')}
     >
       <img src={physiotherapist} alt="General Physician" className="w-full h-48 object-cover rounded-lg mb-2" />
-      <h3 className="text-md font-medium text-gray-800">General Physician</h3>
-      <p className="text-sm text-gray-600 text-center">for fever, infections, chronic conditions, and elderly care</p>
+      <h3 className="text-md font-medium text-gray-800">Homeopathy</h3>
+      <p className="text-sm text-gray-600 text-center">treat conditions like allergies, skin disorders, migraines, digestive issues, anxiety, and chronic pain</p>
     </div>
     <div
       className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[250px] snap-center"

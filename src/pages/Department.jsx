@@ -31,6 +31,46 @@ import nutritiontip3 from '../assets/nutritiontip3.png';
 
 // Specialty-specific tips
 const specialtyTips = {
+  nurse: [
+    {
+      id: 1,
+      title: 'First-Aid Essentials',
+      content: 'Keep a home first-aid kit stocked with bandages, antiseptic wipes, gauze, and a thermometer for quick care of cuts, scrapes, or fevers.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Smart Medication Management',
+      content: 'Organize medications in a weekly pill box and set phone alarms to avoid missed or double doses.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Monitor Vitals When Sick',
+      content: 'Monitor and log your temperature, blood pressure, and resting pulse daily when unwell to track recovery and share accurate data with your healthcare team.',
+      image: tip,
+    },
+  ],
+  homeopathy: [
+    {
+      id: 1,
+      title: 'Drink Water from Copper Vessel',
+      content: 'Storing water in a copper container overnight helps balance pH levels and supports digestion—an age-old wellness practice aligned with homeopathy’s natural approach.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Wake Up with Sunlight',
+      content: 'Natural morning light boosts your mood, aligns your body clock, and supports your body’s natural healing rhythm.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Walk Barefoot on Grass',
+      content: 'Walking barefoot on natural surfaces like grass or soil (earthing) helps reduce stress, improve sleep, and connect you to natural healing energies.',
+      image: tip,
+    },
+  ],
   physiotherapist: [
     {
       id: 1,
