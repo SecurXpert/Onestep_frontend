@@ -1,7 +1,9 @@
 import React from 'react';
+import { useState, useRef } from 'react';
 import aboutus from '../assets/banner.jpg';
 import about from '../assets/aboutus.png';
 import security from '../assets/security.jpg';
+import doctor1 from '../assets/doctor1.png'
 import {
   IoMedkitOutline,
   IoPeopleOutline,
@@ -12,6 +14,75 @@ import {
 } from 'react-icons/io5';
 
 const AboutUs = () => {
+   const [currentIndex, setCurrentIndex] = useState(0);
+  const containerRef = useRef(null);
+  
+  const testimonials = [
+    {
+      id: 1,
+      name: "Dr. Arvind Reddy",
+      specialty: "Cardiologist",
+      quote: "With this platform, I can focus more on patient care rather than managing appointments.",
+      image: doctor1
+    },
+    {
+      id: 2,
+      name: "Dr. Sneha Dasari",
+      specialty: "Dermatologist",
+      quote: "It's refreshing to see a system that connects doctors and patients so seamlessly.",
+      image: doctor1
+    },
+    {
+      id: 3,
+      name: "Dr. Rahul Varma",
+      specialty: "Pediatrician",
+      quote: "This platform has transformed how I manage my practice.",
+      image: doctor1
+    },
+    {
+      id: 4,
+      name: "Dr. Keerthi Iyer",
+      specialty: "Gynaecologist",
+      quote: "I appreciate how user-friendly and secure the platform is.",
+      image: doctor1
+    },
+    {
+      id: 5,
+      name: "Dr. Mahesh Alluri",
+      specialty: "Orthopedic Surgeon",
+      quote: "The quick access to patient records has improved my consultations.",
+      image: doctor1
+    }
+  ];
+
+  const cardWidth = 250; // width of each card
+  const cardMargin = 16; // margin between cards (mx-4 = 16px)
+
+  const prevTestimonial = () => {
+    setCurrentIndex(prev => {
+      const newIndex = prev === 0 ? testimonials.length - 1 : prev - 1;
+      scrollToTestimonial(newIndex);
+      return newIndex;
+    });
+  };
+
+  const nextTestimonial = () => {
+    setCurrentIndex(prev => {
+      const newIndex = prev === testimonials.length - 1 ? 0 : prev + 1;
+      scrollToTestimonial(newIndex);
+      return newIndex;
+    });
+  };
+
+  const scrollToTestimonial = (index) => {
+    if (containerRef.current) {
+      const scrollAmount = index * (cardWidth + cardMargin * 2);
+      containerRef.current.scrollTo({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
   return (
     <div className="w-full bg-white flex flex-col items-center relative overflow-hidden">
       {/* Banner Section - Full Width */}
@@ -163,75 +234,91 @@ const AboutUs = () => {
 
           {/* What Makes Us Different from Others Section */}
           <div className="mt-12">
-            <h2 className="text-4xl font-extrabold text-blue-600 mb-10 text-center tracking-tight animate-fade-in-up">
-              What Makes Us Different from Others?
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {/* Card 1: Trust */}
-              <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-5xl text-blue-500 mx-auto mb-4"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15.5l-4-4 1.41-1.41L11 14.67l5.59-5.59L18 10.5l-7 7z" />
-                </svg>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Trust</h3>
-                <p className="text-gray-600 text-sm">
-                  Verified doctors, honest reviews you can rely on.
-                </p>
-              </div>
+  <h2 className="text-4xl font-extrabold  mb-10 text-center tracking-tight animate-fade-in-up" style={{ colo: 'rgb(1, 79, 134)' }}>
+    What Makes Us Different from Others?
+  </h2>
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    {/* Card 1: Trust */}
+    <div className=" rounded-2xl p-6 text-center text-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300" style={{ backgroundColor: 'rgb(1, 79, 134)' }}>
+     <svg xmlns="http://www.w3.org/2000/svg" 
+     className="mx-auto mb-4"
+     width="48" height="48" 
+     viewBox="0 0 24 24" 
+     fill="none" 
+     stroke="white" 
+     strokeWidth="2" 
+     strokeLinecap="round" 
+     strokeLinejoin="round">
+  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  <path d="M9 12l2 2 4-4"/>
+</svg>
 
-              {/* Card 2: Support */}
-              <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-5xl text-blue-500 mx-auto mb-4"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-15h-2v6H8v2h3v3h2v-3h3v-2h-3V7z" />
-                </svg>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Support</h3>
-                <p className="text-gray-600 text-sm">
-                  Post-consultation follow-ups, reminders, and help.
-                </p>
-              </div>
+      <h3 className="text-xl font-semibold mb-2">Trust</h3>
+      <p className="text-sm">Verified doctors, honest reviews you can rely on.</p>
+    </div>
 
-              {/* Card 3: Access */}
-              <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-5xl text-blue-500 mx-auto mb-4"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13h-2v-2h-2v-2h-2v2H9v2H7v-6h10v6z" />
-                </svg>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Access</h3>
-                <p className="text-gray-600 text-sm">
-                  From appointments to reports, anytime, anywhere.
-                </p>
-              </div>
+    {/* Card 2: Support */}
+    <div className=" rounded-2xl p-6 text-center text-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"style={{ backgroundColor: 'rgb(1, 79, 134)' }} >
+     <svg xmlns="http://www.w3.org/2000/svg"
+       className="mx-auto mb-4"
+       width="48"
+       height="48"
+       viewBox="0 0 24 24"
+       fill="none"
+       stroke="white"
+       strokeWidth="2"
+       strokeLinecap="round"
+       strokeLinejoin="round">
+    <path d="M3 13v-2a9 9 0 0 1 18 0v2" />
+    <path d="M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2z" />
+    <path d="M3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2z" />
+    <path d="M12 20v-4" />
+  </svg>
+      <h3 className="text-xl font-semibold mb-2">Support</h3>
+      <p className="text-sm">Post-consultation follow-ups, reminders, and help.</p>
+    </div>
 
-              {/* Card 4: Care */}
-              <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-5xl text-blue-500 mx-auto mb-4"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                </svg>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Care</h3>
-                <p className="text-gray-600 text-sm">
-                  Designed around real patient needs, not just features.
-                </p>
-              </div>
-            </div>
-          </div>
+    {/* Card 3: Access */}
+    <div className=" rounded-2xl p-6 text-center text-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"style={{ backgroundColor: 'rgb(1, 79, 134)' }}>
+      <svg xmlns="http://www.w3.org/2000/svg"
+       className="mx-auto mb-4"
+       width="48"
+       height="48"
+       viewBox="0 0 24 24"
+       fill="none"
+       stroke="white"
+       strokeWidth="2"
+       strokeLinecap="round"
+       strokeLinejoin="round">
+    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+    <line x1="12" y1="18" x2="12.01" y2="18" />
+  </svg>
+      <h3 className="text-xl font-semibold mb-2">Access</h3>
+      <p className="text-sm">From appointments to reports, anytime, anywhere.</p>
+    </div>
+
+    {/* Card 4: Care */}
+    <div className=" rounded-2xl p-6 text-center text-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300" style={{ backgroundColor: 'rgb(1, 79, 134)' }}>
+     <svg xmlns="http://www.w3.org/2000/svg"
+       className="mx-auto mb-4"
+       width="48"
+       height="48"
+       viewBox="0 0 24 24"
+       fill="none"
+       stroke="white"
+       strokeWidth="2"
+       strokeLinecap="round"
+       strokeLinejoin="round">
+    <path d="M3 14s1 0 2-1 3-3 5-3 3 1 4 2 3 3 4 4 2 2 3 2" />
+    <path d="M12 21c-4.5-2-6.5-5.5-6.5-8.5 0-1.5 1-3.5 3.5-3.5 1.5 0 2.5 1 3 2 0.5-1 1.5-2 3-2 2.5 0 3.5 2 3.5 3.5 0 3-2 6.5-6.5 8.5z" />
+  </svg>
+      <h3 className="text-xl font-semibold mb-2">Care</h3>
+      <p className="text-sm">Designed around real patient needs, not just features.</p>
+    </div>
+  </div>
+</div>
+
+
 
           <div className="bg-gray-100 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row items-center max-w-8xl mx-auto mt-10">
             <div className="md:w-1/2 p-4">
@@ -277,55 +364,73 @@ const AboutUs = () => {
                 "The ease of managing patient records and scheduling consultations has saved me hours every week. Highly recommend it!"
               </p>
             </div>
-            <div className="md:w-full p-4 mt-6 overflow-hidden whitespace-nowrap">
-              <div className="inline-flex animate-marquee space-x-8">
-                <div className="flex items-center space-x-4 bg-white p-2 rounded-lg shadow-md">
+        <div className="w-full p-4 mt-6 relative">
+      
+      <div className="relative">
+        {/* Left Arrow */}
+        <button 
+          onClick={prevTestimonial}
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        {/* Testimonial Container */}
+        <div 
+          ref={containerRef}
+          className="flex overflow-x-hidden mx-10 scroll-smooth snap-x"
+          style={{ scrollbarWidth: 'none' }}
+        >
+          <div className="flex transition-all duration-300">
+            {testimonials.map((testimonial) => (
+              <div 
+                key={testimonial.id}
+                className="flex flex-col bg-white p-4 rounded-lg shadow-md w-[250px] h-[180px] mx-4 flex-shrink-0 snap-start"
+              >
+                <div className="flex items-center space-x-3 mb-3">
                   <img
-                    src="https://via.placeholder.com/50?text=Doctor"
+                    src={testimonial.image}
                     alt="Doctor Profile"
-                    className="w-12 h-12 object-cover rounded-full"
+                    className="w-10 h-10 object-cover rounded-full"
                   />
                   <div>
-                    <p className="text-gray-800 font-semibold">Dr. Anil Sharma</p>
-                    <p className="text-gray-600 text-sm">General Physician</p>
+                    <p className="text-gray-800 font-semibold">{testimonial.name}</p>
+                    <p className="text-gray-600 text-xs">{testimonial.specialty}</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-4 bg-white p-2 rounded-lg shadow-md">
-                  <img
-                    src="https://via.placeholder.com/50?text=Doctor"
-                    alt="Doctor Profile"
-                    className="w-12 h-12 object-cover rounded-full"
-                  />
-                  <div>
-                    <p className="text-gray-800 font-semibold">Dr. Priya Menon</p>
-                    <p className="text-gray-600 text-sm">Cardiologist</p>
-                  </div>
-                </div>
-                {/* Duplicate items for seamless looping */}
-                <div className="flex items-center space-x-4 bg-white p-2 rounded-lg shadow-md">
-                  <img
-                    src="https://via.placeholder.com/50?text=Doctor"
-                    alt="Doctor Profile"
-                    className="w-12 h-12 object-cover rounded-full"
-                  />
-                  <div>
-                    <p className="text-gray-800 font-semibold">Dr. Anil Sharma</p>
-                    <p className="text-gray-600 text-sm">General Physician</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4 bg-white p-2 rounded-lg shadow-md">
-                  <img
-                    src="https://via.placeholder.com/50?text=Doctor"
-                    alt="Doctor Profile"
-                    className="w-12 h-12 object-cover rounded-full"
-                  />
-                  <div>
-                    <p className="text-gray-800 font-semibold">Dr. Priya Menon</p>
-                    <p className="text-gray-600 text-sm">Cardiologist</p>
-                  </div>
-                </div>
+                <p className="text-gray-700 text-sm italic flex-grow">"{testimonial.quote}"</p>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Arrow */}
+        <button 
+          onClick={nextTestimonial}
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Dots Indicator */}
+      <div className="flex justify-center mt-4">
+        {testimonials.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              setCurrentIndex(index);
+              scrollToTestimonial(index);
+            }}
+            className={`w-2 h-2 mx-1 rounded-full ${index === currentIndex ? 'bg-blue-500' : 'bg-gray-300'}`}
+          />
+        ))}
+      </div>
+    </div>
           </div>
         </div>
       </div>
