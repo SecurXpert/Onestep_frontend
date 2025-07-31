@@ -9,6 +9,8 @@ import physiotherapist from '../assets/phys.jpg';
 import phys from '../assets/physiotherapist.png';
 import nutritionist from '../assets/nutritionist.jpg';
 import nurse from '../assets/nurse.png';
+import foodskin from '../assets/foodskin.jpg';
+import foodeye from '../assets/foodeye.jpg'
 
 // City options for dropdown
 const cityOptions = ['Visakhapatnam', 'Hyderabad'];
@@ -36,6 +38,27 @@ const SpecialityMenu = () => {
     "Neurologist",
     "Orthopedic Doctor",
   ];
+
+  // Articles data object
+  const articles = [
+    {
+      id: '1',
+      title: 'TOP 5 FOODS THAT NATURALLY WHITEN YOUR TEETH',
+      category: 'FOOD',
+      description: '“Top 5 Foods That Naturally Whiten Your Teeth”',
+      author: 'Dr. Diana Borgio',
+      image: foodeye,
+    },
+    {
+      id: '2',
+      title: 'BEST FERTILITY FOODS FOR WOMEN DURING PREGNANCY',
+      category: 'DERMA',
+      description: '“Clear Skin from Within: Foods That Fight Acne”',
+      author: 'Dr. Diana Borgio',
+      image: foodskin,
+    },
+  ];
+  
   const handleClick = (specialtyName) => {
     // Map problem-based specialties to their corresponding department
     const specialtyMap = {
@@ -103,6 +126,10 @@ const SpecialityMenu = () => {
 
   const handleSeeAllArticles = () => {
     navigate('/article');
+  };
+
+  const handleArticleClick = (articleTitle) => {
+    navigate(`/article/${encodeURIComponent(articleTitle)}`);
   };
 
   return (
@@ -349,32 +376,34 @@ const SpecialityMenu = () => {
 </div>
 
       {/* Articles Section */}
-      <div className="w-full max-w-7xl mx-auto px-4 py-8 mt-8 flex flex-col md:flex-row items-start bg-white shadow-md rounded-lg">
-        <div className="md:w-1/3 mb-4 md:mb-0">
-          <h2 className="text-xl font-semibold text-gray-700 mb-2">Read top articles from health experts</h2>
-          <p className="text-gray-600 mb-4">Health articles that keep you informed about good health practices and achieve your goals.</p>
-          <button
-            onClick={handleSeeAllArticles}
-            className="px-4 py-2 bg-custom-blue text-white rounded-lg hover:bg-blue-700 transition-colors mt-10"
-          >
-            See all articles
-          </button>
-        </div>
-        <div className="md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col items-start">
-            <img src="/images/coronavirus.jpg" alt="Coronavirus" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">FOOD</h3>
-            <p className="text-sm text-gray-600">“Top 5 Foods That Naturally Whiten Your Teeth”</p>
-            <p className="text-xs text-gray-500">Dr. Diana Borgio</p>
-          </div>
-          <div className="flex flex-col items-start">
-            <img src="/images/vitamins.jpg" alt="Vitamins and Supplements" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">DERMA</h3>
-            <p className="text-sm text-gray-600">“Clear Skin from Within: Foods That Fight Acne”</p>
-            <p className="text-xs text-gray-500">Dr. Diana Borgio</p>
-          </div>
-        </div>
+ {/* Articles Section */}
+
+<div className="w-full max-w-7xl mx-auto px-4 py-8 mt-8 flex flex-col md:flex-row items-start bg-white shadow-md rounded-lg justify-center">
+  <div className="md:w-1/3 mb-4 md:mb-0 flex flex-col items-center md:items-start text-center md:text-left">
+    <h2 className="text-xl font-semibold text-gray-700 mb-2">Read top articles from health experts</h2>
+    <p className="text-gray-600 mb-4">Health articles that keep you informed about good health practices and achieve your goals.</p>
+    <button
+      onClick={handleSeeAllArticles}
+      className="px-4 py-2 bg-custom-blue text-white rounded-lg hover:bg-blue-700 transition-colors mt-10"
+    >
+      See all articles
+    </button>
+  </div>
+  <div className="md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+    {articles.map((article) => (
+      <div
+        key={article.id}
+        className="flex flex-col items-start cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2"
+        onClick={() => handleArticleClick(article.title)}
+      >
+        <img src={article.image} alt={article.title} className="w-full h-48 object-cover rounded-lg mb-2" />
+        <h3 className="text-md font-medium text-gray-800">{article.category}</h3>
+        <p className="text-sm text-gray-600">{article.description}</p>
+        <p className="text-xs text-gray-500">{article.author}</p>
       </div>
+    ))}
+  </div>
+</div>
     </div>
   );
 };

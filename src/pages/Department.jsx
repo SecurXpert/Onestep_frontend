@@ -21,6 +21,12 @@ import genraltrail3 from '../assets/genraltrail3.png';
 import jointtip1 from '../assets/jointtip1.png';
 import jointtip2 from '../assets/jointtip2.png';
 import jointtip3 from '../assets/jointtip3.png';
+import thyroidtip1 from '../assets/thyroidtip1.png';
+import thyroidtip2 from '../assets/thyroidtip2.png';
+import thyroidtip3 from '../assets/thyroidtip3.png';
+import nutritiontip1 from '../assets/nutritiontip1.png';
+import nutritiontip2 from '../assets/nutritiontip2.png';
+import nutritiontip3 from '../assets/nutritiontip3.png';
 
 
 // Specialty-specific tips
@@ -70,19 +76,19 @@ const specialtyTips = {
       id: 1,
       title: 'Support Thyroid Health',
       content: 'Snack on 2–3 Brazil nuts weekly to support healthy thyroid function and balance hormones naturally.',
-      image: tip,
+      image: thyroidtip1,
     },
     {
       id: 2,
       title: 'Reduce Chemical Exposure',
       content: 'Use glass or steel containers instead of plastic to reduce chemical exposure that can affect your hormones.',
-      image: tip,
+      image: thyroidtip2,
     },
     {
       id: 3,
       title: 'Prioritize Deep Sleep',
       content: 'Focus on deep sleep, not just long sleep. Quality rest keeps your energy steady and hormones in sync.',
-      image: tip,
+      image: thyroidtip3,
     },
   ],
   cardiologist: [
@@ -130,19 +136,19 @@ const specialtyTips = {
       id: 1,
       title: 'Balanced Meal Rule',
       content: 'Follow the 3-2-1 rule for every meal: 3 parts vegetables, 2 parts protein, and 1 part whole grain for balanced nutrition and steady energy.',
-      image: tip,
+      image: nutritiontip1,
     },
     {
       id: 2,
       title: 'Mindful Chewing',
       content: 'Chew each bite 20–30 times to eat less, digest better, and avoid post-meal bloating.',
-      image: tip,
+      image: nutritiontip2,
     },
     {
       id: 3,
       title: 'Smart Carb Pairing',
       content: 'Pair carbs with protein and fiber, like brown rice with lentils and sautéed veggies, for steady energy and better weight control.',
-      image: tip,
+      image: nutritiontip3,
     },
   ],
   generalphysician: [
