@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import myImage from '../assets/contactus-1.png';
 import { FaPaperPlane } from 'react-icons/fa';
- 
+
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -12,26 +12,26 @@ const ContactUs = () => {
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
- 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
- 
+
     // Validate name: only letters and spaces
     if (name === 'name' && value && !/^[a-zA-Z\s]*$/.test(value)) {
       setErrors({ ...errors, [name]: 'Name can only contain letters and spaces' });
       return;
     }
- 
+
     // Validate phone number: only numbers
     if (name === 'phone_number' && value && !/^\d*$/.test(value)) {
       setErrors({ ...errors, [name]: 'Phone number can only contain numbers' });
       return;
     }
- 
+
     setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: '' });
   };
- 
+
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
@@ -42,11 +42,11 @@ const ContactUs = () => {
     if (!formData.message.trim()) newErrors.message = 'Message is required';
     return newErrors;
   };
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formErrors = validateForm();
-   
+
     if (Object.keys(formErrors).length === 0) {
       setIsSubmitting(true);
       try {
@@ -57,11 +57,11 @@ const ContactUs = () => {
           },
           body: JSON.stringify(formData),
         });
- 
+
         if (!response.ok) {
           throw new Error('Failed to submit form');
         }
- 
+
         setFormData({
           name: '',
           email: '',
@@ -80,12 +80,9 @@ const ContactUs = () => {
       setErrors(formErrors);
     }
   };
- 
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-16 relative overflow-hidden">
-      {/* Decorative Line Element */}
-      {/* <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 to-purple-600"></div> */}
- 
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
         {/* Left - Contact Form */}
         <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -95,7 +92,7 @@ const ContactUs = () => {
           <p className="text-gray-500 mb-8 text-lg max-w-lg">
             Have a question or idea? Fill out the form below, and we'll respond promptly!
           </p>
- 
+
           <div className="space-y-5">
             <div className="relative">
               <input
@@ -184,10 +181,10 @@ const ContactUs = () => {
             </button>
           </div>
         </div>
- 
+
         {/* Right - Info & Image */}
         <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-xl transition-shadow duration-300">
-          <div className="relative w-full h-96 rounded-xl overflow-hidden group mb-8">
+          <div className="relative w-full h-96 rounded-xl overflow-hidden group mb-8 hidden sm:block">
             <img
               src={myImage}
               alt="Contact Us"
@@ -195,7 +192,7 @@ const ContactUs = () => {
             />
             <div className="absolute inset-0 border-4 border-indigo-500/20 rounded-xl group-hover:border-indigo-600/30 transition-colors duration-300"></div>
           </div>
- 
+
           <div className="space-y-6">
             <div>
               <h4 className="font-semibold text-indigo-600 text-lg">Email</h4>
@@ -217,5 +214,5 @@ const ContactUs = () => {
     </div>
   );
 };
- 
+
 export default ContactUs;
