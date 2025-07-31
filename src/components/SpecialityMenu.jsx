@@ -50,9 +50,9 @@ const SpecialityMenu = () => {
     {
       id: '2',
       title: 'BEST FERTILITY FOODS FOR WOMEN DURING PREGNANCY',
-      category: 'DERMA',
-      description: '“Clear Skin from Within: Foods That Fight Acne”',
-      author: 'Dr. Diana Borgio',
+      category: 'WOMEN DURING PREGNANCY',
+      description: `“satisfying cravings and nourishing your baby”`,
+      author: '',
       image: foodskin,
     },
   ];
