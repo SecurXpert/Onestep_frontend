@@ -8,12 +8,16 @@ import physio from '../assets/physio-4.jpg';
 import genral from '../assets/genral-4.png';
 import nutrition from '../assets/nutrition-4.jpg';
 
+// City options for dropdown
+const cityOptions = ['Visakhapatnam', 'Hyderabad'];
+
 const Doctors = () => {
   const { specialty } = useParams();
   const [filterdoc, setFilterDoc] = useState([]);
   const [activeFilter, setActiveFilter] = useState(specialty || "All");
   const [searchParams, setSearchParams] = useState({
-    area: '',
+    city: '',
+    locality: '',
     searchTerm: '',
   });
   const { topdoctors } = useContext(AppContext);
@@ -55,21 +59,21 @@ const Doctors = () => {
   };
 
   // Apply filter based on activeFilter and searchParams.searchTerm
-  // const applyFilter = (doctors) => {
-  //   let filtered = activeFilter === "All"
-  //     ? doctors
-  //     : doctors.filter(doc => doc.specialization_name === activeFilter);
+  const applyFilter = (doctors) => {
+    let filtered = activeFilter === "All"
+      ? doctors
+      : doctors.filter(doc => doc.specialization_name === activeFilter);
 
-  //   if (searchParams.searchTerm.trim() !== "") {
-  //     const lowerSearch = searchParams.searchTerm.toLowerCase();
-  //     filtered = filtered.filter(doc =>
-  //       doc.name.toLowerCase().includes(lowerSearch) ||
-  //       doc.specialization_name.toLowerCase().includes(lowerSearch)
-  //     );
-  //   }
+    if (searchParams.searchTerm.trim() !== "") {
+      const lowerSearch = searchParams.searchTerm.toLowerCase();
+      filtered = filtered.filter(doc =>
+        doc.name.toLowerCase().includes(lowerSearch) ||
+        doc.specialization_name.toLowerCase().includes(lowerSearch)
+      );
+    }
 
-  //   setFilterDoc(filtered);
-  // };
+    setFilterDoc(filtered);
+  };
 
   useEffect(() => {
     if (specialty && doctorsListRef.current) {
@@ -90,10 +94,7 @@ const Doctors = () => {
   }, [activeFilter, searchParams.searchTerm, topdoctors]);
 
   const handleClick = (specialtyName) => {
-    const queryString = searchParams.area ? `?area=${encodeURIComponent(searchParams.area)}` : '';
-    navigate(`/department/${encodeURIComponent(specialtyName)}${queryString}`, {
-      state: { searchParams: { area: searchParams.area, searchTerm: specialtyName } }
-    });
+    navigate(`/department/${encodeURIComponent(specialtyName)}`);
     setActiveFilter(specialtyName);
     setSearchParams((prev) => ({ ...prev, searchTerm: "" }));
     setTimeout(() => {
@@ -106,32 +107,32 @@ const Doctors = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const area = formData.get('area');
+    const city = formData.get('city');
+    const locality = formData.get('locality');
     const searchTerm = formData.get('searchTerm');
-    
-    if (!searchTerm) {
-      return; // Prevent search if no specialization is selected
+    setSearchParams({ city, locality, searchTerm });
+
+    let location = locality || city;
+    if (city && locality) {
+      location = `${locality},${city}`;
     }
 
-    setSearchParams({ area, searchTerm });
-
-    try {
-      let url = `http://192.168.0.120:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
-      if (area) {
-        url = `http://192.168.0.120:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
+    if (location) {
+      try {
+        const response = await fetch(
+          `http://192.168.0.123:8000/doctors/by-location?location=${encodeURIComponent(location)}`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch doctors by location');
+        }
+        const data = await response.json();
+        applyFilter(data);
+      } catch (err) {
+        console.error(err);
+        setFilterDoc([]);
       }
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Failed to fetch doctors');
-      }
-      const data = await response.json();
-      const queryString = area ? `?area=${encodeURIComponent(area)}` : '';
-      navigate(`/department/${encodeURIComponent(searchTerm)}${queryString}`, {
-        state: { filteredDoctors: data, searchParams: { area, searchTerm } }
-      });
-    } catch (err) {
-      console.error(err);
-      setFilterDoc([]);
+    } else {
+      applyFilter(topdoctors);
     }
   };
 
@@ -145,96 +146,108 @@ const Doctors = () => {
 
         <div className="flex flex-col gap-6">
           {/* Search Form Section */}
-          <div className="mb-4 md:mb-6">
-            <div className="w-full max-w-[95vw] md:max-w-6xl mx-auto px-2 sm:px-4 mb-8">
-              <h2 className="text-lg sm:text-xl font-semibold text-center text-gray-800 mb-3 sm:mb-4">
-                Your health, our priority – find the right doctor at OneStep Medi.
-              </h2>
-              
-              <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3 items-stretch w-full">
-                {/* Mobile View - Only Specialist Dropdown and Search Button */}
-                <div className="md:hidden flex flex-row gap-2 w-full">
-                  <div className="relative flex-1 min-w-[160px]">
-                    <select
-                      name="searchTerm"
-                      className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg text-base appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
-                      value={searchParams.searchTerm}
-                      onChange={(e) => setSearchParams((prev) => ({ ...prev, searchTerm: e.target.value }))}
-                    >
-                      <option value="">Select Specialist</option>
-                      {specialties.map((spec) => (
-                        <option key={spec} value={spec}>{spec}</option>
-                      ))}
-                    </select>
-                    <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </span>
-                  </div>
-                  <button
-                    type="submit"
-                    className="flex-none px-6 py-3 bg-custom-blue text-white rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap"
-                    disabled={!searchParams.searchTerm}
-                  >
-                    Search
-                  </button>
-                </div>
+{/* Search Form Section */}
+<div className="mb-4 md:mb-6">
+  <div className="w-full max-w-[95vw] md:max-w-6xl mx-auto px-2 sm:px-4 mb-8">
+    <h2 className="text-lg sm:text-xl font-semibold text-center text-gray-800 mb-3 sm:mb-4">
+      Your health, our priority – find the right doctor at OneStep Medi.
+    </h2>
+    
+    <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3 items-stretch w-full">
+      {/* Mobile View - Only Specialist Dropdown and Search Button */}
+      <div className="md:hidden flex flex-row gap-2 w-full">
+        <div className="relative flex-1 min-w-[160px]">
+          <select
+            name="searchTerm"
+            className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg text-base appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
+            value={searchParams.searchTerm}
+            onChange={(e) => setSearchParams((prev) => ({ ...prev, searchTerm: e.target.value }))}
+          >
+            <option value="">Select Specialist</option>
+            {specialties.map((spec) => (
+              <option key={spec} value={spec}>{spec}</option>
+            ))}
+          </select>
+          <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+            <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </div>
+        <button
+          type="submit"
+          className="flex-none px-6 py-3 bg-custom-blue text-white rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap"
+        >
+          Search
+        </button>
+      </div>
 
-                {/* Desktop View - Area and Specialist Inputs */}
-                <div className="hidden md:flex flex-row gap-2 w-full">
-                  {/* Area Input */}
-                  <div className="relative flex-[1_1_35%] min-w-[180px]">
-                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                      <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </span>
-                    <input
-                      type="text"
-                      name="area"
-                      placeholder="City or Locality"
-                      className="w-full h-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
-                      value={searchParams.area}
-                      onChange={(e) => setSearchParams((prev) => ({ ...prev, area: e.target.value }))}
-                    />
-                  </div>
+      {/* Desktop View - Full Form */}
+      <div className="hidden md:flex flex-row gap-2 w-full">
+        {/* City Select */}
+        <div className="relative flex-[1_1_25%] min-w-[150px]">
+          <select
+            name="city"
+            className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
+            value={searchParams.city}
+            onChange={(e) => setSearchParams((prev) => ({ ...prev, city: e.target.value }))}
+          >
+            <option value="">Select City</option>
+            {cityOptions.map((city) => (
+              <option key={city} value={city}>{city}</option>
+            ))}
+          </select>
+          <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+            <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </div>
 
-                  {/* Specialist Dropdown */}
-                  <div className="relative flex-[2_1_65%] min-w-[200px]">
-                    <select
-                      name="searchTerm"
-                      className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
-                      value={searchParams.searchTerm}
-                      onChange={(e) => setSearchParams((prev) => ({ ...prev, searchTerm: e.target.value }))}
-                    >
-                      <option value="">Select Specialist</option>
-                      {specialties.map((spec) => (
-                        <option key={spec} value={spec}>{spec}</option>
-                      ))}
-                    </select>
-                    <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </span>
-                  </div>
+        {/* Locality Input */}
+        <div className="relative flex-[2_1_35%] min-w-[180px]">
+          <input
+            type="text"
+            name="locality"
+            placeholder="Locality or Pincode"
+            className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
+            value={searchParams.locality}
+            onChange={(e) => setSearchParams((prev) => ({ ...prev, locality: e.target.value }))}
+          />
+        </div>
 
-                  {/* Search Button */}
-                  <button
-                    type="submit"
-                    className={`flex-none px-6 py-3 rounded-lg text-white transition-colors ${
-                      !searchParams.searchTerm ? 'bg-gray-400 cursor-not-allowed' : 'bg-custom-blue hover:bg-blue-700'
-                    }`}
-                    disabled={!searchParams.searchTerm}
-                  >
-                    Search
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+        {/* Specialist Dropdown */}
+        <div className="relative flex-[2_1_40%] min-w-[200px]">
+          <select
+            name="searchTerm"
+            className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
+            value={searchParams.searchTerm}
+            onChange={(e) => setSearchParams((prev) => ({ ...prev, searchTerm: e.target.value }))}
+          >
+            <option value="">Select Specialist</option>
+            {specialties.map((spec) => (
+              <option key={spec} value={spec}>{spec}</option>
+            ))}
+          </select>
+          <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+            <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </div>
+
+        {/* Search Button */}
+        <button
+          type="submit"
+          className="flex-none px-6 py-3 bg-custom-blue text-white rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+          
 
           {/* Specialties Carousel Section */}
           <div className="relative w-full flex flex-col items-start">
@@ -328,60 +341,60 @@ const Doctors = () => {
           </div>
 
           {/* Featured Specialists Section */}
-          <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg mt-8">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">Expert HealthCare – Right at Your Doorstep</h2>
-            <p className="text-gray-600 mb-6">Book trusted specialists nearby for quick consultations and appointments.</p>
-            <div className="flex flex-row overflow-x-auto space-x-4 pb-4 snap-x snap-mandatory md:grid md:grid-cols-4 md:gap-6 md:overflow-x-hidden">
-              <div
-                className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[200px] snap-center"
-                onClick={() => handleClick('Physiotherapist')}
-              >
-                <img
-                  src={physio}
-                  alt="Physiotherapist"
-                  className="w-full h-36 2xs:h-32 object-cover rounded-lg mb-2"
-                />
-                <h3 className="text-sm 2xs:text-xs font-medium text-gray-800">Physiotherapist</h3>
-                <p className="text-xs 2xs:text-[10px] text-gray-600 text-center">for recovery, rehabilitation, and mobility support</p>
-              </div>
-              <div
-                className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[200px] snap-center"
-                onClick={() => handleClick('Nutritionist')}
-              >
-                <img
-                  src={nutrition}
-                  alt="Nutritionist / Dietitian"
-                  className="w-full h-36 2xs:h-32 object-cover rounded-lg mb-2"
-                />
-                <h3 className="text-sm 2xs:text-xs font-medium text-gray-800">Nutritionist / Dietitian</h3>
-                <p className="text-xs 2xs:text-[10px] text-gray-600 text-center">for personalized diet planning and nutrition advice.</p>
-              </div>
-              <div
-                className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[200px] snap-center"
-                onClick={() => handleClick('GeneralPhysician')}
-              >
-                <img
-                  src={genral}
-                  alt="General Physician"
-                  className="w-full h-36 2xs:h-32 object-cover rounded-lg mb-2"
-                />
-                <h3 className="text-sm 2xs:text-xs font-medium text-gray-800">General Physician</h3>
-                <p className="text-xs 2xs:text-[10px] text-gray-600 text-center">for fever, infections, chronic conditions, and elderly care</p>
-              </div>
-              <div
-                className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[200px] snap-center"
-                onClick={() => handleClick('Nurse')}
-              >
-                <img
-                  src={nurse}
-                  alt="Nurse / Elderly Care Assistant"
-                  className="w-full h-36 2xs:h-32 object-cover rounded-lg mb-2"
-                />
-                <h3 className="text-sm 2xs:text-xs font-medium text-gray-800">Nurse / Elderly Care Assistant</h3>
-                <p className="text-xs 2xs:text-[10px] text-gray-600 text-center">for post-surgical care, injections, wound dressing.</p>
-              </div>
-            </div>
-          </div>
+<div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg mt-8">
+  <h2 className="text-xl font-semibold text-gray-700 mb-4">Expert HealthCare – Right at Your Doorstep</h2>
+  <p className="text-gray-600 mb-6">Book trusted specialists nearby for quick consultations and appointments.</p>
+  <div className="flex flex-row overflow-x-auto space-x-4 pb-4 snap-x snap-mandatory md:grid md:grid-cols-4 md:gap-6 md:overflow-x-hidden">
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[200px] snap-center"
+      onClick={() => handleClick('Physiotherapist')}
+    >
+      <img
+        src={physio}
+        alt="Physiotherapist"
+        className="w-full h-36 2xs:h-32 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-xs font-medium text-gray-800">Physiotherapist</h3>
+      <p className="text-xs 2xs:text-[10px] text-gray-600 text-center">for recovery, rehabilitation, and mobility support</p>
+    </div>
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[200px] snap-center"
+      onClick={() => handleClick('Nutritionist')}
+    >
+      <img
+        src={nutrition}
+        alt="Nutritionist / Dietitian"
+        className="w-full h-36 2xs:h-32 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-xs font-medium text-gray-800">Nutritionist / Dietitian</h3>
+      <p className="text-xs 2xs:text-[10px] text-gray-600 text-center">for personalized diet planning and nutrition advice.</p>
+    </div>
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[200px] snap-center"
+      onClick={() => handleClick('GeneralPhysician')}
+    >
+      <img
+        src={genral}
+        alt="General Physician"
+        className="w-full h-36 2xs:h-32 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-xs font-medium text-gray-800">General Physician</h3>
+      <p className="text-xs 2xs:text-[10px] text-gray-600 text-center">for fever, infections, chronic conditions, and elderly care</p>
+    </div>
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[200px] snap-center"
+      onClick={() => handleClick('Nurse')}
+    >
+      <img
+        src={nurse}
+        alt="Nurse / Elderly Care Assistant"
+        className="w-full h-36 2xs:h-32 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-xs font-medium text-gray-800">Nurse / Elderly Care Assistant</h3>
+      <p className="text-xs 2xs:text-[10px] text-gray-600 text-center">for post-surgical care, injections, wound dressing.</p>
+    </div>
+  </div>
+</div>
         </div>
       </div>
     </div>
