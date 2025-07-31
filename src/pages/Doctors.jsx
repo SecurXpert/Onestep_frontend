@@ -252,7 +252,9 @@ const Doctors = () => {
           {/* Specialties Carousel Section */}
           <div className="relative w-full flex flex-col items-start">
             <div className="flex justify-between items-center w-full mb-2">
-              <h1 className="text-3xl md:text-4xl font-bold text-custom-blue">13+ Specialities</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-custom-blue">18+ Specialities</h1>
+              <div className="hidden md:block relative w-48">
+              </div>
             </div>
             <p className="text-lg md:text-m text-gray-600 mb-6 text-center max-w-2xl">
               Find the right specialist for every health need.

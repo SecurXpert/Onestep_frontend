@@ -31,6 +31,26 @@ import nutritiontip3 from '../assets/nutritiontip3.png';
 
 // Specialty-specific tips
 const specialtyTips = {
+  physiotherapist: [
+    {
+      id: 1,
+      title: 'Relieve Neck Tension',
+      content: 'Gently tilt your head side to side ear to shoulder holding each stretch for 15 seconds to relieve neck tension.',
+      image: tip,
+    },
+    {
+      id: 2,
+      title: 'Massage with a Ball',
+      content: 'Squeeze a small massage ball (or tennis ball) under your foot or along your shoulder blade to work out knots.',
+      image: tip,
+    },
+    {
+      id: 3,
+      title: 'Stretch with Bands',
+      content: 'Stretch with resistance bands looped around your feet or hands for gentle pulls that build strength without strain.',
+      image: tip,
+    },
+  ],
   gynecologist: [
     {
       id: 1,
@@ -234,6 +254,9 @@ const specialtyTips = {
   cosmetologist: [
     {
       id: 1,
+      title: 'Hair Massage',
+      content: 'Spend 5 minutes, 2–3× weekly, massaging warm coconut or argan oil into your scalp to boost circulation, nourish follicles, and minimize hair fall.',
+      image: tip,
       title: 'Sleep for Skin Health',
       content: 'Sleep 7–8 hours a night—your skin repairs itself best during deep sleep, boosting collagen and reducing inflammation.',
       image: skintip2,
@@ -241,12 +264,16 @@ const specialtyTips = {
     {
       id: 2,
       title: 'Clean Makeup Brushes',
+      content: 'Cleaning your makeup brushes every week prevents bacterial buildup that causes clogged pores and breakouts.',
+      image: tip,
       content: 'Clean your makeup brushes every week to prevent bacterial buildup that causes clogged pores and breakouts.',
       image: skintip1,
     },
     {
       id: 3,
       title: 'Limit Exfoliation',
+      content: 'Over-exfoliation damages your skin barrier and limits scrubs or acids to 2–3 times a week based on your skin type',
+      image: tip,
       content: 'Over-exfoliation damages your skin barrier. Limit scrubs or acids to 2–3 times a week based on your skin type.',
       image: skintip3,
     },
@@ -292,6 +319,7 @@ const specialtyTips = {
     },
   ],
 };
+
 
 // Sample FAQ data
 const faqs = [

@@ -45,10 +45,13 @@ const DoctorProfileWrapper = () => {
           success_rate: selectedDoctor.success_rate || 'Not available',
           techniques: selectedDoctor.techniques || [],
           hospital: selectedDoctor.hospital || {
-            name: 'Not specified',
-            location: 'Not specified',
+            name: 'Fortis Hospital, Hyderabad',
+            location: 'Hyderabad',
             hours: 'Not specified',
           },
+          available: selectedDoctor.available || true,
+          patients: selectedDoctor.patients || '275+',
+          regNo: selectedDoctor.regNo || '20XXXXXX',
         };
         setDoctor(mappedDoctor);
         setLoading(false);
@@ -87,7 +90,45 @@ const DoctorProfileWrapper = () => {
     );
   }
 
-  return <DoctorProfile doctor={doctor} />;
+  return (
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <div className="flex items-center space-x-6">
+        <img src={doctor.image} alt={`${doctor.doctor_name} profile`} className="w-32 h-32 rounded-full" />
+        <div>
+          <h1 className="text-2xl font-bold">{doctor.doctor_name}</h1> 
+          <div className="flex items-center justify-between">
+            <p className="text-gray-600">{doctor.specialty} ({doctor.qualifications})</p>
+          
+          <div className="mt-0 ml-8">
+            <a href="#" className="text-blue-600 hover:underline">Experience</a> | 
+            <a href="#" className="text-blue-600 hover:underline ml-2">Educational History</a>
+          </div>
+          </div>
+          
+          <p className="text-gray-500">{doctor.experience}  of experience</p>
+          
+        </div>
+      </div>
+      <div className="mt-6 flex items-center space-x-6 ml-[9rem]">
+        <div className="flex items-right">
+          <span className="text-green-600 mr-2">✔</span>
+          <span>{doctor.hospital.name}</span>
+        </div>
+        <div className="text-green-600">{doctor.available ? 'Available' : 'Not Available'}</div>
+        <div className="text-gray-500">• {doctor.patients} patients</div>
+      </div>
+       <div className="flex items-center space-x-6">
+      <div className="mt-4">
+        <p className="text-gray-700">Doctor ID: {doctor.id}</p>
+        <p className="text-gray-700">Reg No.: {doctor.regNo}</p>
+      </div>
+      <div className="mt-6  ml-[5rem] flex  space-x-4">
+        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Book Appointment</button>
+        <button className="bg-blue-100 text-blue-600 px-4 py-2 rounded hover:bg-blue-200">Check Availability</button>
+      </div>
+      </div>
+    </div>
+  );
 };
 
 export default DoctorProfileWrapper;
