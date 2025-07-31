@@ -1,12 +1,25 @@
 import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+// import derma from '../assets/derma.png';
+// import food1 from '../assets/avoidfoodskin.jpg';
+// import damageskin from '../assets/damageskin.jpg';
+import damagingeye from '../assets/damagingeye.jpg';
+import damagteeth from '../assets/damagteeth.jpg';
+import eyedamage from '../assets/eyedamage.jpg';
+// import skinacne from '../assets/skinacne.jpg';
+ import foodteeth from '../assets/foodteeth.jpg';
+ import teeths from '../assets/teeths.jpg';
+ import avoidfood from '../assets/foodavoidPregnency.jpg';
+ import womenfertility from '../assets/womenfertility.jpg';
+ import boost from '../assets/fertilityboost.jpg';
+ import foodeye from '../assets/foodeye.jpg'
 
 const IndividualArticle = () => {
-  const { name } = useParams(); // Get the article name from the URL
+  const { name } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  // Articles data array
+  // Articles data array with correct image references
   const articlesData = [
     {
       id: '1',
@@ -37,7 +50,9 @@ While brushing, flossing and dental visits are important, your food choices also
       ],
       note: 'Please give internal links for the text "naturally whiten your teeth," which is written in bold and italic.',
       conclusion: `Achieving a radiant smile doesn't have to rely solely on expensive or chemical treatments. By incorporating the Top 5 Foods That Naturally Whiten Your Teeth into your routine, you'll naturally brighten your teeth and enhance oral health. Remember to combine these foods with proper oral hygiene practices and regular dental care for the best results.`,
-      image: '/images/weight-loss.jpg',
+      image: damagteeth,
+      image2: foodteeth,
+      image3: teeths,
       tags: ['Weight Loss', 'Weight Training'],
       likes: 702,
       metaTitle: 'Top 5 Foods That Naturally Whiten Your Teeth',
@@ -86,7 +101,9 @@ Snacks: Yoghurt, nuts & citrus fruits`,
       ],
       note: 'Give internal links for the text "fertility foods for women" which is in bold and italic.',
       conclusion: `A nutrient-rich diet filled with fertility foods for women can significantly enhance your chances of conceiving naturally and support a healthy early pregnancy. Start with small & consistent changes like adding leafy greens, seeds and whole grains to give your body the nourishment it needs for optimal reproductive health.`,
-      image: '/images/immune-system.jpg',
+      image: avoidfood,
+      image2: womenfertility,
+      image3: boost,
       tags: ['Immunity'],
       likes: 8,
       metaTitle: 'Best fertility foods for women during pregnancy.',
@@ -128,7 +145,9 @@ Foods to avoid for eye health
       ],
       note: 'Give internal links for the text which has bold and italic text "foods for eye health".',
       conclusion: `In an era dominated by screens and digital interaction, prioritising foods for eye health is more important than ever. Including these scientifically-backed, vision-boosting foods in your daily routine can help protect against digital strain, dryness and long-term degeneration naturally and effectively.`,
-      image: '/images/skin-type.jpg',
+      image: damagingeye,
+      image2: foodeye,
+      image3: eyedamage,
       tags: [],
       likes: 160,
       metaTitle: 'Best foods for eye health',
@@ -205,7 +224,7 @@ Foods to avoid for eye health
           </div>
           <div className="md:w-1/2 flex justify-center">
             <img
-              src={selectedArticle.image || '/images/placeholder.jpg'}
+              src={selectedArticle.image}
               alt={`${selectedArticle.title || 'Article'} - Image 1`}
               className="w-full max-w-md h-auto object-cover rounded-lg"
               onError={(e) => {
@@ -219,7 +238,7 @@ Foods to avoid for eye health
         <div className="flex flex-col md:flex-row gap-6 mb-12">
           <div className="md:w-1/2 flex justify-center">
             <img
-              src={selectedArticle.image2 || '/images/placeholder2.jpg'}
+              src={selectedArticle.image2}
               alt={`${selectedArticle.title || 'Article'} - Image 2`}
               className="w-full max-w-md h-auto object-cover rounded-lg"
               onError={(e) => {
@@ -255,7 +274,7 @@ Foods to avoid for eye health
           </div>
           <div className="md:w-1/2 flex justify-center">
             <img
-              src={selectedArticle.image3 || '/images/placeholder3.jpg'}
+              src={selectedArticle.image3}
               alt={`${selectedArticle.title || 'Article'} - Image 3`}
               className="w-full max-w-md h-auto object-cover rounded-lg"
               onError={(e) => {
