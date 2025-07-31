@@ -76,7 +76,7 @@ const ProfileContent = () => {
           const baseUrl = data.profile_picture.startsWith('/')
             ? data.profile_picture
             : `/${data.profile_picture}`;
-          const imageUrl = `http://192.168.0.131:8000${baseUrl}?t=${Date.now()}`;
+          const imageUrl = `http://192.168.0.123:8000${baseUrl}?t=${Date.now()}`;
           console.log('Setting profile image URL:', imageUrl);
           const img = new Image();
           img.src = imageUrl;
@@ -96,7 +96,7 @@ const ProfileContent = () => {
           const docBaseUrl = data.medical_document.startsWith('/')
             ? data.medical_document
             : `/${data.medical_document}`;
-          const docUrl = `http://192.168.0.131:8000${docBaseUrl}?t=${Date.now()}`;
+          const docUrl = `http://192.168.0.123:8000${docBaseUrl}?t=${Date.now()}`;
           console.log('Setting medical document URL:', docUrl);
           setMedicalDocument(docUrl);
         } else {
@@ -275,7 +275,7 @@ const ProfileContent = () => {
         const baseUrl = updatedProfile.profile_picture.startsWith('/')
           ? updatedProfile.profile_picture
           : `/${updatedProfile.profile_picture}`;
-        const imageUrl = `http://192.168.0.131:8000${baseUrl}?t=${Date.now()}`;
+        const imageUrl = `http://192.168.0.123:8000${baseUrl}?t=${Date.now()}`;
         console.log('Updating profile image URL:', imageUrl);
         const img = new Image();
         img.src = imageUrl;
@@ -302,7 +302,7 @@ const ProfileContent = () => {
         const docBaseUrl = updatedProfile.medical_document.startsWith('/')
           ? updatedProfile.medical_document
           : `/${updatedProfile.medical_document}`;
-        const docUrl = `http://192.168.0.131:8000${docBaseUrl}?t=${Date.now()}`;
+        const docUrl = `http://192.168.0.123:8000${docBaseUrl}?t=${Date.now()}`;
         console.log('Updating medical document URL:', docUrl);
         setMedicalDocument(docUrl);
       } else {
