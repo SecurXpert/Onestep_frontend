@@ -21,7 +21,7 @@ export default {
       },
       colors:{
         'primary': "#5f6fff",
-        'custom-blue': '#014F86',
+        'custom-blue': '#03045e',
       },
 
        backgroundImage: {
