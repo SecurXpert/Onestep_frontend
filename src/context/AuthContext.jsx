@@ -113,7 +113,7 @@ export const AuthProvider = ({ children }) => {
         };
         setUser(formattedProfile);
         setIsLoggedIn(true);
-        sessionStorage.setItem('userProfile', JSON.stringify(formattedProfile));
+        // sessionStorage.setItem('userProfile', JSON.stringify(formattedProfile));
         console.log("Registered user:", formattedProfile);
         return { success: true, data };
       } else {

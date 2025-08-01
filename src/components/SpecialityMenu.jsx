@@ -70,7 +70,7 @@ const SpecialityMenu = () => {
       'Piles': 'Proctologist',
       'Fertility Specialist': 'Gynecologist',
       'Fever & Cold': 'GeneralPhysician',
-      'PCOS & hormonal imbalance': 'Gynecologist',
+      'PCOS': 'Gynecologist',
       'Stress': 'Neurologist',
     };
     const department = specialtyMap[specialtyName] || specialtyName;
