@@ -6,23 +6,21 @@ const DoctorProfileWrapper = () => {
   const { id } = useParams();
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+ const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://192.168.0.123:8000/doctors/all');
+        const response = await fetch('http://192.168.0.111:8000/doctors/all');
         if (!response.ok) {
           throw new Error('Failed to fetch doctors');
         }
         const data = await response.json();
-        // Find the doctor with matching doctor_id
         const selectedDoctor = data.find((doc) => doc.doctor_id === id);
         if (!selectedDoctor) {
           throw new Error('Doctor not found');
         }
-        // Map API response to expected DoctorProfile props
         const mappedDoctor = {
           id: selectedDoctor.doctor_id,
           doctor_name: selectedDoctor.doctor_name,
@@ -92,40 +90,80 @@ const DoctorProfileWrapper = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <div className="flex items-center space-x-6">
-        <img src={doctor.image} alt={`${doctor.doctor_name} profile`} className="w-32 h-32 rounded-full" />
+      <div className="flex items-center justify-between bg-blue-100 p-6 rounded-lg">
         <div>
-          <h1 className="text-2xl font-bold">{doctor.doctor_name}</h1> 
-          <div className="flex items-center justify-between">
-            <p className="text-gray-600">{doctor.specialty} ({doctor.qualifications})</p>
-          
-          <div className="mt-0 ml-8">
-            <a href="#" className="text-blue-600 hover:underline">Experience</a> | 
-            <a href="#" className="text-blue-600 hover:underline ml-2">Educational History</a>
+          <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt={`${doctor.doctor_name} profile`} className="w-48 h-48 rounded-lg" />
+        </div>
+        <div>
+          <h1 className="text-3xl font-bold text-blue-600">{doctor.doctor_name}</h1>
+          <p className="text-gray-600">{doctor.specialty} ({doctor.qualifications})</p>
+          <p className="text-gray-500">{doctor.experience} of experience</p>
+          <p className="text-gray-700 italic mt-2">"I believe in listening to the patient's heart – both literally and emotionally."</p>
+          <div className="mt-4 flex items-center space-x-4">
+            <span className="text-yellow-500">🏥</span>
+            <span className="text-gray-700">{doctor.hospital.name}</span>
+            <span className="text-gray-600">• {doctor.patients} patients</span>
+            <span className="text-green-600">{doctor.available ? 'Available' : 'Not Available'}</span>
           </div>
+          <div className="mt-4 flex space-x-4">
+            <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Check Availability</button>
+            <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Book Appointment</button>
           </div>
-          
-          <p className="text-gray-500">{doctor.experience}  of experience</p>
-          
         </div>
       </div>
-      <div className="mt-6 flex items-center space-x-6 ml-[9rem]">
-        <div className="flex items-right">
-          <span className="text-green-600 mr-2">✔</span>
-          <span>{doctor.hospital.name}</span>
+      <div className="mt-6 flex space-x-4">
+        <div className="flex items-center bg-gray-100 p-2 rounded">
+          <span className="text-blue-600 mr-2">👤</span>
+          <span>In clinic, Online</span>
         </div>
-        <div className="text-green-600">{doctor.available ? 'Available' : 'Not Available'}</div>
-        <div className="text-gray-500">• {doctor.patients} patients</div>
+        <div className="flex items-center bg-gray-100 p-2 rounded">
+          <span className="text-orange-600 mr-2">🗣️</span>
+          <span>English, Hindi, Telugu</span>
+        </div>
+        <div className="flex items-center bg-gray-100 p-2 rounded">
+          <span className="text-green-600 mr-2">⭐</span>
+          <span>97% recommends</span>
+        </div>
       </div>
-       <div className="flex items-center space-x-6">
-      <div className="mt-4">
-        <p className="text-gray-700">Doctor ID: {doctor.id}</p>
-        <p className="text-gray-700">Reg No.: {doctor.regNo}</p>
-      </div>
-      <div className="mt-6  ml-[5rem] flex  space-x-4">
-        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Book Appointment</button>
-        <button className="bg-blue-100 text-blue-600 px-4 py-2 rounded hover:bg-blue-200">Check Availability</button>
-      </div>
+      <div className="mt-10 p-6 bg-blue-100 rounded-lg">
+        <div className="flex items-center justify-between">
+          <div>
+            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt={`${doctor.doctor_name} profile`} className="w-48 h-48 rounded-lg" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-blue-600 mb-4">About Dr. Anita Sharma</h2>
+            <p className="text-gray-700">
+              Dr. Anita Sharma is a renowned Cardiologist with over 19 years of clinical experience in managing a wide spectrum of heart-related disorders. Known for her evidence-based approach and patient-first philosophy, Dr. Sharma specializes in both preventive cardiology and advanced interventional treatments.
+            </p>
+            <p className="text-gray-700 mt-2">
+              She is currently affiliated with Fortis Hospital, Hyderabad, and has successfully treated over 3,200+ patients across all age groups. Her calm demeanor, multilingual communication, and focus on long-term patient well-being make her a preferred cardiologist for both routine checkups and critical interventions.
+            </p>
+            <div className="mt-4 flex space-x-4 text-red-600">
+              <a href="#" className="hover:underline">Experience</a>
+              <a href="#" className="hover:underline">Education</a>
+              <a href="#" className="hover:underline">Certifications</a>
+              <a href="#" className="hover:underline">Awards</a>
+            </div>
+          </div>
+        </div>
+        <div className="mt-6 flex space-x-4">
+          <div className="flex items-center bg-white p-3 rounded shadow">
+            <img src="https://via.placeholder.com/50?text=Apollo" alt="Apollo Hospital" className="w-10 h-10 mr-2" />
+            <span>Apollo Hospital, Hyderabad</span>
+          </div>
+          <div className="flex items-center bg-white p-3 rounded shadow">
+            <img src="https://via.placeholder.com/50?text=Fortis" alt="Fortis Hospital" className="w-10 h-10 mr-2" />
+            <span>Fortis Hospital, Chennai</span>
+          </div>
+          <div className="flex items-center bg-white p-3 rounded shadow">
+            <img src="https://via.placeholder.com/50?text=Manipal" alt="Manipal Hospital" className="w-10 h-10 mr-2" />
+            <span>Manipal Hospital, Bangalore</span>
+          </div>
+        </div>
+        <div className="mt-6 flex space-x-4">
+          <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Meet Now</button>
+          <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Know More!</button>
+        </div>
       </div>
     </div>
   );

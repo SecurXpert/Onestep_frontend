@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
- 
-const RelatedDoctors = ({ doctors, specialty, date, time, onSelectDoctor}) => {
+
+const RelatedDoctors = ({ doctors, specialty, date, time, onSelectDoctor }) => {
   const [selectedSlot, setSelectedSlot] = useState(null); // Track single selected slot globally
- 
+
   const handleSlotClick = (doctorId, slot) => {
     const newSelectedSlot = { doctorId, slot };
     setSelectedSlot(newSelectedSlot); // Store single selected slot
     onSelectDoctor(doctorId, slot); // Call parent handler
   };
- 
+
   if (!doctors || doctors.length === 0) {
     return (
       <div className="text-center p-4 md:p-6 text-sm md:text-base text-gray-600">
@@ -16,7 +16,7 @@ const RelatedDoctors = ({ doctors, specialty, date, time, onSelectDoctor}) => {
       </div>
     );
   }
- 
+
   return (
     <div className="bg-white p-4 md:p-6 rounded-xl shadow-lg border border-purple-100 mb-6 md:mb-10">
       <h3 className="text-lg md:text-xl font-semibold text-purple-700 mb-4 md:mb-6">
@@ -83,5 +83,5 @@ const RelatedDoctors = ({ doctors, specialty, date, time, onSelectDoctor}) => {
     </div>
   );
 };
- 
+
 export default RelatedDoctors;

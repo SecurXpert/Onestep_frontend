@@ -48,6 +48,9 @@ import derma3 from '../assets/derma3.png';
 import psychairtisttip1 from '../assets/psychairtisttip1.png';
 import psychairtisttip2 from '../assets/psychairtisttip2.png';
 import psychairtisttip3 from '../assets/psychairtisttip3.png';
+import homeotip1 from '../assets/homeotip1.png';
+import homeotip2 from '../assets/homeotip2.png';
+import homeotip3 from '../assets/homeotip3.png';
 
 // Specialty-specific tips
 const specialtyTips = {
@@ -76,19 +79,19 @@ const specialtyTips = {
       id: 1,
       title: 'Drink Water from Copper Vessel',
       content: 'Storing water in a copper container overnight helps balance pH levels and supports digestion—an age-old wellness practice aligned with homeopathy’s natural approach.',
-      image: tip,
+      image: homeotip1,
     },
     {
       id: 2,
       title: 'Wake Up with Sunlight',
       content: 'Natural morning light boosts your mood, aligns your body clock, and supports your body’s natural healing rhythm.',
-      image: tip,
+      image: homeotip2,
     },
     {
       id: 3,
       title: 'Walk Barefoot on Grass',
       content: 'Walking barefoot on natural surfaces like grass or soil (earthing) helps reduce stress, improve sleep, and connect you to natural healing energies.',
-      image: tip,
+      image: homeotip3,
     },
   ],
   physiotherapist: [
@@ -428,9 +431,9 @@ const Department = () => {
     const fetchDoctors = async () => {
       try {
         setLoading(true);
-        let url = `http://192.168.0.123:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
+        let url = `http://192.168.0.111:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
         if (searchParams.city) {
-          url = `http://192.168.0.123:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.city)}`;
+          url = `http://192.168.0.111:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.city)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
@@ -459,9 +462,9 @@ const Department = () => {
     if (searchTerm) {
       try {
         setLoading(true);
-        let url = `http://192.168.0.123:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
+        let url = `http://192.168.0.111:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
         if (city) {
-          url = `http://192.168.0.123:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(city)}`;
+          url = `http://192.168.0.111:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(city)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
@@ -630,15 +633,26 @@ const Department = () => {
                   <p className="text-sm text-gray-600 mb-1 flex items-center">
                     <span className="mr-1">📍</span> {doctor.clinic_location || 'Not specified'}
                   </p>
-                  <button
-                    className="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/appointment/${doctor.doctor_id}`);
-                    }}
-                  >
-                    Consult Now
-                  </button>
+                  <div className="flex gap-2 mt-2">
+                    <button
+                      className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/appointment/${doctor.doctor_id}`);
+                      }}
+                    >
+                      Consult Now
+                    </button>
+                    <button
+                      className="flex-1 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm font-medium"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/doctor/${doctor.doctor_id}`);
+                      }}
+                    >
+                      View Profile
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

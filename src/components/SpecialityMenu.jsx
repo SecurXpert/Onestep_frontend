@@ -85,7 +85,7 @@ const SpecialityMenu = () => {
     if (area && searchTerm) {
       try {
         const response = await fetch(
-          `http://192.168.0.123:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`
+          `http://192.168.0.111:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch doctors');
