@@ -123,96 +123,61 @@ const SpecialityMenu = () => {
   return (
     <div className="w-full bg-white py-10">
       {/* Search Bar */}
-      <div className="w-full max-w-7xl mx-auto px-4 mb-8">
-        <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3 items-stretch w-full">
-          {/* Mobile View - Only Area Input and Specialist Dropdown */}
-          <div className="md:hidden flex flex-row gap-2 w-full">
-            <div className="relative flex-1 min-w-[160px]">
-              <input
-                type="text"
-                name="area"
-                placeholder="City or Locality"
-                className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
-                value={searchParams.area}
-                onChange={(e) => setSearchParams((prev) => ({ ...prev, area: e.target.value }))}
-              />
-            </div>
-            <div className="relative flex-1 min-w-[160px]">
-              <select
-                name="searchTerm"
-                className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg text-base appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
-                value={searchParams.searchTerm}
-                onChange={(e) => setSearchParams((prev) => ({ ...prev, searchTerm: e.target.value }))}
-              >
-                <option value="">Select Specialist</option>
-                {specialties.map((spec) => (
-                  <option key={spec} value={spec}>{spec}</option>
-                ))}
-              </select>
-              <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-            </div>
-            <button
-              type="submit"
-              className={`flex-none px-6 py-3 rounded-lg text-white transition-colors whitespace-nowrap ${
-                isSearchEnabled ? 'bg-custom-blue hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'
-              }`}
-              disabled={!isSearchEnabled}
-            >
-              Search
-            </button>
-          </div>
-
-          {/* Desktop View - Full Form */}
-          <div className="hidden md:flex flex-row gap-2 w-full">
-            {/* Area Input */}
-            <div className="relative flex-[2_1_35%] min-w-[180px]">
-              <input
-                type="text"
-                name="area"
-                placeholder="City or Locality"
-                className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
-                value={searchParams.area}
-                onChange={(e) => setSearchParams((prev) => ({ ...prev, area: e.target.value }))}
-              />
-            </div>
-
-            {/* Specialist Dropdown */}
-            <div className="relative flex-[2_1_40%] min-w-[200px]">
-              <select
-                name="searchTerm"
-                className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
-                value={searchParams.searchTerm}
-                onChange={(e) => setSearchParams((prev) => ({ ...prev, searchTerm: e.target.value }))}
-              >
-                <option value="">Select Specialist</option>
-                {specialties.map((spec) => (
-                  <option key={spec} value={spec}>{spec}</option>
-                ))}
-              </select>
-              <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-            </div>
-
-            {/* Search Button */}
-            <button
-              type="submit"
-              className={`flex-none px-6 py-3 rounded-lg text-white transition-colors whitespace-nowrap ${
-                isSearchEnabled ? 'bg-custom-blue hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'
-              }`}
-              disabled={!isSearchEnabled}
-            >
-              Search
-            </button>
-          </div>
-        </form>
+      <div className="w-full max-w-7xl mx-auto px-4 mb-8 mt-8">
+  <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4 items-center justify-center">
+    {/* Combined input container for both fields */}
+    <div className="relative w-full md:w-2/3 flex border border-gray-300 rounded-lg overflow-hidden">
+      {/* Area Input with icon */}
+      <div className="relative w-1/3 border-r border-gray-300">
+        <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
+          <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </span>
+        <input
+          type="text"
+          name="area"
+          placeholder="City or Locality"
+          className="w-full pl-10 pr-4 py-3 rounded-l-lg border-0 focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
+          value={searchParams.area}
+          onChange={(e) => setSearchParams((prev) => ({ ...prev, area: e.target.value }))}
+        />
       </div>
+
+      {/* Specialist Dropdown */}
+      <div className="relative w-2/3">
+        <select
+          name="searchTerm"
+          className="w-full px-4 py-3 border-0 border-l border-gray-300 appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue text-gray-700"
+          value={searchParams.searchTerm}
+          onChange={(e) => setSearchParams((prev) => ({ ...prev, searchTerm: e.target.value }))}
+        >
+          <option value="">Select Specialization</option>
+          {specialties.map((spec) => (
+            <option key={spec} value={spec}>{spec}</option>
+          ))}
+        </select>
+        <span className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+          <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    {/* Search Button */}
+    <button
+      type="submit"
+      className={`w-full md:w-auto px-6 py-3 rounded-lg text-white transition-colors ${
+        isSearchEnabled ? 'bg-custom-blue hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'
+      }`}
+      disabled={!isSearchEnabled}
+    >
+      Search
+    </button>
+  </form>
+</div>
 
       <div className="w-full max-w-7xl mx-auto px-2 2xs:px-3 xs:px-4 2sm:px-4 sm:px-4 md:px-4 md800:px-5 md900:px-6 lg:px-6 xl:px-8 2xl:px-10 3xl:px-12 flex flex-col 2sm:flex-row items-start 2sm:items-center justify-between mb-4 2xs:mb-5 xs:mb-6 2sm:mb-6 sm:mb-6 md:mb-6 md800:mb-7 md900:mb-7 lg:mb-8 xl:mb-9 2xl:mb-10 3xl:mb-11 gap-3 2xs:gap-3.5 xs:gap-4">
         <div className="flex flex-col">
