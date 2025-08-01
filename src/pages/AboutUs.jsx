@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import aboutus from '../assets/banner.jpg';
-import about from '../assets/aboutus.png';
+import about from '../assets/2.png';
 import security from '../assets/security.jpg';
-import doctor1 from '../assets/doctor1.png'
+import doctor1 from '../assets/doctor1.png';
 import {
   IoMedkitOutline,
   IoPeopleOutline,
@@ -89,16 +89,16 @@ const AboutUs = () => {
       <div className="w-full min-h-[40vh] mx-auto bg-b3d8e4-gradient flex flex-col md:flex-row items-center justify-between">
         {/* Left Content */}
         <div className="md:w-3/4 mb-6 md:mb-0 text-left md:text-center md:pl-32 md:pr-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-blue-600 mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
+          <h1 className="text-4xl md:text-5xl text-custom-blue font-bold text-blue-600 mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
             About One Step Medi
           </h1>
-          <h1 className="text-3xl md:text-4xl font-bold text-blue-600 mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
+          <h1 className="text-3xl md:text-4xl text-custom-blue font-bold text-blue-600 mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
             Your Digital Healthcare Partner
           </h1>
-          <p className="text-gray-700 font-medium text-base md:text-lg mb-4">
+          <p className="text-custom-blue font-medium text-base md:text-lg mb-4">
             We bring medical care to your fingertips, including online and in-clinic doctor appointments, diagnostics, and more!
           </p>
-          <p className="text-gray-700 font-medium text-base md:text-lg mb-6">
+          <p className="text-custom-blue font-medium text-base md:text-lg mb-6">
             Find Your Trusted Doctor In Just One Step – Only At OneStep Medi.
           </p>
         </div>
@@ -130,7 +130,7 @@ const AboutUs = () => {
             {/* Text Section */}
             <div className="flex justify-center px-4">
   <div className="max-w-3xl text-left">
-    <h2 className="text-2xl font-bold text-blue-600 mb-4">
+    <h2 className="text-2xl font-bold text-custom-blue mb-4">
       One Step Medi – India’s Most Trusted All-in-One Digital Healthcare Platform
     </h2>
 
@@ -153,7 +153,7 @@ const AboutUs = () => {
 
         {/* Why Choose Us Section */}
         <div>
-          <h2 className="text-4xl font-extrabold text-blue-600 mb-10 text-center tracking-tight animate-fade-in-up">
+          <h2 className="text-4xl font-extrabold text-custom-blue mb-10 text-center tracking-tight animate-fade-in-up">
             Why Choose Us?
           </h2>
 
@@ -166,7 +166,7 @@ const AboutUs = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 */}
             <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <IoPeopleOutline className="text-5xl text-blue-500 mx-auto mb-4" />
+              <IoPeopleOutline className="text-5xl text-custom-blue mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Verified Doctors</h3>
               <h3 className="text-xl font-bold text-gray-800 mb-2">130+</h3>
               <p className="text-gray-600 text-sm">
@@ -176,7 +176,7 @@ const AboutUs = () => {
 
             {/* Card 2 */}
             <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <IoMedkitOutline className="text-5xl text-blue-500 mx-auto mb-4" />
+              <IoMedkitOutline className="text-5xl text-custom-blue mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Trusted Pharmacy</h3>
               <h3 className="text-xl font-bold text-gray-800 mb-2">100+</h3>
               <p className="text-gray-600 text-sm">
@@ -186,7 +186,7 @@ const AboutUs = () => {
 
             {/* Card 3 */}
             <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <IoCartOutline className="text-5xl text-blue-500 mx-auto mb-4" />
+              <IoCartOutline className="text-5xl text-custom-blue mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Diagnostics Tie Up</h3>
               <h3 className="text-xl font-bold text-gray-800 mb-2">10+</h3>
               <p className="text-gray-600 text-sm">
@@ -196,7 +196,7 @@ const AboutUs = () => {
 
             {/* Card 4 */}
             <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <IoCashOutline className="text-5xl text-blue-500 mx-auto mb-4" />
+              <IoCashOutline className="text-5xl text-custom-blue mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Affordable Pricing</h3>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Upto 80% Discount</h3>
               <p className="text-gray-600 text-sm">
@@ -206,7 +206,7 @@ const AboutUs = () => {
 
             {/* Card 5 */}
             <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <IoHeadsetOutline className="text-5xl text-blue-500 mx-auto mb-4" />
+              <IoHeadsetOutline className="text-5xl text-custom-blue mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">24/7 Call and Chat Support</h3>
               <p className="text-gray-600 text-sm">
                 We’re always available to assist you anytime via calls and chats.
@@ -215,7 +215,7 @@ const AboutUs = () => {
 
             {/* Card 6 */}
             <div className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <IoPulseOutline className="text-5xl text-blue-500 mx-auto mb-4" />
+              <IoPulseOutline className="text-5xl text-custom-blue mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Branches</h3>
               <p className="text-gray-600 text-sm flex items-center justify-center gap-5">
                 <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 24 24" fill="red">

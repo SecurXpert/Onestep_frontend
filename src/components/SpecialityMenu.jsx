@@ -123,7 +123,7 @@ const SpecialityMenu = () => {
   return (
     <div className="w-full bg-white py-10">
       {/* Search Bar */}
-      <div className="w-full max-w-7xl mx-auto px-4 mb-8 mt-8">
+      <div className="w-full max-w-7xl mx-auto px-4 mb-8">
   <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4 items-center justify-center">
     {/* Combined input container for both fields */}
     <div className="relative w-full md:w-2/3 flex border border-gray-300 rounded-lg overflow-hidden">
