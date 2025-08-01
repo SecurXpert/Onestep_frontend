@@ -10,7 +10,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await fetchWithAuth('http://192.168.0.120:8000/doctors/all', {
+        const response = await fetchWithAuth('http://192.168.0.111:8000/doctors/all', {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
