@@ -85,7 +85,7 @@ const SpecialityMenu = () => {
     if (area && searchTerm) {
       try {
         const response = await fetch(
-          `http://192.168.0.111:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`
+          `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch doctors');
@@ -267,7 +267,7 @@ const SpecialityMenu = () => {
           </div>
           <div
             className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[250px] snap-center"
-            onClick={() => handleClick('ENT Specialist')}
+            onClick={() => handleClick('ENTSpecialist')}
           >
             <img src={ent} alt="ENT Specialist" className="w-full h-48 object-cover rounded-lg mb-2" />
             <h3 className="text-md font-medium text-gray-800">ENT Specialist</h3>

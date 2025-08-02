@@ -57,31 +57,34 @@ const Doctors = () => {
   };
 
   // Apply filter based on activeFilter and searchParams.searchTerm
-  const applyFilter = (doctors) => {
-    let filtered = activeFilter === "All"
-      ? doctors
-      : doctors.filter(doc => doc.specialization_name === activeFilter);
+const applyFilter = (doctors) => {
+  if (!doctors || !Array.isArray(doctors)) {
+    setFilterDoc([]);
+    return;
+  }
 
-    if (searchParams.searchTerm.trim() !== "") {
-      const lowerSearch = searchParams.searchTerm.toLowerCase();
-      filtered = filtered.filter(doc =>
-        doc.name.toLowerCase().includes(lowerSearch) ||
-        doc.specialization_name.toLowerCase().includes(lowerSearch)
-      );
-    }
+  let filtered = activeFilter === "All"
+    ? doctors
+    : doctors.filter(doc => doc.specialization_name === activeFilter);
 
-    setFilterDoc(filtered);
-  };
+  if (searchParams.searchTerm.trim() !== "") {
+    const lowerSearch = (searchParams.searchTerm || "").toLowerCase();
+    filtered = filtered.filter(doc =>
+      (doc.name ? doc.name.toLowerCase().includes(lowerSearch) : false) ||
+      (doc.specialization_name ? doc.specialization_name.toLowerCase().includes(lowerSearch) : false)
+    );
+  }
 
-  useEffect(() => {
-    if (specialty && doctorsListRef.current) {
-      setTimeout(() => {
-        doctorsListRef.current.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else {
-      window.scrollTo(0, 0);
-    }
-  }, [location.pathname, specialty]);
+  setFilterDoc(filtered);
+};
+
+useEffect(() => {
+  if (topdoctors && topdoctors.length > 0) {
+    applyFilter(topdoctors);
+  } else {
+    setFilterDoc([]);
+  }
+}, [activeFilter, searchParams.searchTerm, topdoctors]);
 
   useEffect(() => {
     setActiveFilter(specialty || "All");
@@ -114,9 +117,9 @@ const Doctors = () => {
 
     if (searchTerm) {
       try {
-        let url = `http://192.168.0.123:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
+        let url = `http://192.168.0.112:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
         if (area) {
-          url = `http://192.168.0.123:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
+          url = `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {

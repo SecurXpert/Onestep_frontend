@@ -53,6 +53,47 @@ import psychairtisttip3 from '../assets/psychairtisttip3.png';
 
 // Specialty-specific tips
 const specialtyTips = {
+   entspecialist: [
+    {
+      id: 1,
+      title: 'Saline Nasal Rinse',
+      content: 'Use a saline nasal rinse twice daily to clear mucus, soothe inflamed sinuses, and reduce congestion.',
+      image: tip, // Replace `tip` with your actual ENT-related image import if available
+    },
+    {
+      id: 2,
+      title: 'Steam Inhalation Relief',
+      content: 'Inhale warm steam for 5–10 minutes (bowl of hot water or hot shower) to loosen chest and nasal mucus and relieve ear‑throat pressure.',
+      image: tip, // Replace as needed
+    },
+    {
+      id: 3,
+      title: 'Avoid Irritants',
+      content: 'Identify and avoid triggers like smoke, strong perfumes, and allergens to prevent sinus and throat flare‑ups.',
+      image: tip, // Replace as needed
+    },
+  ],
+
+  ophthalmologist: [
+    {
+      id: 1,
+      title: 'Prevent Digital Eye Strain',
+      content: 'Follow the 20‑20‑20 rule: every 20 minutes of screen time, look 20 feet away for 20 seconds to prevent digital eye strain.',
+      image: tip, // Replace with relevant ophthalmology image
+    },
+    {
+      id: 2,
+      title: 'UV Protection for Eyes',
+      content: 'Wear sunglasses blocking 100% UVA/UVB whenever outdoors to protect against cataracts and macular degeneration.',
+      image: tip, // Replace as needed
+    },
+    {
+      id: 3,
+      title: 'Nutrients for Vision',
+      content: 'Snack on lutein‑ and zeaxanthin‑rich foods (spinach, kale, eggs) to support retina health and slow age‑related vision decline.',
+      image: tip, // Replace as needed
+    },
+  ],
   nurse: [
     {
       id: 1,
@@ -430,9 +471,9 @@ const Department = () => {
     const fetchDoctors = async () => {
       try {
         setLoading(true);
-        let url = `http://192.168.0.111:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
+        let url = `http://192.168.0.112:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
         if (searchParams.area) {
-          url = `http://192.168.0.111:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.area)}`;
+          url = `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
@@ -461,9 +502,9 @@ const Department = () => {
     if (searchTerm) {
       try {
         setLoading(true);
-        let url = `http://192.168.0.111:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
+        let url = `http://192.168.0.112:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
         if (area) {
-          url = `http://192.168.0.111:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
+          url = `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
