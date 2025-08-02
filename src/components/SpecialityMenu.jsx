@@ -85,7 +85,7 @@ const SpecialityMenu = () => {
     if (area && searchTerm) {
       try {
         const response = await fetch(
-          `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`
+          `http://192.168.0.162:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch doctors');
@@ -245,84 +245,116 @@ const SpecialityMenu = () => {
 </div>
 
       {/* In-Clinic Consultation Section */}
-      <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg mt-8">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">Book an in-clinic appointment with our Experienced & Verified Doctors</h2>
-        <p className="text-gray-600 mb-6">Find Nearby Specialists for Your Health Needs – Easy and Fast</p>
-        <div className="flex flex-row overflow-x-auto space-x-4 pb-4 snap-x snap-mandatory md:grid md:grid-cols-4 md:gap-6 md:overflow-x-hidden">
-          <div
-            className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[250px] snap-center"
-            onClick={() => handleClick('Dentist')}
-          >
-            <img src={dental} alt="Dentist" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">Dentist</h3>
-            <p className="text-sm text-gray-600 text-center">for dental care, cleaning, root canal, etc.</p>
-          </div>
-          <div
-            className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[250px] snap-center"
-            onClick={() => handleClick('Cosmetologist')}
-          >
-            <img src={derma} alt="Cosmetologist / Dermatologist" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">Cosmetologist / Dermatologist</h3>
-            <p className="text-sm text-gray-600 text-center">For skin, hair, and aesthetic treatments</p>
-          </div>
-          <div
-            className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[250px] snap-center"
-            onClick={() => handleClick('ENTSpecialist')}
-          >
-            <img src={ent} alt="ENT Specialist" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">ENT Specialist</h3>
-            <p className="text-sm text-gray-600 text-center">For ear, nose, and throat disorders</p>
-          </div>
-          <div
-            className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[250px] snap-center"
-            onClick={() => handleClick('Ophthalmologist')}
-          >
-            <img src={Ophthalmologist} alt="Ophthalmologist" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">Ophthalmologist</h3>
-            <p className="text-sm text-gray-600 text-center">for eye checkups, vision problems, and surgeries.</p>
-          </div>
-        </div>
-      </div>
+<div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg mt-8">
+  <h2 className="text-base 2xs:text-base xs:text-lg 2sm:text-lg sm:text-lg md:text-lg md800:text-xl md900:text-xl lg:text-xl font-semibold text-gray-700 mb-4">Book an in-clinic appointment with our Experienced & Verified Doctors</h2>
+  <p className="text-gray-600 text-xs 2xs:text-xs xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-base md900:text-base lg:text-base mb-6">Find Nearby Specialists for Your Health Needs – Easy and Fast</p>
+  <div className="flex flex-row overflow-x-auto space-x-4 pb-4 snap-x snap-mandatory md:grid md:grid-cols-4 md:gap-6 md:overflow-x-hidden">
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[150px] 2xs:min-w-[160px] xs:min-w-[170px] 2sm:min-w-[180px] sm:min-w-[200px] md:min-w-[220px] md800:min-w-[230px] md900:min-w-[240px] lg:min-w-[250px] snap-center"
+      onClick={() => handleClick('Dentist')}
+    >
+      <img
+        src={dental}
+        alt="Dentist"
+        className="w-full h-28 2xs:h-32 xs:h-36 2sm:h-40 sm:h-44 md:h-46 md800:h-46 md900:h-46 lg:h-48 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-sm xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-md md900:text-md lg:text-md font-medium text-gray-800">Dentist</h3>
+      <p className="text-xs 2xs:text-xs xs:text-xs 2sm:text-xs sm:text-xs md:text-xs md800:text-sm md900:text-sm lg:text-sm text-gray-600 text-center">for dental care, cleaning, root canal, etc.</p>
+    </div>
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[150px] 2xs:min-w-[160px] xs:min-w-[170px] 2sm:min-w-[180px] sm:min-w-[200px] md:min-w-[220px] md800:min-w-[230px] md900:min-w-[240px] lg:min-w-[250px] snap-center"
+      onClick={() => handleClick('Cosmetologist')}
+    >
+      <img
+        src={derma}
+        alt="Dermatologist"
+        className="w-full h-28 2xs:h-32 xs:h-36 2sm:h-40 sm:h-44 md:h-46 md800:h-46 md900:h-46 lg:h-48 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-sm xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-md md900:text-md lg:text-md font-medium text-gray-800">Dermatologist</h3>
+      <p className="text-xs 2xs:text-xs xs:text-xs 2sm:text-xs sm:text-xs md:text-xs md800:text-sm md900:text-sm lg:text-sm text-gray-600 text-center">For skin, hair, and aesthetic treatments</p>
+    </div>
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[150px] 2xs:min-w-[160px] xs:min-w-[170px] 2sm:min-w-[180px] sm:min-w-[200px] md:min-w-[220px] md800:min-w-[230px] md900:min-w-[240px] lg:min-w-[250px] snap-center"
+      onClick={() => handleClick('ENT Specialist')}
+    >
+      <img
+        src={ent}
+        alt="ENT Specialist"
+        className="w-full h-28 2xs:h-32 xs:h-36 2sm:h-40 sm:h-44 md:h-46 md800:h-46 md900:h-46 lg:h-48 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-sm xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-md md900:text-md lg:text-md font-medium text-gray-800">ENT Specialist</h3>
+      <p className="text-xs 2xs:text-xs xs:text-xs 2sm:text-xs sm:text-xs md:text-xs md800:text-sm md900:text-sm lg:text-sm text-gray-600 text-center">For ear, nose, and throat disorders</p>
+    </div>
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[150px] 2xs:min-w-[160px] xs:min-w-[170px] 2sm:min-w-[180px] sm:min-w-[200px] md:min-w-[220px] md800:min-w-[230px] md900:min-w-[240px] lg:min-w-[250px] snap-center"
+      onClick={() => handleClick('Ophthalmologist')}
+    >
+      <img
+        src={Ophthalmologist}
+        alt="Ophthalmologist"
+        className="w-full h-28 2xs:h-32 xs:h-36 2sm:h-40 sm:h-44 md:h-46 md800:h-46 md900:h-46 lg:h-48 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-sm xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-md md900:text-md lg:text-md font-medium text-gray-800">Ophthalmologist</h3>
+      <p className="text-xs 2xs:text-xs xs:text-xs 2sm:text-xs sm:text-xs md:text-xs md800:text-sm md900:text-sm lg:text-sm text-gray-600 text-center">for eye checkups, vision problems, and surgeries.</p>
+    </div>
+  </div>
+</div>
 
       {/* Expert Healthcare Section */}
-      <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg mt-8">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">Expert HealthCare – Right at Your Doorstep</h2>
-        <p className="text-gray-600 mb-6">Book trusted specialists nearby for quick consultations and appointments</p>
-        <div className="flex flex-row overflow-x-auto space-x-4 pb-4 snap-x snap-mandatory md:grid md:grid-cols-4 md:gap-6 md:overflow-x-hidden">
-          <div
-            className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[250px] snap-center"
-            onClick={() => handleClick('Physiotherapist')}
-          >
-            <img src={phys} alt="Physiotherapist" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">Physiotherapist</h3>
-            <p className="text-sm text-gray-600 text-center">for recovery, rehabilitation, and mobility support.</p>
-          </div>
-          <div
-            className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[250px] snap-center"
-            onClick={() => handleClick('Nutritionist')}
-          >
-            <img src={nutritionist} alt="Nutritionist / Dietitian" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">Nutritionist / Dietitian</h3>
-            <p className="text-sm text-gray-600 text-center">for personalized diet planning and nutrition advice.</p>
-          </div>
-          <div
-            className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[250px] snap-center"
-            onClick={() => handleClick('Homeopathy')}
-          >
-            <img src={Homeopathy} alt="General Physician" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">Homeopathy</h3>
-            <p className="text-sm text-gray-600 text-center">treat conditions like allergies, skin disorders, migraines, digestive issues, anxiety, and chronic pain</p>
-          </div>
-          <div
-            className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[250px] snap-center"
-            onClick={() => handleClick('Nurse')}
-          >
-            <img src={nurse} alt="Nurse / Elderly Care Assistant" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">Nurse / First Aid</h3>
-            <p className="text-sm text-gray-600 text-center">for post-surgical care, injections, wound dressing</p>
-          </div>
-        </div>
-      </div>
+<div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg mt-8">
+  <h2 className="text-base 2xs:text-base xs:text-lg 2sm:text-lg sm:text-lg md:text-lg md800:text-xl md900:text-xl lg:text-xl font-semibold text-gray-700 mb-4">Expert HealthCare – Right at Your Doorstep</h2>
+  <p className="text-gray-600 text-xs 2xs:text-xs xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-base md900:text-base lg:text-base mb-6">Book trusted specialists nearby for quick consultations and appointments</p>
+  <div className="flex flex-row overflow-x-auto space-x-4 pb-4 snap-x snap-mandatory md:grid md:grid-cols-4 md:gap-6 md:overflow-x-hidden">
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[150px] 2xs:min-w-[160px] xs:min-w-[170px] 2sm:min-w-[180px] sm:min-w-[200px] md:min-w-[220px] md800:min-w-[230px] md900:min-w-[240px] lg:min-w-[250px] snap-center"
+      onClick={() => handleClick('Physiotherapist')}
+    >
+      <img
+        src={phys}
+        alt="Physiotherapist"
+        className="w-full h-28 2xs:h-32 xs:h-36 2sm:h-40 sm:h-44 md:h-46 md800:h-46 md900:h-46 lg:h-48 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-sm xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-md md900:text-md lg:text-md font-medium text-gray-800">Physiotherapist</h3>
+      <p className="text-xs 2xs:text-xs xs:text-xs 2sm:text-xs sm:text-xs md:text-xs md800:text-sm md900:text-sm lg:text-sm text-gray-600 text-center">for recovery, rehabilitation, and mobility support.</p>
+    </div>
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[150px] 2xs:min-w-[160px] xs:min-w-[170px] 2sm:min-w-[180px] sm:min-w-[200px] md:min-w-[220px] md800:min-w-[230px] md900:min-w-[240px] lg:min-w-[250px] snap-center"
+      onClick={() => handleClick('Nutritionist')}
+    >
+      <img
+        src={nutritionist}
+        alt="Nutritionist / Dietitian"
+        className="w-full h-28 2xs:h-32 xs:h-36 2sm:h-40 sm:h-44 md:h-46 md800:h-46 md900:h-46 lg:h-48 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-sm xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-md md900:text-md lg:text-md font-medium text-gray-800">Nutritionist / Dietitian</h3>
+      <p className="text-xs 2xs:text-xs xs:text-xs 2sm:text-xs sm:text-xs md:text-xs md800:text-sm md900:text-sm lg:text-sm text-gray-600 text-center">for personalized diet planning and nutrition advice.</p>
+    </div>
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[150px] 2xs:min-w-[160px] xs:min-w-[170px] 2sm:min-w-[180px] sm:min-w-[200px] md:min-w-[220px] md800:min-w-[230px] md900:min-w-[240px] lg:min-w-[250px] snap-center"
+      onClick={() => handleClick('Homeopathy')}
+    >
+      <img
+        src={Homeopathy}
+        alt="General Physician"
+        className="w-full h-28 2xs:h-32 xs:h-36 2sm:h-40 sm:h-44 md:h-46 md800:h-46 md900:h-46 lg:h-48 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-sm xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-md md900:text-md lg:text-md font-medium text-gray-800">Homeopathy</h3>
+      <p className="text-xs 2xs:text-xs xs:text-xs 2sm:text-xs sm:text-xs md:text-xs md800:text-sm md900:text-sm lg:text-sm text-gray-600 text-center">treat conditions like allergies, skin disorders, migraines, digestive issues, anxiety, and chronic pain</p>
+    </div>
+    <div
+      className="flex flex-col items-center cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 min-w-[150px] 2xs:min-w-[160px] xs:min-w-[170px] 2sm:min-w-[180px] sm:min-w-[200px] md:min-w-[220px] md800:min-w-[230px] md900:min-w-[240px] lg:min-w-[250px] snap-center"
+      onClick={() => handleClick('Nurse')}
+    >
+      <img
+        src={nurse}
+        alt="Nurse / Elderly Care Assistant"
+        className="w-full h-28 2xs:h-32 xs:h-36 2sm:h-40 sm:h-44 md:h-46 md800:h-46 md900:h-46 lg:h-48 object-cover rounded-lg mb-2"
+      />
+      <h3 className="text-sm 2xs:text-sm xs:text-sm 2sm:text-sm sm:text-sm md:text-sm md800:text-md md900:text-md lg:text-md font-medium text-gray-800">Nurse / Elderly Care Assistant</h3>
+      <p className="text-xs 2xs:text-xs xs:text-xs 2sm:text-xs sm:text-xs md:text-xs md800:text-sm md900:text-sm lg:text-sm text-gray-600 text-center">for post-surgical care, injections, wound dressing</p>
+    </div>
+  </div>
+</div>
 
       {/* Articles Section */}
       <div className="w-full max-w-7xl mx-auto px-8 py-8 mt-8 flex flex-col md:flex-row items-start bg-white shadow-md rounded-lg justify-center">

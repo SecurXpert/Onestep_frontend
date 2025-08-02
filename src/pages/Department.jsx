@@ -471,9 +471,9 @@ const Department = () => {
     const fetchDoctors = async () => {
       try {
         setLoading(true);
-        let url = `http://192.168.0.112:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
+        let url = `http://192.168.0.162:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
         if (searchParams.area) {
-          url = `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.area)}`;
+          url = `http://192.168.0.162:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
@@ -502,9 +502,9 @@ const Department = () => {
     if (searchTerm) {
       try {
         setLoading(true);
-        let url = `http://192.168.0.112:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
+        let url = `http://192.168.0.162:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
         if (area) {
-          url = `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
+          url = `http://192.168.0.162:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {

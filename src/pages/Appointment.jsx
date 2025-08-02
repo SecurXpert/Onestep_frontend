@@ -115,7 +115,7 @@ const Appointment = () => {
   const fetchDoctor = async () => {
     setIsLoading(true);
     try {
-      const response = await fetchWithAuth('http://192.168.0.112:8000/doctors/all', {
+      const response = await fetchWithAuth('http://192.168.0.162:8000/doctors/all', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -149,7 +149,7 @@ const Appointment = () => {
  
   try {
     const response = await fetchWithAuth(
-      `http://192.168.0.112:8000/slots/similar-doctors?specialization=${encodeURIComponent(
+      `http://192.168.0.162:8000/slots/similar-doctors?specialization=${encodeURIComponent(
         doctor.specialization_name
       )}&exclude_doctor_id=${id}&preferred_date=${selectedDate}`,
       {
@@ -213,7 +213,7 @@ const Appointment = () => {
     setValidationErrors([]);
     try {
       const response = await fetchWithAuth(
-        `http://192.168.0.112:8000/slots/available-slots?preferred_date=${date}&doctor_id=${id}`,
+        `http://192.168.0.162:8000/slots/available-slots?preferred_date=${date}&doctor_id=${id}`,
         {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
@@ -441,7 +441,7 @@ const Appointment = () => {
       }
       console.log('FormData entries:', [...formData.entries()]);
 
-      const response = await fetchWithAuth('http://192.168.0.112:8000/appointments/book', {
+      const response = await fetchWithAuth('http://192.168.0.162:8000/appointments/book', {
         method: 'POST',
         body: formData,
       });

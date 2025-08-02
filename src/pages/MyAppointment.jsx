@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-import AppointmentCard from "../components/AppointmentCard"
+import AppointmentCard from "../components/AppointmentCard";
 
 const MyAppointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -72,7 +71,16 @@ const MyAppointment = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10 space-y-6">
+    <div className="max-w-5xl mx-auto px-4 py-10 space-y-6 h-screen overflow-y-auto md:ml-64 scrollbar-hide">
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
+        }
+      `}</style>
       <h1 className="text-3xl font-bold text-center text-black mb-8">My Appointments</h1>
 
       {appointments.length === 0 ? (

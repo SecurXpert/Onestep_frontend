@@ -6,11 +6,11 @@ import apollo from '../assets/apollo.png'
 import clicnic1 from '../assets/clicnic1.jpg'
 import clicnic2 from '../assets/clicnic2.jpg'
 import doctor1 from '../assets/doctor1.png'
-
+ 
 const DoctorProfileWrapper = () => {
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(1); // Center card index
-
+ 
   const scrollToCard = (index) => {
     const container = scrollRef.current;
     if (!container) return;
@@ -21,11 +21,11 @@ const DoctorProfileWrapper = () => {
       behavior: 'smooth',
     });
   };
-
+ 
   useEffect(() => {
     scrollToCard(activeIndex);
   }, [activeIndex]);
-
+ 
   const doctor = {
     name: "Dr. Anil Sharma",
     title: "Cardiologist (MBBS, MD)",
@@ -44,7 +44,7 @@ const DoctorProfileWrapper = () => {
     about: {
       name: "Dr. Anita Sharma",
       description: `Dr. Anita Sharma is a renowned Cardiologist with over 10 years of clinical experience in managing a wide spectrum of heart-related disorders. Known for her evidence-based approach and patient-first philosophy, Dr. Sharma specializes in both preventive cardiology and critical interventions.
-
+ 
 She is currently affiliated with Fortis Hospital, Hyderabad, and has successfully treated over a thousand patients with complex heart problems. Her methodical and structured care has ensured that patients get long-term well-being. Dr. Anita is a preferred cardiologist for both routine checkups and critical interventions.`,
       tabs: [
         { label: "Experience", color: "bg-red-100 text-red-500" },
@@ -116,7 +116,7 @@ She is currently affiliated with Fortis Hospital, Hyderabad, and has successfull
       "Follow Up and Stay Consistent"
     ]
   };
-
+ 
   // Article Card Component (styled as in the screenshot)
   const ArticleCard = ({ art, idx, isActive }) => (
     <div
@@ -149,9 +149,9 @@ She is currently affiliated with Fortis Hospital, Hyderabad, and has successfull
       </div>
      
     </div>
-    
+   
   );
-
+ 
   return (
     <div className="bg-[#f7fafd] min-h-screen font-sans">
       {/* Profile Header Section */}
@@ -225,7 +225,7 @@ She is currently affiliated with Fortis Hospital, Hyderabad, and has successfull
                 ))}
               </div>
               <div className="mt-3 flex gap-2">
-                
+               
                 <button className="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded">Consult Now</button>
                 <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded">Know More !</button>
               </div>
@@ -308,10 +308,10 @@ She is currently affiliated with Fortis Hospital, Hyderabad, and has successfull
       {/* Articles and Solutions - BLUE GRADIENT BACKGROUND, MODERN LAYOUT */}
      <div className="max-w-7xl mx-auto bg-gradient-to-r from-[#6ec1e4] via-[#b8d8f5] to-[#f7fafd] rounded-xl shadow-md p-6 mt-8">
   <div className="flex flex-col md:flex-row gap-8 md:gap-6 items-center">
-    
+   
     {/* Left side: Articles */}
     <div className="flex-[1.5] relative flex items-center min-h-[260px]">
-      
+     
       {/* Left arrow */}
       <button
         onClick={() => setActiveIndex((prev) => Math.max(0, prev - 1))}
@@ -320,7 +320,7 @@ She is currently affiliated with Fortis Hospital, Hyderabad, and has successfull
       >
         <ChevronLeft className="w-5 h-5 text-blue-700" />
       </button>
-
+ 
       {/* Cards */}
       <div
         ref={scrollRef}
@@ -336,7 +336,7 @@ She is currently affiliated with Fortis Hospital, Hyderabad, and has successfull
           />
         ))}
       </div>
-
+ 
       {/* Right arrow */}
       <button
         onClick={() =>
@@ -350,7 +350,7 @@ She is currently affiliated with Fortis Hospital, Hyderabad, and has successfull
         <ChevronRight className="w-5 h-5 text-blue-700" />
       </button>
     </div>
-
+ 
     {/* Right side: Steps */}
     <div className="md:w-[350px] w-full mt-8 md:mt-0 flex flex-col items-center">
       <h3 className="text-2xl font-bold mb-3 text-gray-900 text-center md:text-left">
@@ -373,10 +373,10 @@ She is currently affiliated with Fortis Hospital, Hyderabad, and has successfull
         </button>
       </div>
     </div>
-
+ 
   </div>
 </div>
-
+ 
       {/* Video and Health Tips */}
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-6 mt-8 mb-10">
         <div className="flex-1">
@@ -410,5 +410,5 @@ She is currently affiliated with Fortis Hospital, Hyderabad, and has successfull
     </div>
   );
 };
-
+ 
 export default DoctorProfileWrapper;
