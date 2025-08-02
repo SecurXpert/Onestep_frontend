@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchWithAuth } from '../utils/api';
+import { jwtDecode } from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -146,6 +147,20 @@ export const AuthProvider = ({ children }) => {
         }
         setIsLoggedIn(true);
 
+        // Decode JWT token to check role
+        let userRole = '';
+        try {
+          const decodedToken = jwtDecode(data.access_token);
+          console.log("Decoded JWT token:", decodedToken); // Debug token content
+          userRole = decodedToken.role ? decodedToken.role.toLowerCase() : '';
+          if (!userRole) {
+            console.warn("No role found in JWT token. Defaulting to standard user.");
+          }
+        } catch (error) {
+          console.error("Error decoding JWT token:", error);
+          userRole = '';
+        }
+
         const profileResponse = await fetchWithAuth('http://192.168.0.112:8000/profile/me', {
           method: 'GET',
         });
@@ -171,6 +186,16 @@ export const AuthProvider = ({ children }) => {
           if (!formattedProfile.patient_id) {
             console.warn("No patient_id in profile. User may need to complete profile.");
           }
+
+          // Navigate based on role
+          if (userRole === 'superadmin') {
+            console.log("Navigating to /super_dashboard for superadmin");
+            navigate('/super_dashboard', { replace: true });
+          } else {
+            console.log("Navigating to /dashboard for non-superadmin");
+            navigate('/dashboard', { replace: true });
+          }
+
           return { success: true, data };
         } else {
           console.error('Failed to fetch profile after login:', await profileResponse.json());

@@ -318,7 +318,7 @@ const SpecialityMenu = () => {
             onClick={() => handleClick('Nurse')}
           >
             <img src={nurse} alt="Nurse / Elderly Care Assistant" className="w-full h-48 object-cover rounded-lg mb-2" />
-            <h3 className="text-md font-medium text-gray-800">Nurse / Elderly Care Assistant</h3>
+            <h3 className="text-md font-medium text-gray-800">Nurse / First Aid</h3>
             <p className="text-sm text-gray-600 text-center">for post-surgical care, injections, wound dressing</p>
           </div>
         </div>
