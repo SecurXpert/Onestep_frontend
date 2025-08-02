@@ -28,7 +28,7 @@ const Headers = () => {
         <p className="text-custom-blue font-bold text-xs 2xs:text-xs xs:text-xs 2sm:text-sm sm:text-sm md:text-sm mb-4 sm:mb-5 md:mb-6">
           Find Your Trusted Doctor In Just One Step – Only At OneStep Medi.
         </p>
-        <div className="flex pl-20  gap-4">
+        <div className="flex justify-center 2xs:justify-center xs:justify-center 2sm:justify-center sm:justify-center md:justify-center md800:justify-center md900:justify-center lg:pl-20 gap-4">
           <button
             onClick={handleAppointmentClick}
             className="px-4 py-2 bg-custom-blue text-white font-semibold rounded-xl hover:bg-blue-700 transition-all duration-300"
