@@ -33,6 +33,7 @@ const Appointment = () => {
     optionalDoctorId: '',
     blood_group: '',
     medical_history: false,
+    alternativeTime: '',
   });
   const [reportFile, setReportFile] = useState(null);
   const [selectedDate, setSelectedDate] = useState('');
@@ -64,6 +65,7 @@ const Appointment = () => {
     return age.toString();
   };
 
+  // Initial setup and user data population
   useEffect(() => {
     if (!isLoggedIn) {
       alert('Please log in to book an appointment.');
@@ -98,7 +100,13 @@ const Appointment = () => {
     }
   }, [id, isLoggedIn, navigate, topdoctors, user, bookingForSelf]);
 
+  // Fetch related doctors when conditions are met
   useEffect(() => {
+    console.log('Related doctors useEffect triggered:', {
+      showRelatedDoctors,
+      hasSpecialization: !!doctor?.specialization_name,
+      selectedDate,
+    });
     if (showRelatedDoctors && doctor?.specialization_name && selectedDate) {
       fetchRelatedDoctors();
     }
@@ -107,7 +115,7 @@ const Appointment = () => {
   const fetchDoctor = async () => {
     setIsLoading(true);
     try {
-      const response = await fetchWithAuth('http://192.168.0.112:8000/doctors/all', {
+      const response = await fetchWithAuth('http://192.168.0.162:8000/doctors/all', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -133,53 +141,53 @@ const Appointment = () => {
     }
   };
 
-  const fetchRelatedDoctors = async () => {
-    if (!doctor?.specialization_name || !selectedDate) {
-      console.log('Skipping fetchRelatedDoctors: missing specialization or date');
-      return;
-    }
-
-    try {
-      const response = await fetchWithAuth(
-        `http://192.168.0.112:8000/slots/similar-doctors?specialization=${encodeURIComponent(
-          doctor.specialization_name
-        )}&exclude_doctor_id=${id}&preferred_date=${selectedDate}`,
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
-      const data = await response.json();
-      if (response.ok) {
-        const grouped = {};
-        (data.Available_slots || []).forEach((slot) => {
-          if (!grouped[slot.doctor_id]) {
-            grouped[slot.doctor_id] = {
-              doctor_id: slot.doctor_id,
-              doctor_name: slot.doctor_name || 'Unknown Doctor',
-              specialization_name: doctor.specialization_name,
-              consultation_fee: slot.consultation_fee || 'N/A',
-              image: slot.image || '/src/assets/default-doctor.png',
-              time_slots: [],
-            };
-          }
-          grouped[slot.doctor_id].time_slots = [
-            ...new Set([...grouped[slot.doctor_id].time_slots, slot.time_slot]),
-          ];
-        });
-        const relatedDocs = Object.values(grouped);
-        console.log('Related doctors fetched:', relatedDocs);
-        setRelatedDoctors(relatedDocs);
-        setShowRelatedDoctors(relatedDocs.length > 0);
-      } else {
-        throw new Error(data.detail || 'Failed to fetch related doctors');
+ const fetchRelatedDoctors = async () => {
+  if (!doctor?.specialization_name || !selectedDate) {
+    console.log('Skipping fetchRelatedDoctors: missing specialization or date');
+    return;
+  }
+ 
+  try {
+    const response = await fetchWithAuth(
+      `http://192.168.0.162:8000/slots/similar-doctors?specialization=${encodeURIComponent(
+        doctor.specialization_name
+      )}&exclude_doctor_id=${id}&preferred_date=${selectedDate}`,
+      {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
       }
-    } catch (error) {
-      console.error('Error fetching related doctors:', error);
-      setError(`Unable to fetch related doctors: ${error.message}. Please try another time or doctor.`);
-      setRelatedDoctors([]);
+    );
+    const data = await response.json();
+    if (response.ok) {
+      const grouped = {};
+      (data.Available_slots || []).forEach((slot) => {
+        if (!grouped[slot.doctor_id]) {
+          grouped[slot.doctor_id] = {
+            doctor_id: slot.doctor_id,
+            doctor_name: slot.doctor_name || 'Unknown Doctor',
+            specialization_name: doctor.specialization_name,
+            consultation_fee: slot.consultation_fee || 'N/A',
+            image: slot.image || '/src/assets/default-doctor.png',
+            time_slots: [],
+          };
+        }
+        grouped[slot.doctor_id].time_slots = [
+          ...new Set([...grouped[slot.doctor_id].time_slots, slot.time_slot]),
+        ];
+      });
+      const relatedDocs = Object.values(grouped);
+      console.log('Related doctors fetched:', relatedDocs);
+      setRelatedDoctors(relatedDocs);
+      setShowRelatedDoctors(relatedDocs.length > 0);
+    } else {
+      throw new Error(data.detail || 'Failed to fetch related doctors');
     }
-  };
+  } catch (error) {
+    console.error('Error fetching related doctors:', error);
+    setError(`Unable to fetch related doctors: ${error.message}. Please try another time or doctor.`);
+    setRelatedDoctors([]);
+  }
+};
 
   const getDayOfWeek = (offset) => {
     const date = new Date(Date.now() + offset * 86400000);
@@ -205,13 +213,14 @@ const Appointment = () => {
     setValidationErrors([]);
     try {
       const response = await fetchWithAuth(
-        `http://192.168.0.112:8000/slots/available-slots?preferred_date=${date}&doctor_id=${id}`,
+        `http://192.168.0.162:8000/slots/available-slots?preferred_date=${date}&doctor_id=${id}`,
         {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         }
       );
       const data = await response.json();
+      console.log('Available slots API response:', data);
       if (response.ok) {
         const uniqueTimes = [...new Set(data.available_slots?.map((slot) => slot.time_slot) || [])];
         setAvailableTimes(uniqueTimes);
@@ -273,7 +282,7 @@ const Appointment = () => {
       setShowRelatedDoctors(true);
       fetchRelatedDoctors();
       setBookingStatus(
-        `Doctor ${doctor?.name || 'Unknown'} is not available at ${time}. Please select another time or doctor.`
+        `Doctor ${doctor?.doctor_name || 'Unknown'} is not available at ${time}. Please select another time or doctor.`
       );
     } else {
       setSelectedTime(time);
@@ -326,6 +335,7 @@ const Appointment = () => {
     }
     if (!id) missingFields.push('Doctor ID (from URL parameters)');
     if (!doctor || !doctor.specialization_name) missingFields.push('Doctor or Specialization');
+    if (!doctor?.doctor_name) missingFields.push('Doctor Name');
     if (!selectedDate) missingFields.push('Preferred Date');
     if (!selectedTime) missingFields.push('Time Slot');
     if (!selectedMode) missingFields.push('Appointment Mode');
@@ -378,7 +388,6 @@ const Appointment = () => {
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`;
       };
 
-      // Convert DOB from DD/MM/YYYY to YYYY-MM-DD
       const formatDOB = (dob) => {
         if (!dob || !/^\d{2}\/\d{2}\/\d{4}$/.test(dob)) return dob;
         const [day, month, year] = dob.split('/');
@@ -387,6 +396,7 @@ const Appointment = () => {
 
       const appointmentData = {
         doctor_id: id,
+        doctor_name: doctor.doctor_name || 'Unknown Doctor',
         preferred_date: selectedDate,
         time_slot: timeTo24Hour(selectedTime),
         appointment_type: selectedMode.toLowerCase().replace(' ', '_'),
@@ -419,7 +429,6 @@ const Appointment = () => {
       console.log('appointmentData before sending:', JSON.stringify(appointmentData, null, 2));
       console.log('reportFile exists:', !!reportFile);
 
-      // Always use FormData to match Postman
       console.log('Sending request with FormData');
       const formData = new FormData();
       Object.entries(appointmentData).forEach(([key, value]) => {
@@ -432,7 +441,7 @@ const Appointment = () => {
       }
       console.log('FormData entries:', [...formData.entries()]);
 
-      const response = await fetchWithAuth('http://192.168.0.112:8000/appointments/book', {
+      const response = await fetchWithAuth('http://192.168.0.162:8000/appointments/book', {
         method: 'POST',
         body: formData,
       });
@@ -493,7 +502,7 @@ const Appointment = () => {
     return <div className="text-center p-6 md:p-10">Loading...</div>;
   }
 
-  if (error || !doctor) {
+  if (error && !doctor) {
     return (
       <div className="text-center p-6 md:p-10 text-sm md:text-base">
         {error || 'Doctor not found. Please try another doctor or contact support.'}
@@ -507,7 +516,11 @@ const Appointment = () => {
         <DoctorProfile doctor={doctor} />
         <div className="bg-white p-4 md:p-6 rounded-xl shadow-lg border border-purple-100 mb-6 md:mb-10">
           <h3 className="text-lg md:text-xl font-semibold text-purple-700 mb-4 md:mb-6">Book Your Appointment</h3>
-          {error && <p className="text-red-600 text-xs md:text-sm mb-4">{error}</p>}
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-sm">
+              {error}
+            </div>
+          )}
           {validationErrors.length > 0 && (
             <div className="text-red-600 text-xs md:text-sm mb-4">
               <p>Please correct the following errors:</p>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const RelatedDoctors = ({ doctors, specialty, date, time, onSelectDoctor }) => {
+const RelatedDoctors = ({ doctors, specialty, date, time, onSelectDoctor, patientInfo }) => {
   const [selectedSlot, setSelectedSlot] = useState(null); // Track single selected slot globally
 
   const handleSlotClick = (doctorId, slot) => {
@@ -9,10 +9,24 @@ const RelatedDoctors = ({ doctors, specialty, date, time, onSelectDoctor }) => {
     onSelectDoctor(doctorId, slot); // Call parent handler
   };
 
+  console.log('RelatedDoctors props:', { doctors, specialty, date, time, patientInfo });
+
   if (!doctors || doctors.length === 0) {
     return (
-      <div className="text-center p-4 md:p-6 text-sm md:text-base text-gray-600">
-        No alternative doctors available for {specialty} on {date}.
+      <div className="bg-white p-4 md:p-6 rounded-xl shadow-lg border border-purple-100 mb-6 md:mb-10">
+        <h3 className="text-lg md:text-xl font-semibold text-purple-700 mb-4 md:mb-6">
+          Alternative Doctors for {specialty}
+        </h3>
+        <div className="text-center text-sm md:text-base text-gray-600">
+          No alternative doctors available for {specialty} on{' '}
+          {date
+            ? new Date(date).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })
+            : 'the selected date'}.
+        </div>
       </div>
     );
   }

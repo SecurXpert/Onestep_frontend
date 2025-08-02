@@ -49,13 +49,51 @@ import derma3 from '../assets/derma3.png';
 import psychairtisttip1 from '../assets/psychairtisttip1.png';
 import psychairtisttip2 from '../assets/psychairtisttip2.png';
 import psychairtisttip3 from '../assets/psychairtisttip3.png';
-import homeotip1 from '../assets/homeotip1.png';
-import homeotip2 from '../assets/homeotip2.png';
-import homeotip3 from '../assets/homeotip3.png';
 
 
 // Specialty-specific tips
 const specialtyTips = {
+   entspecialist: [
+    {
+      id: 1,
+      title: 'Saline Nasal Rinse',
+      content: 'Use a saline nasal rinse twice daily to clear mucus, soothe inflamed sinuses, and reduce congestion.',
+      image: tip, // Replace `tip` with your actual ENT-related image import if available
+    },
+    {
+      id: 2,
+      title: 'Steam Inhalation Relief',
+      content: 'Inhale warm steam for 5–10 minutes (bowl of hot water or hot shower) to loosen chest and nasal mucus and relieve ear‑throat pressure.',
+      image: tip, // Replace as needed
+    },
+    {
+      id: 3,
+      title: 'Avoid Irritants',
+      content: 'Identify and avoid triggers like smoke, strong perfumes, and allergens to prevent sinus and throat flare‑ups.',
+      image: tip, // Replace as needed
+    },
+  ],
+
+  ophthalmologist: [
+    {
+      id: 1,
+      title: 'Prevent Digital Eye Strain',
+      content: 'Follow the 20‑20‑20 rule: every 20 minutes of screen time, look 20 feet away for 20 seconds to prevent digital eye strain.',
+      image: tip, // Replace with relevant ophthalmology image
+    },
+    {
+      id: 2,
+      title: 'UV Protection for Eyes',
+      content: 'Wear sunglasses blocking 100% UVA/UVB whenever outdoors to protect against cataracts and macular degeneration.',
+      image: tip, // Replace as needed
+    },
+    {
+      id: 3,
+      title: 'Nutrients for Vision',
+      content: 'Snack on lutein‑ and zeaxanthin‑rich foods (spinach, kale, eggs) to support retina health and slow age‑related vision decline.',
+      image: tip, // Replace as needed
+    },
+  ],
   nurse: [
     {
       id: 1,
@@ -81,19 +119,19 @@ const specialtyTips = {
       id: 1,
       title: 'Drink Water from Copper Vessel',
       content: 'Storing water in a copper container overnight helps balance pH levels and supports digestion—an age-old wellness practice aligned with homeopathy’s natural approach.',
-      image: homeotip1,
+      image: tip,
     },
     {
       id: 2,
       title: 'Wake Up with Sunlight',
       content: 'Natural morning light boosts your mood, aligns your body clock, and supports your body’s natural healing rhythm.',
-      image: homeotip2,
+      image: tip,
     },
     {
       id: 3,
       title: 'Walk Barefoot on Grass',
       content: 'Walking barefoot on natural surfaces like grass or soil (earthing) helps reduce stress, improve sleep, and connect you to natural healing energies.',
-      image: homeotip3,
+      image: tip,
     },
   ],
   physiotherapist: [
@@ -433,9 +471,9 @@ const Department = () => {
     const fetchDoctors = async () => {
       try {
         setLoading(true);
-        let url = `http://192.168.0.112:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
-        if (searchParams.city) {
-          url = `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.city)}`;
+        let url = `http://192.168.0.162:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
+        if (searchParams.area) {
+          url = `http://192.168.0.162:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
@@ -464,9 +502,9 @@ const Department = () => {
     if (searchTerm) {
       try {
         setLoading(true);
-        let url = `http://192.168.0.112:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
-        if (city) {
-          url = `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(city)}`;
+        let url = `http://192.168.0.162:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
+        if (area) {
+          url = `http://192.168.0.162:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
@@ -599,7 +637,7 @@ const Department = () => {
                 <div className="w-24 h-24 bg-gray-300 rounded-full overflow-hidden mr-4 flex-shrink-0">
                   {doctor.image ? (
                     <img
-                      src= {doctor}
+                      src= {doctor.image}
                       alt={doctor.doctor_name}
                       className="w-full h-full object-cover"
                     />
@@ -629,26 +667,15 @@ const Department = () => {
                   <p className="text-sm text-gray-600 mb-1 flex items-center">
                     <span className="mr-1">📍</span> {doctor.clinic_location || 'Not specified'}
                   </p>
-                  <div className="flex gap-2 mt-2">
-                    <button
-                      className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/appointment/${doctor.doctor_id}`);
-                      }}
-                    >
-                      Consult Now
-                    </button>
-                    <button
-                      className="flex-1 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm font-medium"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/doctor/${doctor.doctor_id}`);
-                      }}
-                    >
-                      View Profile
-                    </button>
-                  </div>
+                  <button
+                    className="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/appointment/${doctor.doctor_id}`);
+                    }}
+                  >
+                    Consult Now
+                  </button>
                 </div>
               </div>
             ))}

@@ -355,7 +355,7 @@ const AboutUs = () => {
           </div>
           <div className="bg-gray-100 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 max-w-4xl mx-auto mt-8">
             <div className="md:w-full p-4">
-              <h3 className="text-3xl font-semibold text-gray-800 mb-4 text-center">Doctors Say About Us</h3>
+              <h3 className="text-3xl font-semibold text-gray-800 mb-4 text-center">What Doctor Say About Us?</h3>
               <p className="font-bold mb-4 text-center">Trusted by healthcare professionals across India.</p>
               <p className="text-gray-600 text-sm mb-4 text-center">
                 "OneStep Medi has revolutionized how I connect with my patients. The platform's seamless integration and reliable support make it a game-changer for healthcare delivery."
