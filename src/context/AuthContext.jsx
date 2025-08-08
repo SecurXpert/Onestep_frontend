@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     } else if (token) {
       const fetchProfile = async () => {
         try {
-          const response = await fetchWithAuth('http://192.168.0.162:8000/profile/me', {
+          const response = await fetchWithAuth('http://192.168.0.170:8000/profile/me', {
             method: 'GET',
           });
           if (response.ok) {
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, number, dob, email, password) => {
     try {
-      const response = await fetch('http://192.168.0.162:8000/patient/signup', {
+      const response = await fetch('http://192.168.0.170:8000/patient/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -129,7 +129,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('http://192.168.0.162:8000/patient/login', {
+      const response = await fetch('http://192.168.0.170:8000/patient/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -161,7 +161,7 @@ export const AuthProvider = ({ children }) => {
           userRole = '';
         }
 
-        const profileResponse = await fetchWithAuth('http://192.168.0.162:8000/profile/me', {
+        const profileResponse = await fetchWithAuth('http://192.168.0.170:8000/profile/me', {
           method: 'GET',
         });
 

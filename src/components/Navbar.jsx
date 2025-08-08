@@ -82,6 +82,9 @@ const Navbar = () => {
             <NavLink to="/doctors" className="nav-link">
               Find Doctors<hr />
             </NavLink>
+                <NavLink to="/emergency" className="nav-link">
+              Emergency Slot<hr />
+            </NavLink>
             {/* <NavLink to="/pharmacy" className="nav-link">
               Pharmacy<hr />
             </NavLink>

@@ -6,7 +6,7 @@ import stress from './stress.png';
 import piles from './piles.png';
 import skin from './skin.png';
 import hairfall from './hairfall.png';
-import nutrition from './nutrition.png';
+// import nutrition from './nutrition.png';
 import dermatologist from './derma.jpg';
 import endocrinologist from './endocrinologist.png';
 import thyroid from './thyroid.png';
@@ -88,10 +88,10 @@ export const specialitymenu = [
     name: 'Thyroid',
     image: thyroid,
   },
-  {
-    name: 'Nutrition',
-    image: nutrition,
-  },
+  // {
+  //   name: 'Nutritionist',
+  //   image: nutrition,
+  // },
 
   {
     name: 'Cavity',
