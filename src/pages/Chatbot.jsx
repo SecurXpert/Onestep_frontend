@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Mock data for questions and solutions
 const mockData = [
@@ -27,7 +27,7 @@ const mockData = [
 const Chatbot = ({ isOpen, onClose }) => {
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'Welcome to Doctor Hub! Please select a question below to get health advice.' }
+    { sender: 'bot', text: 'Hi, welcome to OneStep Medi!' }
   ]);
 
   const handleQuestionClick = (questionObj) => {
@@ -38,6 +38,13 @@ const Chatbot = ({ isOpen, onClose }) => {
       { sender: 'bot', text: questionObj.solution }
     ]);
   };
+
+  // Reset messages when chatbot opens to avoid duplicate welcome messages
+  useEffect(() => {
+    if (isOpen) {
+      setMessages([{ sender: 'bot', text: 'Hi, welcome to OneStep Medi!' }]);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 

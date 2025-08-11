@@ -117,9 +117,9 @@ useEffect(() => {
 
     if (searchTerm) {
       try {
-        let url = `http://192.168.0.112:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
+        let url = `http://192.168.0.122:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
         if (area) {
-          url = `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
+          url = `http://192.168.0.122:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {

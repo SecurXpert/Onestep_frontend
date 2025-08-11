@@ -471,9 +471,9 @@ const Department = () => {
     const fetchDoctors = async () => {
       try {
         setLoading(true);
-        let url = `http://192.168.0.112:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
+        let url = `http://192.168.0.122:8000/doctors/by-specialization/${encodeURIComponent(specialtyName)}`;
         if (searchParams.area) {
-          url = `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.area)}`;
+          url = `http://192.168.0.122:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(specialtyName)}&area=${encodeURIComponent(searchParams.area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
@@ -502,9 +502,9 @@ const Department = () => {
     if (searchTerm) {
       try {
         setLoading(true);
-        let url = `http://192.168.0.112:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
+        let url = `http://192.168.0.122:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
         if (area) {
-          url = `http://192.168.0.112:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
+          url = `http://192.168.0.122:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
@@ -667,15 +667,26 @@ const Department = () => {
                   <p className="text-sm text-gray-600 mb-1 flex items-center">
                     <span className="mr-1">📍</span> {doctor.clinic_location || 'Not specified'}
                   </p>
-                  <button
-                    className="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/appointment/${doctor.doctor_id}`);
-                    }}
-                  >
-                    Consult Now
-                  </button>
+                  <div className="flex gap-2 mt-2">
+                    <button
+                      className="w-1/2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/appointment/${doctor.doctor_id}`);
+                      }}
+                    >
+                      Consult Now
+                    </button>
+                    <button
+                      className="w-1/2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm font-medium"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/doctor/${doctor.doctor_id}`);
+                      }}
+                    >
+                      View Profile
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

@@ -66,7 +66,7 @@ export const speciality = [
     image: nutritionist,
   },
   {
-    name: 'General Physician',
+    name: 'GeneralPhysician',
     image: general,
   },
   {
