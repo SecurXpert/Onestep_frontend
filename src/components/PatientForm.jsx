@@ -47,7 +47,7 @@ const PatientForm = ({
         purpose: '',
         notes: '',
         consent: false,
-        unavailabilityOption: '',
+        // unavailabilityOption: '',
         optionalDoctorId: '',
         alternativeTime: '',
         medical_history: false,
@@ -68,7 +68,7 @@ const PatientForm = ({
         purpose: '',
         notes: '',
         consent: false,
-        unavailabilityOption: '',
+        // unavailabilityOption: '',
         optionalDoctorId: '',
         alternativeTime: '',
         medical_history: false,
@@ -111,11 +111,11 @@ const PatientForm = ({
       setReportFile(null);
     }
 
-    if (name === 'unavailabilityOption' && value === 'similar_doctor') {
-      setShowRelatedDoctors(true);
-    } else if (name === 'unavailabilityOption' && value === 'wait') {
-      setShowRelatedDoctors(false);
-    }
+    // if (name === 'unavailabilityOption' && value === 'similar_doctor') {
+    //   setShowRelatedDoctors(true);
+    // } else if (name === 'unavailabilityOption' && value === 'wait') {
+    //   setShowRelatedDoctors(false);
+    // }
   };
 
   return (
@@ -414,3 +414,5 @@ const PatientForm = ({
 };
 
 export default PatientForm;
+
+

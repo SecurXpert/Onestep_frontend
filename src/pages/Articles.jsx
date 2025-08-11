@@ -59,19 +59,19 @@ const ArticlesPage = () => {
   return (
     <div className="w-full bg-white flex flex-col items-center relative overflow-hidden">
       {/* Banner Section - Full Width */}
-      <div className="w-full bg-gradient-to-r min-h-[40vh] from-blue-100 to-teal-100 flex flex-col md:flex-row items-center justify-between rounded-none shadow-lg p-4 sm:p-8 mb-12">
+      <div className="w-full bg-b3d8e4-gradient flex flex-col md:flex-row items-center justify-between rounded-none shadow-lg p-4 sm:p-8 mb-12">
         {/* Left Content */}
         <div className="w-full md:w-1/2 mb-6 md:mb-0 text-center px-4 sm:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-blue-600 mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
+          <h1 className="text-4xl md:text-5xl font-bold text-custom-blue mb-4">
             ARTICLES
           </h1>
-          <h1 className="text-3xl md:text-4xl font-bold text-blue-600 mb-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
+          <h1 className="text-3xl md:text-4xl font-bold text-custom-blue mb-4" >
             Explore Health Tips, Doctor Advice & Wellness Guides
           </h1>
-          <p className="text-gray-700 font-medium text-base md:text-lg mb-4">
+          <p className="text-custom-blue font-medium md:text-lg mb-4">
             Stay updated with the latest health trends, expert wellness tips,
           </p>
-          <p className="text-gray-700 font-medium text-base md:text-lg mb-6">
+          <p className="text-custom-blue font-medium  md:text-lg mb-6">
             and nutrition advice—all simplified to help you and your family live healthier every day.
           </p>
         </div>

@@ -47,6 +47,12 @@ import DoctorProfile from "./components/DoctorProfile"
 import DoctorProfileWrapper from "./components/DoctorProfileWrapper"
 import Individualarticle from "./pages/Individualarticle"
 import Dashboard_Admin from "./pages/Dashborad_Admin"
+import Doctorsdata from "./pages/Doctorsdata"
+import CaseStudyForm from "./pages/CaseStudyForm"
+import Emergencyappointment from "./pages/EmergencyAppointment"
+import RazorpayEmergency from "./pages/RazorpayEmergency"
+// import Chatbot from "./pages/Chatbot"
+
 
 const App = () => {
   return (
@@ -60,6 +66,7 @@ const App = () => {
         <Route path="/register" element={<Register/>} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/profile" element={<MyProfile />} />
+        <Route path="/emergency" element={<Emergencyappointment />} />
         <Route path="/myappointment" element={<MyAppointment />} />
         {/* <Route path="/appointment/:docId" element={<Appointment />} /> */}
         <Route path="/appointment/:id" element={<Appointment />} />
@@ -76,6 +83,7 @@ const App = () => {
         <Route path="/user-dash" element={<UserDashboardMock />} />
         {/* <Route path="/book-test" element={} */}
         <Route path="/razorpay-payment" element={<RazorpayPayment />} />
+        <Route path="/razorpay-emergency" element={<RazorpayEmergency />} />
         <Route path="/profilepage" element={<ProfilePage />} />
         <Route path="/myorder" element={<Myorder />} />
          <Route path="/login-register" element={<LoginRegister />} />
@@ -98,10 +106,12 @@ const App = () => {
             <Route path="/pharmacy" element={<Pharmacy/>} />
             <Route path="/lab" element={<Labtest/>} />
             <Route path="/department/:specialtyName" element={<Department/>}/>
-            <Route path="/doctor/:id" element={<DoctorProfileWrapper/>} />
+            <Route path="/doctor/:doctor_id" element={<DoctorProfileWrapper/>} />
             <Route path="/article/:name" element={<Individualarticle/>} />
             <Route path="/super_dashboard" element={<Dashboard_Admin/>} />
-  
+            <Route path='/doctorsdata' element={<Doctorsdata />} />
+            <Route path="/casestudy" element={<CaseStudyForm />} />
+            {/* <Route path="/bot" element={<Chatbot />} /> */}
          
 
 

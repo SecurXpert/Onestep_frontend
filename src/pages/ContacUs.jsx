@@ -50,7 +50,11 @@ const ContactUs = () => {
     if (Object.keys(formErrors).length === 0) {
       setIsSubmitting(true);
       try {
+<<<<<<< HEAD
         const response = await fetch('http://192.168.0.122:8000/contact/contact_us', {
+=======
+        const response = await fetch('http://192.168.0.170:8000/contact/contact_us', {
+>>>>>>> 19bc87b2eb153f6b1b2814b1e53c52fc977d0ea0
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -86,10 +90,10 @@ const ContactUs = () => {
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
         {/* Left - Contact Form */}
         <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-xl transition-shadow duration-300">
-          <h2 className="text-3xl font-bold text-indigo-600 mb-4 tracking-tight">
-            Get in Touch
+          <h2 className="text-3xl font-bold text-custom-blue mb-4 tracking-tight">
+           Get In Touch
           </h2>
-          <p className="text-gray-500 mb-8 text-lg max-w-lg">
+          <p className="text-custom-blue mb-8 text-lg max-w-lg">
             Have a question or idea? Fill out the form below, and we'll respond promptly!
           </p>
 
@@ -195,15 +199,15 @@ const ContactUs = () => {
 
           <div className="space-y-6">
             <div>
-              <h4 className="font-semibold text-indigo-600 text-lg">Email</h4>
+              <h4 className="font-semibold text-custom-blue text-lg">Email</h4>
               <p className="text-gray-600">support@example.com</p>
             </div>
             <div>
-              <h4 className="font-semibold text-indigo-600 text-lg">Phone</h4>
+              <h4 className="font-semibold text-custom-blue text-lg">Phone</h4>
               <p className="text-gray-600">+91 12345 67890</p>
             </div>
             <div>
-              <h4 className="font-semibold text-indigo-600 text-lg">Address</h4>
+              <h4 className="font-semibold text-custom-blue text-lg"> Our Co-operate Office Address</h4>
               <p className="text-gray-600">
                 Hitech City,<br /> Hyderabad, India
               </p>

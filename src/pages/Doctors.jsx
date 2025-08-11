@@ -117,9 +117,9 @@ useEffect(() => {
 
     if (searchTerm) {
       try {
-        let url = `http://192.168.0.122:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
+        let url = `http://192.168.0.170:8000/doctors/by-specialization/${encodeURIComponent(searchTerm)}`;
         if (area) {
-          url = `http://192.168.0.122:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
+          url = `http://192.168.0.170:8000/doctors/by-specialization/area_spec/?specialization_name=${encodeURIComponent(searchTerm)}&area=${encodeURIComponent(area)}`;
         }
         const response = await fetch(url);
         if (!response.ok) {
@@ -215,7 +215,7 @@ useEffect(() => {
             <p className="text-lg md:text-m text-gray-600 mb-6 text-center max-w-2xl">
               Find the right specialist for every health need.
             </p>
-            <div className="relative w-full overflow-hidden">
+            <div className="relative w-full overflow-hidden group rounded-l-full rounded-r-full">
               <button
                 className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-custom-blue text-white p-2 rounded-full opacity-70 hover:opacity-100 transition-opacity z-10"
                 onClick={() => {

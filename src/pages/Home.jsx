@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import Headers from '../components/Headers';
-import SpecialityMenu from '../components/SpecialityMenu';
+import React, { useState } from 'react';
+import Headers from '../components/Headers'
+import SpecialityMenu from '../components/SpecialityMenu'
+import TopDoctors from '../components/TopDoctors'
+import Banner from '../components/Banner'
+import AppointmentModesCard from '../components/AppointmentModesCard'
+import PharmacyLabLanding from '../components/PharmacyLabLanding'
+import Chatbot from './Chatbot';
+import botIcon from '../assets/bot1.png';
 
 import Chatbot from './Chatbot';
 import botIcon from '../assets/bot.png'; // Import the image
@@ -24,8 +30,7 @@ const Home = () => {
     <div>
       <Headers />
       <SpecialityMenu />
-     
-      <button
+     <button
         onClick={toggleChatbot}
         className="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors z-50"
         aria-label="Open OneStep Medi Chatbot"
@@ -37,6 +42,7 @@ const Home = () => {
         />
       </button>
       <Chatbot isOpen={isChatbotOpen} onClose={() => setIsChatbotOpen(false)} />
+ 
     </div>
   );
 };

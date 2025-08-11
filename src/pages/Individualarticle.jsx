@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 // import derma from '../assets/derma.png';
 // import food1 from '../assets/avoidfoodskin.jpg';
@@ -18,6 +18,10 @@ const IndividualArticle = () => {
   const { name } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [name]);
 
   // Articles data array with correct image references
   const articlesData = [

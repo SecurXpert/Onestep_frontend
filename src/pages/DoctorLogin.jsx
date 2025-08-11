@@ -17,7 +17,7 @@ const DoctorLogin = () => {
     }
 
     try {
-      const response = await fetch('http://192.168.0.122:8000/doctors/login', {
+      const response = await fetch('http://192.168.0.170:8000/doctors/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
